@@ -1,0 +1,13 @@
+body {
+    min-width: 30em;
+    min-height: 25em;
+}
+
+#funds-data {
+    border: 2px solid;
+    height: 18em;
+}
+
+#fund {
+    width: 17em;
+}

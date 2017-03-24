@@ -1,0 +1,15 @@
+{
+  "manifest_version": 2,
+  "name": "Mutual Fund Tracker",
+  "description": "A chrome extension to track Indian mutual funds.",
+  "version": "1.0.0",
+  
+  "permissions": [
+    "storage"
+  ],
+  
+  "browser_action": {
+    "default_icon": "resources/icon.png",
+    "default_popup": "popup.html"
+  }
+}
