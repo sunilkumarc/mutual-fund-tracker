@@ -2,17 +2,49 @@ function round(num) {
   return Math.round(num * 100) / 100;
 }
 
+$("#fund-options").click(function(ev) {
+    $("#fund").val(ev.target.innerHTML.split("<br>")[0]);
+    window.localStorage.setItem("mf_fund_id", ev.target.id);
+    $("#fund-options").html("");
+});
+
+$("#add-mutual-fund").click(function() {
+    var mfId = window.localStorage.getItem("mf_fund_id");
+    chrome.storage.local.get("mf_ids", function(data) {
+        if (data == undefined || $.isEmptyObject(data)) {
+            data = {};
+            data.mf_ids = [];
+        }
+        data.mf_ids.push(mfId);
+        chrome.storage.local.set({"mf_ids": data.mf_ids}, function(){});
+    });
+});
+
+$("#temp").click(function() {
+    chrome.storage.local.get("mf_ids", function(data) {
+        if (data.mf_ids != undefined) {
+            alert(JSON.stringify(data.mf_ids));
+        } else {
+            alert("Nothing stored yet!");
+        }
+    });
+    // chrome.storage.local.clear();
+});
+
 $("#fund").keyup(function() {
     var str = $("#fund").val();
     str = new RegExp(str, "i");
+    
     var matches = autoCompleteData.filter(function(mf) {
         var res = mf["name"].match(str);
         return res;
     });
+
     var content = "";
     for (var i = 0; i < matches.length; ++i) {
-        content += "<div>" + matches[i].name + "<br/>(" + matches[i].desc + ")" + "</div>";
+        content += "<div id=\"" + matches[i].code + "\" style=\"border-bottom: 1px solid; cursor: pointer\">" + matches[i].name + "<br/>(" + matches[i].desc + ")" + "</div>";
     }
+
     $("#fund-options").html(content);
 });
 

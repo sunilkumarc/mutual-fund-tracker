@@ -1,6 +1,7 @@
 body {
     min-width: 30em;
     min-height: 25em;
+    overflow: hidden;
 }
 
 #funds-data {
@@ -14,4 +15,5 @@ body {
 
 #fund-options {
     width: 18.8em;
+    border: 1px solid;
 }
