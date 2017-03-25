@@ -55,3 +55,7 @@ table div {
 h3 {
     text-align: center;
 }
+
+#fund-options :hover {
+    background-color: lightblue;
+}

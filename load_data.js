@@ -74,12 +74,13 @@ function getData(url) {
         var todayValue = data['data']['graph'][length-1]['y'];
         var yesterdayValue = data['data']['graph'][length-2]['y'];
         var netPercentageChange = (todayValue - yesterdayValue) / todayValue * 100;
+        // netPercentageChange = String(netPercentageChange) + " %";
         if (netPercentageChange > 0)
-            content += "<td id=\"positive-percentage\">" + round(netPercentageChange) + "</td></tr>";
+            content += "<td id=\"positive-percentage\">" + round(netPercentageChange) + "%</td></tr>";
         else if (netPercentageChange < 0)
-            content += "<td id=\"negative-percentage\">" + round(netPercentageChange) + "</td></tr>";
+            content += "<td id=\"negative-percentage\">" + round(netPercentageChange) + " %</td></tr>";
         else
-            content += "<td>" + round(netPercentageChange) + "</td></tr>";
+            content += "<td>" + round(netPercentageChange) + " %</td></tr>";
 
         $("#funds-data").html($("#funds-data").html() + content);
     });
