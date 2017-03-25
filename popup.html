@@ -4,13 +4,29 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-	<h3>Your Mutual Funds :D</h3>
-    <div id="funds-data"></div><br/>
+	<h3>Your Mutual Funds</h3>
+    <hr/>
+    <table>
+        <tr>
+            <th>Mutual Fund</th>
+            <th>Current NAV</th>
+            <th>Percentage Change</th>
+        </tr>
+        <div>
+            <tbody id="funds-data">
 
+            </tbody>
+        </div>
+    </table>
+
+    <br/>
     <input type="text" id="fund"></input>
     <button id="add-mutual-fund">Add Fund</button>
     <div id="fund-options"></div>
-    <button id="temp">Check</button>
+    <br/><br/>
+    <button id="clear">Clear Funds</button>
+    <a id="funds-list">List of all mutual funds</a>
+    <!--<button id="check">Check</button>-->
 
     <script src="mf_data.js"></script>
     <script src="jquery.js"></script>

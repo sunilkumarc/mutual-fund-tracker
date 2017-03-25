@@ -3,9 +3,14 @@ function round(num) {
 }
 
 $("#fund-options").click(function(ev) {
+    $("#fund-options").css("display", "none");
     $("#fund").val(ev.target.innerHTML.split("<br>")[0]);
     window.localStorage.setItem("mf_fund_id", ev.target.id);
     $("#fund-options").html("");
+});
+
+$("#funds-list").click(function() {
+    chrome.tabs.create({url: "https://mf.zerodha.com/funds", active: false});
 });
 
 $("#add-mutual-fund").click(function() {
@@ -17,10 +22,13 @@ $("#add-mutual-fund").click(function() {
         }
         data.mf_ids.push(mfId);
         chrome.storage.local.set({"mf_ids": data.mf_ids}, function(){});
+        getData(mfId);
+        window.localStorage.removeItem("mf_fund_id");
+        $("#fund").val("");
     });
 });
 
-$("#temp").click(function() {
+$("#check").click(function() {
     chrome.storage.local.get("mf_ids", function(data) {
         if (data.mf_ids != undefined) {
             alert(JSON.stringify(data.mf_ids));
@@ -28,7 +36,11 @@ $("#temp").click(function() {
             alert("Nothing stored yet!");
         }
     });
-    // chrome.storage.local.clear();
+});
+
+$("#clear").click(function() {
+    chrome.storage.local.clear();
+    $("#funds-data").html("");
 });
 
 $("#fund").keyup(function() {
@@ -46,31 +58,34 @@ $("#fund").keyup(function() {
     }
 
     $("#fund-options").html(content);
+    $("#fund-options").css("display", "block");
 });
 
-// $("#funds-data").html(autoCompleteData[0]["name"]);
+function getData(url) {
+    var url = "https://mf.zerodha.com/api/fund-info?graph_type=normal&scheme_id=" + url + "&session_token=";
+    $.get(url, function(data) {
+        var length = data['data']['graph'].length;
+        var content = "<tr>";
+        content += "<td>" + data['data']['bse_master'][0]['scheme_name'] + "</td>";
+        content += "<td>" + data['data']['graph'][length-1]['y'] + "</td>";
 
-// $.get("https://mf.zerodha.com/api/fund-info?graph_type=normal&scheme_id=14051732.00206600&session_token=", function(data) {
-//     var length = data['data']['graph'].length;
-//     content = data['data']['bse_master'][0]['scheme_name'];
-//     content += "......" + data['data']['graph'][length-1]['y'];
+        var todayValue = data['data']['graph'][length-1]['y'];
+        var yesterdayValue = data['data']['graph'][length-2]['y'];
+        var netPercentageChange = (todayValue - yesterdayValue) / todayValue * 100;
+        content += "<td>" + round(netPercentageChange) + "</td></tr>"
+        $("#funds-data").html($("#funds-data").html() + content);
+    });
+}
 
-//     var todayValue = data['data']['graph'][length-1]['y'];
-//     var yesterdayValue = data['data']['graph'][length-2]['y'];
-//     var netPercentageChange = (todayValue - yesterdayValue) / todayValue * 100;
-//     content += "......" + round(netPercentageChange) + "<br>"
-//     $("#funds-data").html($("#funds-data").html() + content);
-// });
+function loadData() {
+    $("#funds-data").html("");
+    chrome.storage.local.get("mf_ids", function(data) {
+        if (data.mf_ids != undefined && data.mf_ids.length > 0) {
+            for (var i = 0; i < data.mf_ids.length; ++i) {
+                getData(data.mf_ids[i]);
+            }
+        }
+    });
+}
 
-// $.get("https://mf.zerodha.com/api/fund-info?graph_type=normal&scheme_id=14050080.00206600&session_token=", function(data) {
-//     var length = data['data']['graph'].length;
-//     content = data['data']['bse_master'][0]['scheme_name'];
-//     content += "......" + data['data']['graph'][length-1]['y'];
-
-//     var todayValue = data['data']['graph'][length-1]['y'];
-//     var yesterdayValue = data['data']['graph'][length-2]['y'];
-//     var netPercentageChange = (todayValue - yesterdayValue) / todayValue * 100;
-//     content += "......" + round(netPercentageChange) + "<br>"
-//     $("#funds-data").html($("#funds-data").html() + content);
-// });
-
+loadData();

@@ -1,19 +1,49 @@
 body {
-    min-width: 30em;
-    min-height: 25em;
+    min-width: 40em;
+    /*min-height: 25em;*/
     overflow: hidden;
 }
 
 #funds-data {
-    border: 2px solid;
+    /*border: 2px solid;*/
     height: 18em;
 }
 
 #fund {
-    width: 17em;
+    width: 25em;
 }
 
 #fund-options {
-    width: 18.8em;
+    width: 28em;
     border: 1px solid;
+    display: none;
+}
+
+button {
+    display: inline-block;
+}
+
+table, th, td {
+    border: 1px solid;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 5px;
+    text-align: center;    
+}
+
+table div {
+    height: 18em;
+}
+
+#funds-list {
+    font-size: 1.2em;
+    cursor: pointer;
+    color: dodgerblue;
+    float: right;
+}
+
+h3 {
+    text-align: center;
 }
