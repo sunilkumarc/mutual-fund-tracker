@@ -33,6 +33,14 @@ th, td {
     text-align: center;    
 }
 
+td#positive-percentage {
+    background-color: lightgreen;
+}
+
+td#negative-percentage {
+    background-color: #FA8072;
+}
+
 table div {
     height: 18em;
 }
