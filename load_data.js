@@ -15,6 +15,7 @@ $("#funds-list").click(function() {
 
 $("#add-mutual-fund").click(function() {
     var mfId = window.localStorage.getItem("mf_fund_id");
+    $("#funds-table").css("display", "table");
     chrome.storage.local.get("mf_ids", function(data) {
         if (data == undefined || $.isEmptyObject(data)) {
             data = {};
@@ -41,6 +42,7 @@ $("#check").click(function() {
 $("#clear").click(function() {
     chrome.storage.local.clear();
     $("#funds-data").html("");
+    $("#funds-table").css("display", "none");
 });
 
 $("#fund").keyup(function() {
@@ -81,9 +83,12 @@ function loadData() {
     $("#funds-data").html("");
     chrome.storage.local.get("mf_ids", function(data) {
         if (data.mf_ids != undefined && data.mf_ids.length > 0) {
+            $("#funds-table").css("display", "table");
             for (var i = 0; i < data.mf_ids.length; ++i) {
                 getData(data.mf_ids[i]);
             }
+        } else {
+            $("#funds-table").css("display", "none");
         }
     });
 }
