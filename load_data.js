@@ -76,7 +76,7 @@ function getData(url) {
         var netPercentageChange = (todayValue - yesterdayValue) / todayValue * 100;
         // netPercentageChange = String(netPercentageChange) + " %";
         if (netPercentageChange > 0)
-            content += "<td id=\"positive-percentage\">" + round(netPercentageChange) + "%</td></tr>";
+            content += "<td id=\"positive-percentage\">+" + round(netPercentageChange) + "%</td></tr>";
         else if (netPercentageChange < 0)
             content += "<td id=\"negative-percentage\">" + round(netPercentageChange) + " %</td></tr>";
         else
