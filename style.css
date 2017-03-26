@@ -1,11 +1,9 @@
 body {
     min-width: 40em;
-    /*min-height: 25em;*/
     overflow: hidden;
 }
 
 #funds-data {
-    /*border: 2px solid;*/
     height: 18em;
 }
 
@@ -21,11 +19,25 @@ body {
 
 button {
     display: inline-block;
+    background-color:#006dcc;
+    border: none;
+    color: #fff;
+    text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+    padding: 4px 4px 4px 4px;
+}
+
+button:hover {
+    background-color: #04c;
+    cursor: pointer;
 }
 
 table, th, td {
     border: 1px solid;
     border-collapse: collapse;
+}
+
+table tr th {
+    background-color: lightgrey;
 }
 
 th, td {
@@ -52,10 +64,10 @@ table div {
     float: right;
 }
 
-h3 {
+h2 {
     text-align: center;
 }
 
 #fund-options :hover {
-    background-color: lightblue;
+    background-color:lightgrey;
 }

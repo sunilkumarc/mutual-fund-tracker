@@ -11,5 +11,9 @@
   "browser_action": {
     "default_icon": "resources/icon.png",
     "default_popup": "popup.html"
+  },
+  
+  "icons": {
+    "48": "resources/icon_48.png"
   }
 }
