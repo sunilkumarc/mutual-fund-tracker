@@ -9,8 +9,8 @@ $("#fund-options").click(function(ev) {
     $("#fund-options").html("");
 });
 
-$("#funds-list").click(function() {
-    chrome.tabs.create({url: "https://mf.zerodha.com/funds", active: false});
+$('body').on('click', 'a', function(){
+    chrome.tabs.create({url: $(this).attr('href')});
 });
 
 $("#add-mutual-fund").click(function() {
@@ -63,24 +63,42 @@ $("#fund").keyup(function() {
     $("#fund-options").css("display", "block");
 });
 
-function getData(url) {
-    var url = "https://mf.zerodha.com/api/fund-info?graph_type=normal&scheme_id=" + url + "&session_token=";
+$("#funds-table").on("click", ".remove-fund", function(ev) {
+    var answer = confirm('Do you want to delete?');
+    if (answer) {
+        chrome.storage.local.get("mf_ids", function(data) {
+        if (data != undefined && !$.isEmptyObject(data)) {
+            var index = data.mf_ids.indexOf($(ev.target).attr("data-value"));
+            if (index >= 0) {
+                data.mf_ids.splice(index, 1);
+            }
+            chrome.storage.local.set({"mf_ids": data.mf_ids}, function(){});
+            $(ev.target).closest('tr').remove();
+        }
+    });
+    }
+});
+
+function getData(fund_id) {
+    var url = "https://mf.zerodha.com/api/fund-info?graph_type=normal&scheme_id=" + fund_id + "&session_token=";
     $.get(url, function(data) {
         var length = data['data']['graph'].length;
         var content = "<tr>";
-        content += "<td>" + data['data']['bse_master'][0]['scheme_name'] + "</td>";
+        content += "<td><a id=\"mutual-fund\" href=\"https://coin.zerodha.com/funds/" + fund_id + "\">" + data['data']['bse_master'][0]['scheme_name'] + "</a></td>";
         content += "<td>" + data['data']['graph'][length-1]['y'] + "</td>";
 
         var todayValue = data['data']['graph'][length-1]['y'];
         var yesterdayValue = data['data']['graph'][length-2]['y'];
         var netPercentageChange = (todayValue - yesterdayValue) / todayValue * 100;
-        // netPercentageChange = String(netPercentageChange) + " %";
         if (netPercentageChange > 0)
-            content += "<td id=\"positive-percentage\">+" + round(netPercentageChange) + "%</td></tr>";
+            content += "<td id=\"positive-percentage\">+" + round(netPercentageChange) + "%</td>";
         else if (netPercentageChange < 0)
-            content += "<td id=\"negative-percentage\">" + round(netPercentageChange) + " %</td></tr>";
+            content += "<td id=\"negative-percentage\">" + round(netPercentageChange) + "%</td>";
         else
-            content += "<td>" + round(netPercentageChange) + " %</td></tr>";
+            content += "<td>" + round(netPercentageChange) + "%</td>";
+        
+        content += "<td class=\"remove-fund\" data-value=\"" + fund_id + "\"><img src=\"resources/delete-icon.png\" data-value=\"" + fund_id + "\" /></td>";
+        content += "</tr>";
 
         $("#funds-data").html($("#funds-data").html() + content);
     });

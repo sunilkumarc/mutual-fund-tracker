@@ -71,3 +71,12 @@ h2 {
 #fund-options :hover {
     background-color:lightgrey;
 }
+
+#mutual-fund {
+    color: #000;
+    text-decoration: none;
+}
+
+.remove-fund {
+    cursor: pointer;
+}
