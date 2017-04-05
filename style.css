@@ -74,7 +74,13 @@ h2 {
 
 #mutual-fund {
     color: #000;
+    font-weight: bold;
     text-decoration: none;
+}
+
+#mutual-fund:hover {
+    color: #04c;
+    font-weight: bold;
 }
 
 .remove-fund {
