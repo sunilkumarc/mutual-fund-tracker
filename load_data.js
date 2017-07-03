@@ -41,13 +41,15 @@ $("#check").click(function() {
 });
 
 $("#clear").click(function() {
-    chrome.storage.local.clear();
-    $("#funds-data").html("");
-    $("#funds-table").css("display", "none");
+    var answer = confirm('Are you sure?');
+    if (answer) {
+        chrome.storage.local.clear();
+        $("#funds-data").html("");
+        $("#funds-table").css("display", "none");
+    }
 });
 
 $("#fund").keyup(function() {
-    // alert('Coming here');
     var str = $("#fund").val();
     str = new RegExp(str, "i");
 
@@ -86,8 +88,8 @@ function getData(fund_id) {
     $.get(url, function(data) {
         var length = data['data']['graph'].length;
         var content = "<tr>";
-        content += "<td><a id=\"mutual-fund\" href=\"https://coin.zerodha.com/funds/" + fund_id + "\">" + data['data']['bse_master'][0]['scheme_name'] + "</a></td>";
-        content += "<td>" + "&#8377; " + data['data']['graph'][length-1]['y'] + "</td>";
+        content += "<td style=\"text-align: left; padding-right: 20px;\"><a id=\"mutual-fund\" href=\"https://coin.zerodha.com/funds/" + fund_id + "\">" + data['data']['bse_master'][0]['scheme_name'] + "</a></td>";
+        content += "<td style=\"text-align: left\">" + "&#8377; " + data['data']['graph'][length-1]['y'] + "</td>";
 
         var todayValue = data['data']['graph'][length-1]['y'];
         var yesterdayValue = data['data']['graph'][length-2]['y'];

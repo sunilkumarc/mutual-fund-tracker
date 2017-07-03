@@ -96,6 +96,14 @@ table div {
     font-style: italic;
 }
 
+#clear:hover {
+    color: #E74D5F;
+}
+
+#funds-list:hover {
+    color: #2349F5;
+}
+
 h1 {
     text-align: center;
     text-shadow: 2px 2px 4px lightgrey;
