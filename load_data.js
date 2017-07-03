@@ -10,7 +10,8 @@ $("#fund-options").click(function(ev) {
 });
 
 $('body').on('click', 'a', function(){
-    chrome.tabs.create({url: $(this).attr('href')});
+    if ($(this).attr("id") != "clear")
+        chrome.tabs.create({url: $(this).attr('href')});
 });
 
 $("#add-mutual-fund").click(function() {
@@ -46,9 +47,10 @@ $("#clear").click(function() {
 });
 
 $("#fund").keyup(function() {
+    // alert('Coming here');
     var str = $("#fund").val();
     str = new RegExp(str, "i");
-    
+
     var matches = autoCompleteData.filter(function(mf) {
         var res = mf["name"].match(str);
         return res;
@@ -85,7 +87,7 @@ function getData(fund_id) {
         var length = data['data']['graph'].length;
         var content = "<tr>";
         content += "<td><a id=\"mutual-fund\" href=\"https://coin.zerodha.com/funds/" + fund_id + "\">" + data['data']['bse_master'][0]['scheme_name'] + "</a></td>";
-        content += "<td>" + data['data']['graph'][length-1]['y'] + "</td>";
+        content += "<td>" + "&#8377; " + data['data']['graph'][length-1]['y'] + "</td>";
 
         var todayValue = data['data']['graph'][length-1]['y'];
         var yesterdayValue = data['data']['graph'][length-2]['y'];
@@ -96,7 +98,7 @@ function getData(fund_id) {
             content += "<td id=\"negative-percentage\">" + round(netPercentageChange) + "%</td>";
         else
             content += "<td>" + round(netPercentageChange) + "%</td>";
-        
+
         content += "<td class=\"remove-fund\" data-value=\"" + fund_id + "\"><img src=\"resources/delete-icon.png\" data-value=\"" + fund_id + "\" /></td>";
         content += "</tr>";
 

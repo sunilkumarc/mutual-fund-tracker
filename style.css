@@ -1,6 +1,10 @@
 body {
-    min-width: 40em;
+    min-width: 45em;
     overflow: hidden;
+    /*background-color: #f7f7f8;*/
+    /*background-color: #E8EAEC;*/
+    background-color: #EEEFF0;
+    font-family: 'Exo 2', sans-serif;
 }
 
 #funds-data {
@@ -8,13 +12,16 @@ body {
 }
 
 #fund {
-    width: 25em;
+    width: 32em;
+    padding: 5px 5px;
+    margin-right: 1em;
 }
 
 #fund-options {
     width: 28em;
     border: 1px solid;
     display: none;
+    background-color: #fff;
 }
 
 button {
@@ -23,7 +30,7 @@ button {
     border: none;
     color: #fff;
     text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
-    padding: 4px 4px 4px 4px;
+    padding: 7px;
 }
 
 button:hover {
@@ -32,17 +39,33 @@ button:hover {
 }
 
 table, th, td {
-    border: 1px solid;
+    border-right: 0.5px;
     border-collapse: collapse;
 }
 
 table tr th {
-    background-color: lightgrey;
+    /*background-color: #292b2c;*/
+    background-color: #454545;
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.3em;
+}
+
+table tr td {
+    background-color: #fff;
+    /*font-family: 'Lato', sans-serif;*/
+    font-family: 'Roboto', sans-serif;
 }
 
 th, td {
     padding: 5px;
     text-align: center;
+}
+
+#add-mutual-fund {
+    padding-left: 10px;
+    padding-right: 10px;
+    font-weight: bold;
 }
 
 td#positive-percentage {
@@ -62,25 +85,33 @@ table div {
     cursor: pointer;
     color: dodgerblue;
     float: right;
+    font-style: italic;
 }
 
-h2 {
+#clear {
+    font-size: 1.2em;
+    cursor: pointer;
+    color: dodgerblue;
+    text-decoration: underline;
+    font-style: italic;
+}
+
+h1 {
     text-align: center;
+    text-shadow: 2px 2px 4px lightgrey;
 }
 
 #fund-options :hover {
-    background-color:lightgrey;
+    background-color:#80c9f7;
 }
 
 #mutual-fund {
     color: #000;
-    font-weight: bold;
     text-decoration: none;
 }
 
 #mutual-fund:hover {
     color: #04c;
-    font-weight: bold;
 }
 
 .remove-fund {
