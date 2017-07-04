@@ -11,6 +11,10 @@ body {
     height: 18em;
 }
 
+#nav-header {
+    text-align: left;
+}
+
 #fund {
     width: 32em;
     padding: 5px 5px;
