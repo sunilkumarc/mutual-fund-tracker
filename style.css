@@ -1,8 +1,8 @@
+html { overflow-y: scroll; }
+
 body {
     min-width: 45em;
     overflow: hidden;
-    /*background-color: #f7f7f8;*/
-    /*background-color: #E8EAEC;*/
     background-color: #EEEFF0;
     font-family: 'Exo 2', sans-serif;
 }
@@ -11,8 +11,15 @@ body {
     height: 18em;
 }
 
-#nav-header {
-    text-align: left;
+.popuptext {
+    border-radius: 6px;
+    border: 1px solid;
+    width: 100px;
+    height: 40px;
+    position: relative;
+    top: -30px;
+    left: 20px;
+    float: auto;
 }
 
 #fund {
@@ -74,6 +81,7 @@ th, td {
 
 td#positive-percentage {
     background-color: lightgreen;
+    width: 20%;
 }
 
 td#negative-percentage {
