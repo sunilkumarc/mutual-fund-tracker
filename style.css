@@ -137,3 +137,12 @@ h1 {
 .remove-fund {
     cursor: pointer;
 }
+
+#popup h4 {
+    font-style: italic;
+}
+
+h3 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}

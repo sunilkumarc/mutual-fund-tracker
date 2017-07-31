@@ -21,13 +21,13 @@ $('body').on('click', 'a', function(){
 $("#add-mutual-fund").click(function() {
     var mfId = window.localStorage.getItem("mf_fund_id");
     $("#funds-table").css("display", "table");
-    chrome.storage.local.get("mf_ids", function(data) {
+    chrome.storage.sync.get("mf_ids", function(data) {
         if (data == undefined || $.isEmptyObject(data)) {
             data = {};
             data.mf_ids = [];
         }
         data.mf_ids.push(mfId);
-        chrome.storage.local.set({"mf_ids": data.mf_ids}, function(){});
+        chrome.storage.sync.set({"mf_ids": data.mf_ids}, function(){});
         getData(mfId);
         window.localStorage.removeItem("mf_fund_id");
         $("#fund").val("");
@@ -35,7 +35,7 @@ $("#add-mutual-fund").click(function() {
 });
 
 $("#check").click(function() {
-    chrome.storage.local.get("mf_ids", function(data) {
+    chrome.storage.sync.get("mf_ids", function(data) {
         if (data.mf_ids != undefined) {
             alert(JSON.stringify(data.mf_ids));
         } else {
@@ -47,7 +47,7 @@ $("#check").click(function() {
 $("#clear").click(function() {
     var answer = confirm('Are you sure?');
     if (answer) {
-        chrome.storage.local.clear();
+        chrome.storage.sync.clear();
         $("#funds-data").html("");
         $("#funds-table").css("display", "none");
     }
@@ -74,13 +74,13 @@ $("#fund").keyup(function() {
 $("#funds-table").on("click", ".remove-fund", function(ev) {
     var answer = confirm('Are you sure?');
     if (answer) {
-        chrome.storage.local.get("mf_ids", function(data) {
+        chrome.storage.sync.get("mf_ids", function(data) {
         if (data != undefined && !$.isEmptyObject(data)) {
             var index = data.mf_ids.indexOf($(ev.target).attr("data-value"));
             if (index >= 0) {
                 data.mf_ids.splice(index, 1);
             }
-            chrome.storage.local.set({"mf_ids": data.mf_ids}, function(){});
+            chrome.storage.sync.set({"mf_ids": data.mf_ids}, function(){});
             $(ev.target).closest('tr').remove();
         }
     });
@@ -114,7 +114,7 @@ function getData(fund_id) {
 
 function loadData() {
     $("#funds-data").html("");
-    chrome.storage.local.get("mf_ids", function(data) {
+    chrome.storage.sync.get("mf_ids", function(data) {
         if (data.mf_ids != undefined && data.mf_ids.length > 0) {
             $("#funds-table").css("display", "table");
             for (var i = 0; i < data.mf_ids.length; ++i) {

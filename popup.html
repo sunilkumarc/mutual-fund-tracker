@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 </head>
 <body>
-	<h1>Your Mutual Funds</h1>
+	<h1 style="margin-top: 5px; margin-bottom: 5px">Your Mutual Funds</h1>
     <hr/>
     <table id="funds-table">
         <tr>
@@ -29,9 +29,21 @@
     <br/><br/>
     <a id="clear">Clear All Funds</a>
     <a id="funds-list" href="https://mf.zerodha.com/funds">List of all mutual funds</a>
+    <br/>
+
+    <div id="popup" style="display: none">
+        <hr/>
+        <h3>Latest Features:</h3>
+        <span>
+            <b>Chrome Sync</b> has been enabled. Once you login to your google account
+            in Chrome, you can access your funds on different computers.
+        </span>
+    </div>
 
     <script src="mf_data.js"></script>
     <script src="jquery.js"></script>
+    <script src="jquery-cookie.js"></script>
     <script src="load_data.js"></script>
+    <script src="popup.js"></script>
 </body>
 </html>
