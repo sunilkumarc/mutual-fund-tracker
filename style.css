@@ -100,7 +100,15 @@ table div {
     font-style: italic;
 }
 
-#clear {
+#bar {
+    font-size: 1.2em;
+    color: dodgerblue;
+    font-style: italic;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+}
+
+#clear, #feature {
     font-size: 1.2em;
     cursor: pointer;
     color: dodgerblue;
@@ -136,6 +144,12 @@ h1 {
 
 .remove-fund {
     cursor: pointer;
+    box-shadow: -1px 0px 10px 0px #aaaaaa;
+}
+
+.remove-fund:hover {
+    cursor: pointer;
+    box-shadow: -1px 0px 10px 0px #F97F7F;
 }
 
 #popup h4 {
