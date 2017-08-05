@@ -116,6 +116,10 @@ table div {
     font-style: italic;
 }
 
+#feature:hover {
+    color: #2349F5;
+}
+
 #clear:hover {
     color: #E74D5F;
 }
@@ -156,7 +160,16 @@ h1 {
     font-style: italic;
 }
 
+#popup {
+    display: none;
+}
+
 h3 {
     margin-top: 5px;
     margin-bottom: 5px;
+}
+
+h3 a {
+    color: #04c;
+    font-size: 1.2em;
 }
