@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-class AddFundsScreen extends Component {
+class ManageFundsScreen extends Component {
 
     render() {
         return (
             <View style={styles.container}>
-                <Text>Add Funds</Text>
+                <Text>Manage Funds</Text>
             </View>
         );
     }
@@ -15,10 +15,10 @@ class AddFundsScreen extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#D3D3D3',
         alignItems: 'center',
         justifyContent: 'center',
     },
 });
 
-export default AddFundsScreen;
+export default ManageFundsScreen;

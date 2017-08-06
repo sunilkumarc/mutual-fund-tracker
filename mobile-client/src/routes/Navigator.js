@@ -1,7 +1,7 @@
 import { TabNavigator } from 'react-navigation';
 import {
     TrackFundsScreen,
-    AddFundsScreen
+    ManageFundsScreen
 } from '../screens';
 import Exponent from 'expo';
 
@@ -13,7 +13,7 @@ const MyNavigator = TabNavigator({
         }
     },
     Manage: {
-        screen: AddFundsScreen,
+        screen: ManageFundsScreen,
         navigationOptions: {
             title: 'Manage Funds'
         }
@@ -21,9 +21,10 @@ const MyNavigator = TabNavigator({
 }, {
     tabBarOptions: {
         upperCaseLabel: false,
+        indicatorStyle: { backgroundColor: '#06D6A0' },
         style: {
             marginTop: Exponent.Constants.statusBarHeight,
-            backgroundColor: '#3F7289',
+            backgroundColor: '#129490',
         }
     }
 });
