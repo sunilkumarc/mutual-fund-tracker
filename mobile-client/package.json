@@ -12,6 +12,7 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-19.0.0.tar.gz",
     "react-native-material-kit": "^0.4.1",
     "react-native-table-component": "^1.0.1",
-    "react-navigation": "^1.0.0-beta.11"
+    "react-navigation": "^1.0.0-beta.11",
+    "styled-components": "^2.1.2"
   }
 }

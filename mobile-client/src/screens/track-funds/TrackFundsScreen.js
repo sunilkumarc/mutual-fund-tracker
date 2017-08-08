@@ -1,10 +1,25 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
-import { Table, TableWraper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
+import { 
+    View, 
+    Text, 
+    StyleSheet, 
+    ActivityIndicator, 
+    AsyncStorage 
+} from 'react-native';
+import { 
+    Table, 
+    TableWraper, 
+    Row, 
+    Rows, 
+    Col, 
+    Cols, 
+    Cell 
+} from 'react-native-table-component';
 import {
     getTheme,
 } from 'react-native-material-kit';
 import axios from 'axios';
+import styled from 'styled-components/native';
 
 const theme = getTheme();
 
@@ -19,11 +34,12 @@ class TrackFundsScreen extends Component {
     }
 
     async componentDidMount() {
-        const storedMFIds = ['14058353.00206600', '14058358.00206600', '14057817.00206600'];
         this.setState({ isLoading: true });
+        await AsyncStorage.setItem('mf_ids', JSON.stringify(['14058353.00206600', '14058358.00206600', '14057817.00206600']));
+        const storedMFIds = JSON.parse(await AsyncStorage.getItem('mf_ids'));
 
         for (let i = 0; i < storedMFIds.length; ++i) {
-            
+
             const fundId = storedMFIds[i];
             const url = "https://mf.zerodha.com/api/fund-info?graph_type=normal&scheme_id=" + fundId + "&session_token=";
             const { data } = await axios.get(url);
@@ -38,7 +54,6 @@ class TrackFundsScreen extends Component {
             tableData.push([mutualFundName, NAV, netPercentageChange]);
             this.setState({ tableData: tableData });
         }
-        console.log(this.state.tableData);
 
         this.setState({ isLoading: false });
     }
@@ -46,11 +61,11 @@ class TrackFundsScreen extends Component {
     render() {
         if (this.state.isLoading) {
             return (
-                <View style={styles.container}>
+                <FlexContainer>
                     <ActivityIndicator
-                        style={[styles.centering, { height: 80 }]}
+                        style={[styles.centering, { height: 200 }]}
                         size="large" />
-                </View>
+                </FlexContainer>
             );
         }
 
@@ -95,5 +110,12 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff'
     }
 });
+
+const FlexContainer = styled.View`
+    flex: 1;
+    justifyContent: center;
+    alignItems: center;
+    alignSelf: stretch;
+`;
 
 export default TrackFundsScreen;
