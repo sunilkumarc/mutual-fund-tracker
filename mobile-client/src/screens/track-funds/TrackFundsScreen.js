@@ -20,7 +20,8 @@ import {
 } from 'react-native-material-kit';
 import axios from 'axios';
 import styled from 'styled-components/native';
-import { Toolbar, Card, COLOR, ThemeProvider } from 'react-native-material-ui';
+import { Toolbar, COLOR, ThemeProvider, Card, Button } from 'react-native-material-ui';
+// import { Card, Button, Image } from 'react-native-material-design';
 
 const uiTheme = {
     palette: {
@@ -70,6 +71,21 @@ class TrackFundsScreen extends Component {
         this.setState({ isLoading: false });
     }
 
+    getCards() {
+        return (
+            <View>
+                <Card
+                    style={{ container: styles.card }}>
+                    <Text>Mutual Fund 1</Text>
+                </Card>
+                <Card
+                    style={{ container: styles.card }}>
+                    <Text>Mutual Fund 2</Text>
+                </Card>
+            </View>
+        );
+    }
+
     render() {
         // if (this.state.isLoading) {
         //     return (
@@ -88,23 +104,30 @@ class TrackFundsScreen extends Component {
                     centerElement="Your Mutual Funds"
                     onRightElementPress={() => this.props.navigation.navigate('Manage')}
                 />
-                <View style={theme.cardStyle}>
+                {this.getCards()}
+                {/* <View style={theme.cardStyle}>
                     <Table style={styles.fundsTable} borderStyle={{ borderWidth: 0, borderColor: '#454545' }}>
                         <Row data={this.state.tableHead} flexArr={[3, 1, 1]} style={styles.head} textStyle={styles.headText} />
                         <TableWraper style={{ flexDirection: 'row' }}>
                             <Rows data={this.state.tableData} flexArr={[3, 1, 1]} style={styles.row} textStyle={styles.dataText} />
                         </TableWraper>
                     </Table>
-                </View>
+                </View> */}
             </View>
         );
     }
 }
 
 const styles = StyleSheet.create({
+    card: {
+        paddingLeft: 20,
+        paddingRight: 20,
+        paddingTop: 10,
+        paddingBottom: 10
+    },
     container: {
         flex: 1,
-        backgroundColor: '#D3D3D3'
+        backgroundColor: '#EEEEEE'
     },
     fundsTable: {
         marginTop: 5

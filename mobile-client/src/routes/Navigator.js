@@ -42,6 +42,7 @@ const MyTabNavigator = TabNavigator({
             upperCaseLabel: false,
             activeTintColor: '#7562DB',
             inactiveTintColor: '#7562DB',
+            pressColor: '#7562DB',
             indicatorStyle: { backgroundColor: '#6458A8' },
             style: {
                 backgroundColor: '#fff'
