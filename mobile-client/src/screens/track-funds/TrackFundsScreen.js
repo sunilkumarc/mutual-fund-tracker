@@ -1,25 +1,37 @@
 import React, { Component } from 'react';
-import { 
-    View, 
-    Text, 
-    StyleSheet, 
-    ActivityIndicator, 
-    AsyncStorage 
+import {
+    View,
+    Text,
+    StyleSheet,
+    ActivityIndicator,
+    AsyncStorage
 } from 'react-native';
-import { 
-    Table, 
-    TableWraper, 
-    Row, 
-    Rows, 
-    Col, 
-    Cols, 
-    Cell 
+import {
+    Table,
+    TableWraper,
+    Row,
+    Rows,
+    Col,
+    Cols,
+    Cell
 } from 'react-native-table-component';
 import {
     getTheme,
 } from 'react-native-material-kit';
 import axios from 'axios';
 import styled from 'styled-components/native';
+import { Toolbar, Card, COLOR, ThemeProvider } from 'react-native-material-ui';
+
+const uiTheme = {
+    palette: {
+        primaryColor: COLOR.green500,
+    },
+    toolbar: {
+        container: {
+            height: 50,
+        },
+    },
+};
 
 const theme = getTheme();
 
@@ -59,18 +71,23 @@ class TrackFundsScreen extends Component {
     }
 
     render() {
-        if (this.state.isLoading) {
-            return (
-                <FlexContainer>
-                    <ActivityIndicator
-                        style={[styles.centering, { height: 200 }]}
-                        size="large" />
-                </FlexContainer>
-            );
-        }
+        // if (this.state.isLoading) {
+        //     return (
+        //         <FlexContainer>
+        //             <ActivityIndicator
+        //                 style={[styles.centering, { height: 200 }]}
+        //                 size="large" />
+        //         </FlexContainer>
+        //     );
+        // }
 
         return (
             <View style={styles.container}>
+                <Toolbar
+                    rightElement="add"
+                    centerElement="Your Mutual Funds"
+                    onRightElementPress={() => this.props.navigation.navigate('Manage')}
+                />
                 <View style={theme.cardStyle}>
                     <Table style={styles.fundsTable} borderStyle={{ borderWidth: 0, borderColor: '#454545' }}>
                         <Row data={this.state.tableHead} flexArr={[3, 1, 1]} style={styles.head} textStyle={styles.headText} />
@@ -87,7 +104,7 @@ class TrackFundsScreen extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#D3D3D3',
+        backgroundColor: '#D3D3D3'
     },
     fundsTable: {
         marginTop: 5
