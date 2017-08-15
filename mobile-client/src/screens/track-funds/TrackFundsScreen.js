@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
     View,
+    ScrollView,
     Text,
     StyleSheet,
     ActivityIndicator,
@@ -48,7 +49,7 @@ class TrackFundsScreen extends Component {
 
     async componentDidMount() {
         this.setState({ isLoading: true });
-        await AsyncStorage.setItem('mf_ids', JSON.stringify(['14058353.00206600', '14058358.00206600', '14057817.00206600']));
+        await AsyncStorage.setItem('mf_ids', JSON.stringify(['14058353.00206600', '14058358.00206600', '14057817.00206600', '14058432.00206600']));
         const storedMFIds = JSON.parse(await AsyncStorage.getItem('mf_ids'));
 
         for (let i = 0; i < storedMFIds.length; ++i) {
@@ -71,21 +72,6 @@ class TrackFundsScreen extends Component {
         this.setState({ isLoading: false });
     }
 
-    getCards() {
-        return (
-            <View>
-                <Card
-                    style={{ container: styles.card }}>
-                    <Text>Mutual Fund 1</Text>
-                </Card>
-                <Card
-                    style={{ container: styles.card }}>
-                    <Text>Mutual Fund 2</Text>
-                </Card>
-            </View>
-        );
-    }
-
     render() {
         // if (this.state.isLoading) {
         //     return (
@@ -95,35 +81,70 @@ class TrackFundsScreen extends Component {
         //                 size="large" />
         //         </FlexContainer>
         //     );
-        // }
-
+        // }==
+        let cards = this.state.tableData.map((fund) => {
+            return <Card style={{ container: styles.card }} key={fund[0]}>
+                <View style={styles.cardMain}>
+                    <View style={styles.fundName}>
+                        <Text>{fund[0]}</Text>
+                    </View>
+                    <View style={styles.fundDesc}>
+                        <View style={styles.fundNAV}>
+                            <Text>{fund[1]}</Text>
+                        </View>
+                        <View style={styles.fundPercent}>
+                            <Text>{fund[2]}</Text>
+                        </View>
+                    </View>
+                </View>
+            </Card>;
+        });
         return (
-            <View style={styles.container}>
+            <ScrollView 
+                style={styles.container}>
                 <Toolbar
                     rightElement="add"
                     centerElement="Your Mutual Funds"
                     onRightElementPress={() => this.props.navigation.navigate('Manage')}
                 />
-                {this.getCards()}
-                {/* <View style={theme.cardStyle}>
-                    <Table style={styles.fundsTable} borderStyle={{ borderWidth: 0, borderColor: '#454545' }}>
-                        <Row data={this.state.tableHead} flexArr={[3, 1, 1]} style={styles.head} textStyle={styles.headText} />
-                        <TableWraper style={{ flexDirection: 'row' }}>
-                            <Rows data={this.state.tableData} flexArr={[3, 1, 1]} style={styles.row} textStyle={styles.dataText} />
-                        </TableWraper>
-                    </Table>
-                </View> */}
-            </View>
+                <View>
+                    {cards}
+                </View>
+            </ScrollView>
         );
     }
 }
 
 const styles = StyleSheet.create({
+    cardMain: {
+        flex: 1,
+    },
+    fundNAV: {
+        flex: 0.5,
+        justifyContent: 'center',
+    },
+    fundPercent: {
+        flex: 0.5,
+        justifyContent: 'center',
+    },
+    fundName: {
+        flex: 0.6,
+        justifyContent: 'center',
+        borderColor: '#000',
+        backgroundColor: '#8679CF'
+    },
+    fundDesc: {
+        flex: 0.4,
+        flexDirection: 'row',
+        borderColor: '#000',
+        backgroundColor: '#7562DB'
+    },
     card: {
-        paddingLeft: 20,
-        paddingRight: 20,
+        height: 120,
+        paddingLeft: 10,
+        paddingRight: 10,
         paddingTop: 10,
-        paddingBottom: 10
+        paddingBottom: 10,
     },
     container: {
         flex: 1,

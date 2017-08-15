@@ -6,15 +6,20 @@ class FeedbackScreen extends Component {
 
     render() {
         return (
-            <Toolbar
-                centerElement="Feedback"
-            />
+            <View style={styles.container}>
+                <Toolbar
+                    centerElement="Feedback"
+                />
+            </View>
         );
     }
 }
 
 const styles = StyleSheet.create({
-    
+    container: {
+        flex: 1,
+        backgroundColor: '#EEEEEE'
+    }
 });
 
 export default FeedbackScreen;
