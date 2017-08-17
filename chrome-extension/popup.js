@@ -1,6 +1,7 @@
 setTimeout(() => {
-    if (Cookies.get('rating_popup_showed') === undefined) {
+    var mobile_client_popup = window.localStorage.getItem('mobile_client_popup_showed');
+    if (mobile_client_popup == null) {
         $('#popup').show();
-        Cookies.set('rating_popup_showed', 1);
+        window.localStorage.setItem('mobile_client_popup_showed', 1);
     }
 }, 1000);
