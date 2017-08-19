@@ -4,10 +4,15 @@ import {
     Toolbar,
     ListItem
 } from 'react-native-material-ui';
+import TempList from '../../../constants/temp';
 
 class ManageFundsScreen extends Component {
 
     render() {
+        let funds = TempList.map((fund) => {
+            return <ListItem divider centerElement={fund.name} key={fund.code}/>
+        });
+
         return (
             <View style={styles.container}>
                 <Toolbar
@@ -21,9 +26,7 @@ class ManageFundsScreen extends Component {
                 />
                 <ScrollView
                     showsVerticalScrollIndicator={false}>
-                    <ListItem divider centerElement="Test" />
-                    <ListItem divider centerElement="Test" />
-                    <ListItem divider centerElement="Test" />
+                    {funds}
                 </ScrollView>
             </View>
         );
