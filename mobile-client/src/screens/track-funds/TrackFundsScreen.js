@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import {
     View,
     ScrollView,
+    FlatList,
     Text,
     StyleSheet,
     ActivityIndicator,
-    AsyncStorage
+    AsyncStorage,
+    Platform
 } from 'react-native';
 import {
     Table,
@@ -21,7 +23,7 @@ import {
 } from 'react-native-material-kit';
 import axios from 'axios';
 import styled from 'styled-components/native';
-import { Toolbar, COLOR, ThemeProvider, Card, Button } from 'react-native-material-ui';
+import { Toolbar, COLOR, ThemeProvider, Card, Button, ActionButton } from 'react-native-material-ui';
 // import { Card, Button, Image } from 'react-native-material-design';
 
 const uiTheme = {
@@ -49,7 +51,7 @@ class TrackFundsScreen extends Component {
 
     async componentDidMount() {
         this.setState({ isLoading: true });
-        await AsyncStorage.setItem('mf_ids', JSON.stringify(['14058353.00206600', '14058358.00206600', '14057817.00206600', '14058432.00206600']));
+        await AsyncStorage.setItem('mf_ids', JSON.stringify(['14058215.00206600', '14058353.00206600', '14058358.00206600', '14057817.00206600', '14058432.00206600']));
         const storedMFIds = JSON.parse(await AsyncStorage.getItem('mf_ids'));
 
         for (let i = 0; i < storedMFIds.length; ++i) {
@@ -73,15 +75,20 @@ class TrackFundsScreen extends Component {
     }
 
     render() {
-        // if (this.state.isLoading) {
-        //     return (
-        //         <FlexContainer>
-        //             <ActivityIndicator
-        //                 style={[styles.centering, { height: 200 }]}
-        //                 size="large" />
-        //         </FlexContainer>
-        //     );
-        // }==
+        if (this.state.isLoading) {
+            return (
+                <View style={styles.container}>
+                    <Toolbar
+                        rightElement="add"
+                        centerElement="Your Mutual Funds"
+                        onRightElementPress={() => this.props.navigation.navigate('Manage')}
+                    />
+                    <ActivityIndicator
+                        style={[styles.centering, { height: 500 }]}
+                        size="large" />
+                </View>
+            );
+        }
         let cards = this.state.tableData.map((fund) => {
             return <Card style={{ container: styles.card }} key={fund[0]}>
                 <View style={styles.cardMain}>
@@ -100,17 +107,19 @@ class TrackFundsScreen extends Component {
             </Card>;
         });
         return (
-            <ScrollView 
-                style={styles.container}>
+            <View style={styles.container}>
                 <Toolbar
                     rightElement="add"
                     centerElement="Your Mutual Funds"
                     onRightElementPress={() => this.props.navigation.navigate('Manage')}
                 />
-                <View>
-                    {cards}
-                </View>
-            </ScrollView>
+                <ScrollView 
+                    showsVerticalScrollIndicator={false}>
+                    <View>
+                        {cards}
+                    </View>
+                </ScrollView>
+            </View>
         );
     }
 }
