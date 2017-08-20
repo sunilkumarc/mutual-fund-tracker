@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, FlatList } from 'react-native';
 import {
     Toolbar,
     ListItem
 } from 'react-native-material-ui';
 import TempList from '../../../constants/temp';
+import FundsList from '../../../constants/mf_data';
 
 class ManageFundsScreen extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {CurrentFundsList: FundsList};
+    }
 
     render() {
-        let funds = TempList.map((fund) => {
-            return <ListItem divider centerElement={fund.name} key={fund.code}/>
-        });
-
         return (
             <View style={styles.container}>
                 <Toolbar
@@ -24,10 +25,10 @@ class ManageFundsScreen extends Component {
                     }}
                     onLeftElementPress={() => this.props.navigation.goBack()}
                 />
-                <ScrollView
-                    showsVerticalScrollIndicator={false}>
-                    {funds}
-                </ScrollView>
+                <FlatList
+                    data={this.state.CurrentFundsList}
+                    renderItem={({ item }) => <Text>{item.name}</Text>}
+                />
             </View>
         );
     }
