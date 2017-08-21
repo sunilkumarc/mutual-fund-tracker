@@ -140,20 +140,20 @@ const styles = StyleSheet.create({
         flex: 0.6,
         justifyContent: 'center',
         borderColor: '#000',
-        backgroundColor: '#8679CF'
+        // backgroundColor: '#8679CF'
     },
     fundDesc: {
         flex: 0.4,
         flexDirection: 'row',
         borderColor: '#000',
-        backgroundColor: '#7562DB'
+        // backgroundColor: '#7562DB'
     },
     card: {
         height: 120,
-        paddingLeft: 10,
-        paddingRight: 10,
-        paddingTop: 10,
-        paddingBottom: 10,
+        paddingLeft: 15,
+        paddingRight: 15,
+        paddingTop: 20,
+        paddingBottom: 20,
     },
     container: {
         flex: 1,
