@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, ScrollView, FlatList, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, FlatList, ActivityIndicator, TouchableOpacity } from 'react-native';
 import {
     Toolbar,
     ListItem
 } from 'react-native-material-ui';
 import FundsList from '../../../constants/mf_data';
+import { Card } from 'react-native-material-ui';
 
 class ManageFundsScreen extends Component {
     constructor(props) {
@@ -26,6 +27,21 @@ class ManageFundsScreen extends Component {
         }
     }
 
+    onPressItem(item) {
+        
+    }
+
+    fundItem = ({ item }) => {
+        // return <Text style={styles.fundItem}>{item.name}</Text>
+        return (<TouchableOpacity
+                    onPress={() => this.onPressItem(item)}> 
+            <Card style={{ container: styles.card }}>
+                <Text>{item.name}</Text>
+                <Text>({item.desc})</Text>
+            </Card>
+        </TouchableOpacity>);
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -42,8 +58,7 @@ class ManageFundsScreen extends Component {
                 <FlatList
                     data={this.state.CurrentFundsList}
                     showsVerticalScrollIndicator={false}
-                    renderItem={({ item }) => <Text style={styles.fundItem}>{item.name}</Text>}
-                    ItemSeparatorComponent={() => <View style={styles.separator} />}
+                    renderItem={this.fundItem}
                 />
             </View>
         );
@@ -55,16 +70,16 @@ const styles = StyleSheet.create({
     container: {
         flex: 1
     },
-    separator: {
-        height: 1,
-        backgroundColor: '#6458A8'
-    },
     fundItem: {
         paddingBottom: 25,
         paddingTop: 25,
         paddingLeft: 20,
         paddingRight: 20,
         borderColor: '#8679CF',
-        
+    },
+    card: {
+        height: 70,
+        padding: 10,
+        marginTop: 2
     }
 })

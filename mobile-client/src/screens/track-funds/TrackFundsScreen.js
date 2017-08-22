@@ -127,14 +127,20 @@ class TrackFundsScreen extends Component {
 const styles = StyleSheet.create({
     cardMain: {
         flex: 1,
+        alignItems: 'center',
+        alignSelf: 'stretch'
     },
     fundNAV: {
         flex: 0.5,
         justifyContent: 'center',
+        alignItems: 'center',
+        alignSelf: 'stretch'
     },
     fundPercent: {
         flex: 0.5,
         justifyContent: 'center',
+        alignItems: 'center',
+        alignSelf: 'stretch'
     },
     fundName: {
         flex: 0.6,
@@ -146,14 +152,12 @@ const styles = StyleSheet.create({
         flex: 0.4,
         flexDirection: 'row',
         borderColor: '#000',
-        // backgroundColor: '#7562DB'
+        // backgroundColor: '#7562DB',
     },
     card: {
-        height: 120,
-        paddingLeft: 15,
-        paddingRight: 15,
-        paddingTop: 20,
-        paddingBottom: 20,
+        height: 100,
+        padding: 5,
+        marginTop: 5
     },
     container: {
         flex: 1,
