@@ -1,8 +1,19 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, ScrollView, FlatList, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { 
+    View, 
+    Text, 
+    StyleSheet, 
+    ScrollView, 
+    FlatList, 
+    ActivityIndicator, 
+    TouchableOpacity,
+    AsyncStorage,
+    Alert,
+    ToastAndroid
+} from 'react-native';
 import {
     Toolbar,
-    ListItem
+    ListItem,
 } from 'react-native-material-ui';
 import FundsList from '../../../constants/mf_data';
 import { Card } from 'react-native-material-ui';
@@ -27,8 +38,24 @@ class ManageFundsScreen extends Component {
         }
     }
 
-    onPressItem(item) {
-        console.log(item);
+    async onPressItem(item) {
+        await Alert.alert(
+            'Add this fund?',
+            'This fund will be added in your profile. This can be undone later.',
+            [
+                {text: 'OK', onPress: () => this.addFund(item)},
+                {text: 'Cancel', onPress: () => {}},                
+            ]
+        );
+        
+    }
+
+    async addFund(item) {
+        const storedMFIds = JSON.parse(await AsyncStorage.getItem('mf_ids'));
+        await storedMFIds.push(item.key);
+        await AsyncStorage.removeItem('mf_ids');
+        await AsyncStorage.setItem('mf_ids', JSON.stringify(storedMFIds));
+        ToastAndroid.show('Fund is added. Refresh the homescreen to see the changes!', ToastAndroid.LONG);
     }
 
     fundItem = ({ item }) => {

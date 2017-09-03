@@ -51,8 +51,9 @@ class TrackFundsScreen extends Component {
     }
 
     async componentDidMount() {
+        console.log('Component Did Mount!');
         this.setState({ isLoading: true });
-        await AsyncStorage.setItem('mf_ids', JSON.stringify(['14058215.00206600', '14058353.00206600', '14058358.00206600', '14057817.00206600', '14058432.00206600']));
+        // await AsyncStorage.setItem('mf_ids', JSON.stringify(['14058215.00206600', '14058353.00206600', '14058358.00206600', '14057817.00206600', '14058432.00206600']));
         const storedMFIds = JSON.parse(await AsyncStorage.getItem('mf_ids'));
 
         for (let i = 0; i < storedMFIds.length; ++i) {
@@ -77,6 +78,7 @@ class TrackFundsScreen extends Component {
     }
 
     render() {
+        console.log('Render');
         if (this.state.isLoading) {
             return (
                 <View style={styles.container}>
@@ -96,7 +98,6 @@ class TrackFundsScreen extends Component {
             let fundPecentTag = fund[2] > 0 
                                         ? <Text style={{color: 'green', fontWeight: 'bold'}}><FontAwesome name='arrow-circle-up' size={15} color='green'/> {fund[2]}%</Text> 
                                         : <Text style={{color: 'red', fontWeight: 'bold'}}><FontAwesome name='arrow-circle-down' size={15} color='red'/> {fund[2]}%</Text>;
-            console.log(imagePath);
             return <Card style={{ container: styles.card }} key={fund[0]}>
                 <View style={styles.cardMain}>
                     <View style={styles.cardImage}>
@@ -187,7 +188,8 @@ const styles = StyleSheet.create({
     card: {
         height: 100,
         padding: 5,
-        marginTop: 5
+        marginTop: 5,
+        alignSelf: 'stretch',
     },
     container: {
         flex: 1,
