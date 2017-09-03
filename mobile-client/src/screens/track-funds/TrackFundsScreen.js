@@ -7,7 +7,8 @@ import {
     StyleSheet,
     ActivityIndicator,
     AsyncStorage,
-    Platform
+    Platform,
+    Image
 } from 'react-native';
 import {
     Table,
@@ -24,7 +25,7 @@ import {
 import axios from 'axios';
 import styled from 'styled-components/native';
 import { Toolbar, COLOR, ThemeProvider, Card, Button, ActionButton } from 'react-native-material-ui';
-// import { Card, Button, Image } from 'react-native-material-design';
+import { FontAwesome } from '@expo/vector-icons';
 
 const uiTheme = {
     palette: {
@@ -62,12 +63,13 @@ class TrackFundsScreen extends Component {
             const length = data['data']['graph'].length;
             const mutualFundName = data['data']['bse_master'][0]['scheme_name'];
             const NAV = data['data']['graph'][length - 1]['y'];
+            const amcCode = data['data']['bse_master'][0]['amc_code'];
 
             const todayValue = data['data']['graph'][length - 1]['y'];
             const yesterdayValue = data['data']['graph'][length - 2]['y'];
             const netPercentageChange = ((todayValue - yesterdayValue) / todayValue * 100).toFixed(2);
             let tableData = this.state.tableData;
-            tableData.push([mutualFundName, NAV, netPercentageChange]);
+            tableData.push([mutualFundName, NAV, netPercentageChange, amcCode]);
             this.setState({ tableData: tableData });
         }
 
@@ -90,17 +92,30 @@ class TrackFundsScreen extends Component {
             );
         }
         let cards = this.state.tableData.map((fund) => {
+            let imagePath = 'https://coin.zerodha.com/images/fund_houses/' + fund[3] + '.jpg';
+            let fundPecentTag = fund[2] > 0 
+                                        ? <Text style={{color: 'green', fontWeight: 'bold'}}><FontAwesome name='arrow-circle-up' size={15} color='green'/> {fund[2]}%</Text> 
+                                        : <Text style={{color: 'red', fontWeight: 'bold'}}><FontAwesome name='arrow-circle-down' size={15} color='red'/> {fund[2]}%</Text>;
+            console.log(imagePath);
             return <Card style={{ container: styles.card }} key={fund[0]}>
                 <View style={styles.cardMain}>
-                    <View style={styles.fundName}>
-                        <Text>{fund[0]}</Text>
+                    <View style={styles.cardImage}>
+                        <Image 
+                            style={{height: 60, margin: 2}}
+                            resizeMode='stretch'
+                            source={{uri: imagePath}}/>
                     </View>
-                    <View style={styles.fundDesc}>
-                        <View style={styles.fundNAV}>
-                            <Text>{fund[1]}</Text>
+                    <View style={styles.cardContent}>
+                        <View style={styles.fundName}>
+                            <Text>{fund[0]}</Text>
                         </View>
-                        <View style={styles.fundPercent}>
-                            <Text>{fund[2]}</Text>
+                        <View style={styles.fundDesc}>
+                            <View style={styles.fundNAV}>
+                                <Text><FontAwesome name='rupee' size={13} /> {fund[1]}</Text>
+                            </View>
+                            <View style={styles.fundPercent}>
+                                {fundPecentTag}
+                            </View>
                         </View>
                     </View>
                 </View>
@@ -128,13 +143,28 @@ const styles = StyleSheet.create({
     cardMain: {
         flex: 1,
         alignItems: 'center',
-        alignSelf: 'stretch'
+        alignSelf: 'stretch',
+        flexDirection: 'row',
+    },
+    cardImage: {
+        flex: 0.4,
+        height: 94, 
+        justifyContent: 'center',
+        borderRightColor: '#D3D3D3', 
+        borderRightWidth: 1,
+        paddingRight: 4
+    },
+    cardContent: {
+        flex: 0.6, 
+        marginLeft: 5
     },
     fundNAV: {
         flex: 0.5,
         justifyContent: 'center',
         alignItems: 'center',
-        alignSelf: 'stretch'
+        alignSelf: 'stretch',
+        borderRightColor: '#D3D3D3', 
+        borderRightWidth: 1,
     },
     fundPercent: {
         flex: 0.5,
@@ -144,15 +174,15 @@ const styles = StyleSheet.create({
     },
     fundName: {
         flex: 0.6,
+        borderBottomColor: '#D3D3D3', 
+        borderBottomWidth: 1,
         justifyContent: 'center',
-        borderColor: '#000',
-        // backgroundColor: '#8679CF'
+        borderColor: '#000'
     },
     fundDesc: {
         flex: 0.4,
         flexDirection: 'row',
-        borderColor: '#000',
-        // backgroundColor: '#7562DB',
+        borderColor: '#000'
     },
     card: {
         height: 100,

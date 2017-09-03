@@ -28,7 +28,7 @@ class ManageFundsScreen extends Component {
     }
 
     onPressItem(item) {
-        
+        console.log(item);
     }
 
     fundItem = ({ item }) => {

@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import Root from './src/Root';
 import { Toolbar, Card, COLOR, ThemeProvider } from 'react-native-material-ui';
 import Exponent from 'expo';
+import Expo from "expo";
 
 const uiTheme = {
     palette: {
@@ -17,6 +18,13 @@ const uiTheme = {
 };
 
 export default class App extends Component {
+	async componentDidMount() {
+		await Expo.Font.loadAsync({
+			Roboto: require("native-base/Fonts/Roboto.ttf"),
+			Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
+			Ionicons: require("@expo/vector-icons/fonts/Ionicons.ttf")
+		  });
+	}
 	render() {
 		return (
 			<ThemeProvider uiTheme={uiTheme}>
