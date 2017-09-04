@@ -8,7 +8,8 @@ import {
     ActivityIndicator,
     AsyncStorage,
     Platform,
-    Image
+    Image,
+    DeviceEventEmitter
 } from 'react-native';
 import {
     Table,
@@ -50,8 +51,7 @@ class TrackFundsScreen extends Component {
         };
     }
 
-    async componentDidMount() {
-        console.log('Component Did Mount!');
+    async loadData() {
         this.setState({ isLoading: true });
         // await AsyncStorage.setItem('mf_ids', JSON.stringify(['14058215.00206600', '14058353.00206600', '14058358.00206600', '14057817.00206600', '14058432.00206600']));
         const storedMFIds = JSON.parse(await AsyncStorage.getItem('mf_ids'));
@@ -60,6 +60,7 @@ class TrackFundsScreen extends Component {
 
             const fundId = storedMFIds[i];
             const url = "https://mf.zerodha.com/api/fund-info?graph_type=normal&scheme_id=" + fundId + "&session_token=";
+            console.log(url);
             const { data } = await axios.get(url);
             const length = data['data']['graph'].length;
             const mutualFundName = data['data']['bse_master'][0]['scheme_name'];
@@ -77,8 +78,15 @@ class TrackFundsScreen extends Component {
         this.setState({ isLoading: false });
     }
 
+    async componentDidMount() {
+        DeviceEventEmitter.addListener('myEvent', (e) => {
+            this.loadData();
+        });
+
+        this.loadData();
+    }
+
     render() {
-        console.log('Render');
         if (this.state.isLoading) {
             return (
                 <View style={styles.container}>
