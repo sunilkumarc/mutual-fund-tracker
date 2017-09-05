@@ -57,7 +57,6 @@ class TrackFundsScreen extends Component {
 
         if (storedMFIds != null) {
             for (let i = 0; i < storedMFIds.length; ++i) {
-
                 const fundId = storedMFIds[i];
                 const url = "https://mf.zerodha.com/api/fund-info?graph_type=normal&scheme_id=" + fundId + "&session_token=";
                 const { data } = await axios.get(url);
@@ -87,7 +86,6 @@ class TrackFundsScreen extends Component {
     }
 
     render() {
-        console.log(this.state.tableData);
         if (this.state.isLoading) {
             return (
                 <View style={styles.container}>
