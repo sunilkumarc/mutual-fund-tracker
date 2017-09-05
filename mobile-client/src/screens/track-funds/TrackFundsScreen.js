@@ -8,7 +8,8 @@ import {
     ActivityIndicator,
     AsyncStorage,
     Platform,
-    Image
+    Image,
+    DeviceEventEmitter
 } from 'react-native';
 import {
     Table,
@@ -50,35 +51,43 @@ class TrackFundsScreen extends Component {
         };
     }
 
-    async componentDidMount() {
-        console.log('Component Did Mount!');
-        this.setState({ isLoading: true });
-        // await AsyncStorage.setItem('mf_ids', JSON.stringify(['14058215.00206600', '14058353.00206600', '14058358.00206600', '14057817.00206600', '14058432.00206600']));
+    async loadData() {
+        this.setState({ isLoading: true, tableData: [] });
         const storedMFIds = JSON.parse(await AsyncStorage.getItem('mf_ids'));
 
-        for (let i = 0; i < storedMFIds.length; ++i) {
+        if (storedMFIds != null) {
+            for (let i = 0; i < storedMFIds.length; ++i) {
 
-            const fundId = storedMFIds[i];
-            const url = "https://mf.zerodha.com/api/fund-info?graph_type=normal&scheme_id=" + fundId + "&session_token=";
-            const { data } = await axios.get(url);
-            const length = data['data']['graph'].length;
-            const mutualFundName = data['data']['bse_master'][0]['scheme_name'];
-            const NAV = data['data']['graph'][length - 1]['y'];
-            const amcCode = data['data']['bse_master'][0]['amc_code'];
+                const fundId = storedMFIds[i];
+                const url = "https://mf.zerodha.com/api/fund-info?graph_type=normal&scheme_id=" + fundId + "&session_token=";
+                const { data } = await axios.get(url);
+                const length = data['data']['graph'].length;
+                const mutualFundName = data['data']['bse_master'][0]['scheme_name'];
+                const NAV = data['data']['graph'][length - 1]['y'];
+                const amcCode = data['data']['bse_master'][0]['amc_code'];
 
-            const todayValue = data['data']['graph'][length - 1]['y'];
-            const yesterdayValue = data['data']['graph'][length - 2]['y'];
-            const netPercentageChange = ((todayValue - yesterdayValue) / todayValue * 100).toFixed(2);
-            let tableData = this.state.tableData;
-            tableData.push([mutualFundName, NAV, netPercentageChange, amcCode]);
-            this.setState({ tableData: tableData });
+                const todayValue = data['data']['graph'][length - 1]['y'];
+                const yesterdayValue = data['data']['graph'][length - 2]['y'];
+                const netPercentageChange = ((todayValue - yesterdayValue) / todayValue * 100).toFixed(2);
+                let tableData = this.state.tableData;
+                tableData.push([mutualFundName, NAV, netPercentageChange, amcCode]);
+                this.setState({ tableData: tableData });
+            }
         }
 
         this.setState({ isLoading: false });
     }
 
+    async componentDidMount() {
+        DeviceEventEmitter.addListener('FundAddedEvent', (e) => {
+            this.loadData();
+        });
+
+        this.loadData();
+    }
+
     render() {
-        console.log('Render');
+        console.log(this.state.tableData);
         if (this.state.isLoading) {
             return (
                 <View style={styles.container}>

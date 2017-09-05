@@ -9,7 +9,8 @@ import {
     TouchableOpacity,
     AsyncStorage,
     Alert,
-    ToastAndroid
+    ToastAndroid,
+    DeviceEventEmitter
 } from 'react-native';
 import {
     Toolbar,
@@ -51,11 +52,13 @@ class ManageFundsScreen extends Component {
     }
 
     async addFund(item) {
-        const storedMFIds = JSON.parse(await AsyncStorage.getItem('mf_ids'));
+        let storedMFIds = JSON.parse(await AsyncStorage.getItem('mf_ids'));
+        if (storedMFIds == null)
+            storedMFIds = [];
         await storedMFIds.push(item.key);
         await AsyncStorage.removeItem('mf_ids');
         await AsyncStorage.setItem('mf_ids', JSON.stringify(storedMFIds));
-        ToastAndroid.show('Fund is added. Refresh the homescreen to see the changes!', ToastAndroid.LONG);
+        ToastAndroid.show('Fund has been added added.', ToastAndroid.LONG);
     }
 
     fundItem = ({ item }) => {
@@ -80,7 +83,11 @@ class ManageFundsScreen extends Component {
                         placeholder: 'Search Funds',
                         onChangeText: value => this.filterFunds(value),
                     }}
-                    onLeftElementPress={() => this.props.navigation.goBack()}
+                    onLeftElementPress={() => {
+                            DeviceEventEmitter.emit('FundAddedEvent')
+                            this.props.navigation.goBack()
+                        }
+                    }
                 />
                 <FlatList
                     data={this.state.CurrentFundsList}
