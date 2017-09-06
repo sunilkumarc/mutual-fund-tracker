@@ -18,6 +18,7 @@ import {
 } from 'react-native-material-ui';
 import FundsList from '../../../constants/mf_data';
 import { Card } from 'react-native-material-ui';
+import { FundsAPI } from '../../../constants/api';
 
 class ManageFundsScreen extends Component {
     constructor(props) {
@@ -52,12 +53,14 @@ class ManageFundsScreen extends Component {
     }
 
     async addFund(item) {
-        let storedMFIds = JSON.parse(await AsyncStorage.getItem('mf_ids'));
-        if (storedMFIds == null)
-            storedMFIds = [];
-        await storedMFIds.push(item.key);
-        await AsyncStorage.removeItem('mf_ids');
-        await AsyncStorage.setItem('mf_ids', JSON.stringify(storedMFIds));
+        let storedFundsData = JSON.parse(await AsyncStorage.getItem('MF_DATA'));
+        if (storedFundsData == null)
+            storedFundsData = [];
+
+        let fundData = await FundsAPI.getFundData(item.key);
+        await storedFundsData.push(fundData);
+        await AsyncStorage.removeItem('MF_DATA');
+        await AsyncStorage.setItem('MF_DATA', JSON.stringify(storedFundsData));
         ToastAndroid.show('Fund has been added added.', ToastAndroid.LONG);
     }
 

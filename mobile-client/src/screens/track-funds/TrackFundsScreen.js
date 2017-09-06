@@ -27,6 +27,7 @@ import axios from 'axios';
 import styled from 'styled-components/native';
 import { Toolbar, COLOR, ThemeProvider, Card, Button, ActionButton } from 'react-native-material-ui';
 import { FontAwesome } from '@expo/vector-icons';
+import { FundsAPI } from '../../../constants/api';
 
 const uiTheme = {
     palette: {
@@ -53,25 +54,10 @@ class TrackFundsScreen extends Component {
 
     async loadData() {
         this.setState({ isLoading: true, tableData: [] });
-        const storedMFIds = JSON.parse(await AsyncStorage.getItem('mf_ids'));
+        const storedFundsData = JSON.parse(await AsyncStorage.getItem('MF_DATA'));
 
-        if (storedMFIds != null) {
-            for (let i = 0; i < storedMFIds.length; ++i) {
-                const fundId = storedMFIds[i];
-                const url = "https://mf.zerodha.com/api/fund-info?graph_type=normal&scheme_id=" + fundId + "&session_token=";
-                const { data } = await axios.get(url);
-                const length = data['data']['graph'].length;
-                const mutualFundName = data['data']['bse_master'][0]['scheme_name'];
-                const NAV = data['data']['graph'][length - 1]['y'];
-                const amcCode = data['data']['bse_master'][0]['amc_code'];
-
-                const todayValue = data['data']['graph'][length - 1]['y'];
-                const yesterdayValue = data['data']['graph'][length - 2]['y'];
-                const netPercentageChange = ((todayValue - yesterdayValue) / todayValue * 100).toFixed(2);
-                let tableData = this.state.tableData;
-                tableData.push([mutualFundName, NAV, netPercentageChange, amcCode]);
-                this.setState({ tableData: tableData });
-            }
+        if (storedFundsData != null) {
+            this.setState({ tableData: storedFundsData });
         }
 
         this.setState({ isLoading: false });
