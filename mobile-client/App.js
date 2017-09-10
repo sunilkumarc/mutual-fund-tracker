@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
 import Root from './src/Root';
 import { Toolbar, Card, COLOR, ThemeProvider } from 'react-native-material-ui';
 import Exponent from 'expo';
 import Expo from "expo";
+import { fontAssets } from './helpers';
 
 const uiTheme = {
     palette: {
         primaryColor: '#6458A8',
-    },
+	},
+	fontFamily: 'lato',
     toolbar: {
         container: {
 			height: 50,
@@ -18,14 +20,26 @@ const uiTheme = {
 };
 
 export default class App extends Component {
-	async componentDidMount() {
-		await Expo.Font.loadAsync({
-			Roboto: require("native-base/Fonts/Roboto.ttf"),
-			Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
-			Ionicons: require("@expo/vector-icons/fonts/Ionicons.ttf")
-		  });
+	state = {
+		fontLoaded: false,
 	}
+
+	async componentDidMount() {
+		this._loadAssetsAsync();
+	}
+
+	async _loadAssetsAsync() {
+		await Promise.all(fontAssets);
+		this.setState({ fontLoaded: true });
+	}
+
 	render() {
+		if (!this.state.fontLoaded) {
+			return <ActivityIndicator
+				style={[styles.centering, { height: 500 }]}
+				size="large" />
+		}
+
 		return (
 			<ThemeProvider uiTheme={uiTheme}>
 				<Root />

@@ -47,7 +47,6 @@ class TrackFundsScreen extends Component {
         super(props);
         this.state = {
             isLoading: false,
-            tableHead: ['Mutual Fund', 'NAV', '% Change'],
             tableData: []
         };
     }
@@ -101,7 +100,7 @@ class TrackFundsScreen extends Component {
                     </View>
                     <View style={styles.cardContent}>
                         <View style={styles.fundName}>
-                            <Text>{fund[0]}</Text>
+                            <Text style={{ fontFamily: 'roboto', fontSize: 13, lineHeight: 22 }}>{fund[0]}</Text>
                         </View>
                         <View style={styles.fundDesc}>
                             <View style={styles.fundNAV}>
@@ -134,6 +133,9 @@ class TrackFundsScreen extends Component {
 }
 
 const styles = StyleSheet.create({
+    toolbarTitle: {
+        fontFamily: 'roboto'
+    },
     cardMain: {
         flex: 1,
         alignItems: 'center',
@@ -167,21 +169,21 @@ const styles = StyleSheet.create({
         alignSelf: 'stretch'
     },
     fundName: {
-        flex: 0.6,
+        flex: 0.7,
         borderBottomColor: '#D3D3D3', 
         borderBottomWidth: 1,
         justifyContent: 'center',
         borderColor: '#000'
     },
     fundDesc: {
-        flex: 0.4,
+        flex: 0.3,
         flexDirection: 'row',
         borderColor: '#000'
     },
     card: {
-        height: 100,
+        height: 120,
         padding: 5,
-        marginTop: 5,
+        marginTop: 10,
         alignSelf: 'stretch',
     },
     container: {

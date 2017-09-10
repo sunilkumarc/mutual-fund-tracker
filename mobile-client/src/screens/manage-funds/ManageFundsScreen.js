@@ -29,7 +29,6 @@ class ManageFundsScreen extends Component {
     filterFunds(value) {
         if (value != "") {
             var str = new RegExp(value, "i");
-
             var matches = FundsList.filter(function (mf) {
                 var res = mf.name.match(str);
                 return res;
@@ -61,11 +60,11 @@ class ManageFundsScreen extends Component {
         await storedFundsData.push(fundData);
         await AsyncStorage.removeItem('MF_DATA');
         await AsyncStorage.setItem('MF_DATA', JSON.stringify(storedFundsData));
+        // DeviceEventEmitter.emit('FundAddedEvent');
         ToastAndroid.show('Fund has been added added.', ToastAndroid.LONG);
     }
 
     fundItem = ({ item }) => {
-        // return <Text style={styles.fundItem}>{item.name}</Text>
         return (<TouchableOpacity
                     onPress={() => this.onPressItem(item)}> 
             <Card style={{ container: styles.card }}>
@@ -76,7 +75,7 @@ class ManageFundsScreen extends Component {
     }
 
     render() {
-        return (
+        return (  
             <View style={styles.container}>
                 <Toolbar
                     leftElement="arrow-back"
