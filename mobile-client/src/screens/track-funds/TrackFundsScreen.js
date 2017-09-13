@@ -26,7 +26,7 @@ import {
 import axios from 'axios';
 import styled from 'styled-components/native';
 import { Toolbar, COLOR, ThemeProvider, Card, Button, ActionButton } from 'react-native-material-ui';
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import { FundsAPI } from '../../../constants/api';
 
 const uiTheme = {
@@ -75,8 +75,8 @@ class TrackFundsScreen extends Component {
             return (
                 <View style={styles.container}>
                     <Toolbar
-                        rightElement="add"
-                        centerElement="Your Mutual Funds"
+                        rightElement={<Ionicons name='ios-add-circle-outline'/>}
+                        centerElement="Mutual Funds"
                         onRightElementPress={() => this.props.navigation.navigate('Manage')}
                     />
                     <ActivityIndicator
@@ -100,7 +100,7 @@ class TrackFundsScreen extends Component {
                     </View>
                     <View style={styles.cardContent}>
                         <View style={styles.fundName}>
-                            <Text style={{ fontFamily: 'roboto', fontSize: 13, lineHeight: 22 }}>{fund[0]}</Text>
+                            <Text style={{ fontFamily: 'roboto', fontSize: 12, lineHeight: 22 }}>{fund[0]}</Text>
                         </View>
                         <View style={styles.fundDesc}>
                             <View style={styles.fundNAV}>
@@ -117,8 +117,14 @@ class TrackFundsScreen extends Component {
         return (
             <View style={styles.container}>
                 <Toolbar
-                    rightElement="add"
-                    centerElement="Your Mutual Funds"
+                    rightElement={
+                        <Ionicons 
+                            name='ios-add-circle-outline' 
+                            size={30} color='#fff' 
+                            style={{marginRight: '3%'}}
+                            onPress={() => this.props.navigation.navigate('Manage')}
+                        />}
+                    centerElement="Mutual Funds"
                     onRightElementPress={() => this.props.navigation.navigate('Manage')}
                 />
                 <ScrollView 
@@ -173,7 +179,8 @@ const styles = StyleSheet.create({
         borderBottomColor: '#D3D3D3', 
         borderBottomWidth: 1,
         justifyContent: 'center',
-        borderColor: '#000'
+        borderColor: '#000',
+        padding: 5,
     },
     fundDesc: {
         flex: 0.3,
@@ -184,6 +191,8 @@ const styles = StyleSheet.create({
         height: 120,
         padding: 5,
         marginTop: 10,
+        marginLeft: 15,
+        marginRight: 15,
         alignSelf: 'stretch',
     },
     container: {
