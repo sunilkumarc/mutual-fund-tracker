@@ -60,6 +60,7 @@ class TrackFundsScreen extends Component {
         const storedFundsData = JSON.parse(await AsyncStorage.getItem('MF_DATA'));
 
         if (storedFundsData != null) {
+            await AsyncStorage.setItem('DETAILS_PAGE_MF', JSON.stringify(storedFundsData[0]));
             this.setState({ tableData: storedFundsData });
         }
 
@@ -74,8 +75,23 @@ class TrackFundsScreen extends Component {
         this.loadData();
     }
 
-    onPopupEvent = (eventName, index) => {
-        
+    onPopupEvent = async (fund, index) => {
+        if (index == 0) {
+            await AsyncStorage.setItem('DETAILS_PAGE_MF', JSON.stringify(fund));
+            DeviceEventEmitter.emit('DETAILS_FUND_UPDATED');
+            this.props.navigation.navigate('Details');
+        } else if (index == 1) {
+            let storedFundsData = JSON.parse(await AsyncStorage.getItem('MF_DATA'));
+            let newData = [];
+            for (let i = 0; i < storedFundsData.length; ++i) {
+                if (storedFundsData[i][4] != fund[4]) {
+                    newData.push(storedFundsData[i]);
+                }
+            }
+            await AsyncStorage.removeItem('MF_DATA');
+            await AsyncStorage.setItem('MF_DATA', JSON.stringify(newData));
+            this.setState({ tableData: newData });
+        }
     }
 
     render() {
@@ -99,9 +115,6 @@ class TrackFundsScreen extends Component {
                                         ? <Text style={{color: 'green', fontWeight: 'bold'}}><FontAwesome name='arrow-circle-up' size={15} color='green'/> {fund[2]}%</Text> 
                                         : <Text style={{color: 'red', fontWeight: 'bold'}}><FontAwesome name='arrow-circle-down' size={15} color='red'/> {fund[2]}%</Text>;
             return <Card
-                        onPress={() => {
-                            //this.props.navigation.navigate('Details');
-                        }}
                         style={{ container: styles.card }} key={fund[0]}>
                         <View style={styles.cardMain}>
                             <View style={styles.cardImage}>
@@ -124,7 +137,9 @@ class TrackFundsScreen extends Component {
                                 </View>
                             </View>
                             <View style={styles.moreButton}>
-                                <PopupMenu actions={['Details', 'Delete']} onPress={this.onPopupEvent}/>
+                                <PopupMenu actions={['Details', 'Delete']} onPress={(event, index) => {
+                                        this.onPopupEvent(fund, index);
+                                    }}/>
                             </View>
                         </View>
                     </Card>;

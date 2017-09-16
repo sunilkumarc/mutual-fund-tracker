@@ -13,7 +13,7 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-19.0.0.tar.gz",
     "react-native-material-design": "^0.3.7",
     "react-native-material-kit": "^0.4.1",
-    "react-native-material-ui": "^1.12.0",
+    "react-native-material-ui": "^1.13.0",
     "react-native-modal-dropdown": "^0.4.4",
     "react-native-table-component": "^1.0.1",
     "react-navigation": "^1.0.0-beta.11",

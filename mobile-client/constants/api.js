@@ -13,7 +13,7 @@ class API {
         const todayValue = data['data']['graph'][length - 1]['y'];
         const yesterdayValue = data['data']['graph'][length - 2]['y'];
         const netPercentageChange = ((todayValue - yesterdayValue) / todayValue * 100).toFixed(2);
-        return [mutualFundName, NAV, netPercentageChange, amcCode];
+        return [mutualFundName, NAV, netPercentageChange, amcCode, fundId];
     }
 }
 

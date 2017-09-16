@@ -1,5 +1,8 @@
 import React from 'react';
 import {
+    DeviceEventEmitter
+} from 'react-native';
+import {
     TabNavigator,
     DrawerNavigator,
     StackNavigator
@@ -34,7 +37,10 @@ const MyTabNavigator = TabNavigator({
         }
     },
     Details: {
-        screen: FundDetailsScreen
+        screen: FundDetailsScreen,
+        navigationOptions: {
+            title: 'Details'
+        }
     }
 }, {
         tabBarPosition: 'bottom',
