@@ -1,3 +1,3 @@
 export * from './track-funds';
 export * from './manage-funds';
-export * from './feedback';
+export * from './details';

@@ -11,7 +11,8 @@ import {
     Image,
     DeviceEventEmitter,
     TouchableOpacity,
-    TouchableHighlight
+    TouchableHighlight,
+    Alert
 } from 'react-native';
 import {
     Table,
@@ -30,6 +31,7 @@ import styled from 'styled-components/native';
 import { Toolbar, COLOR, ThemeProvider, Card, Button, ActionButton } from 'react-native-material-ui';
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import { FundsAPI } from '../../../constants/api';
+import PopupMenu from '../../../helpers/PopupMenu';
 
 const uiTheme = {
     palette: {
@@ -72,6 +74,10 @@ class TrackFundsScreen extends Component {
         this.loadData();
     }
 
+    onPopupEvent = (eventName, index) => {
+        
+    }
+
     render() {
         if (this.state.isLoading) {
             return (
@@ -93,8 +99,10 @@ class TrackFundsScreen extends Component {
                                         ? <Text style={{color: 'green', fontWeight: 'bold'}}><FontAwesome name='arrow-circle-up' size={15} color='green'/> {fund[2]}%</Text> 
                                         : <Text style={{color: 'red', fontWeight: 'bold'}}><FontAwesome name='arrow-circle-down' size={15} color='red'/> {fund[2]}%</Text>;
             return <Card
-                        onPress={() => {}}
-                        tyle={{ container: styles.card }} key={fund[0]}>
+                        onPress={() => {
+                            //this.props.navigation.navigate('Details');
+                        }}
+                        style={{ container: styles.card }} key={fund[0]}>
                         <View style={styles.cardMain}>
                             <View style={styles.cardImage}>
                                 <Image 
@@ -114,6 +122,9 @@ class TrackFundsScreen extends Component {
                                         {fundPecentTag}
                                     </View>
                                 </View>
+                            </View>
+                            <View style={styles.moreButton}>
+                                <PopupMenu actions={['Details', 'Delete']} onPress={this.onPopupEvent}/>
                             </View>
                         </View>
                     </Card>;
@@ -139,6 +150,10 @@ class TrackFundsScreen extends Component {
 const styles = StyleSheet.create({
     toolbarTitle: {
         fontFamily: 'roboto'
+    },
+    moreButton: {
+        flex: 0.06,
+        height: 110,
     },
     cardMain: {
         flex: 1,

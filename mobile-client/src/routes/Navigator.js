@@ -7,7 +7,7 @@ import {
 import {
     TrackFundsScreen,
     ManageFundsScreen,
-    FeedbackScreen
+    FundDetailsScreen
 } from '../screens';
 import Exponent from 'expo';
 import {
@@ -33,8 +33,8 @@ const MyTabNavigator = TabNavigator({
             title: 'Track Funds'
         }
     },
-    Feedback: {
-        screen: FeedbackScreen
+    Details: {
+        screen: FundDetailsScreen
     }
 }, {
         tabBarPosition: 'bottom',

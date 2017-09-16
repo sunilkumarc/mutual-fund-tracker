@@ -5,6 +5,7 @@ function fixCase(name) {
     let result = '';
     if (name.length > 0) {
         let firstLetter = true;
+        let firstWord = true;
         let i = 0;
         while (i < name.length) {
             if (firstLetter) {
@@ -15,8 +16,9 @@ function fixCase(name) {
             } else if (name[i] == ' ') {
                 result += name[i];
                 firstLetter = true;
+                firstWord = false;
             } else if (!firstLetter) {
-                if (name.charCodeAt(i) >= 65 && name.charCodeAt(i) <= 90)
+                if (!firstWord && name.charCodeAt(i) >= 65 && name.charCodeAt(i) <= 90)
                     result += String.fromCharCode(name.charCodeAt(i) + 32);
                 else result += name[i];
             }
