@@ -9,7 +9,9 @@ import {
     AsyncStorage,
     Platform,
     Image,
-    DeviceEventEmitter
+    DeviceEventEmitter,
+    TouchableOpacity,
+    TouchableHighlight
 } from 'react-native';
 import {
     Table,
@@ -75,7 +77,7 @@ class TrackFundsScreen extends Component {
             return (
                 <View style={styles.container}>
                     <Toolbar
-                        rightElement={<Ionicons name='ios-add-circle-outline'/>}
+                        rightElement="add-circle-outline"
                         centerElement="Mutual Funds"
                         onRightElementPress={() => this.props.navigation.navigate('Manage')}
                     />
@@ -90,40 +92,36 @@ class TrackFundsScreen extends Component {
             let fundPecentTag = fund[2] > 0 
                                         ? <Text style={{color: 'green', fontWeight: 'bold'}}><FontAwesome name='arrow-circle-up' size={15} color='green'/> {fund[2]}%</Text> 
                                         : <Text style={{color: 'red', fontWeight: 'bold'}}><FontAwesome name='arrow-circle-down' size={15} color='red'/> {fund[2]}%</Text>;
-            return <Card style={{ container: styles.card }} key={fund[0]}>
-                <View style={styles.cardMain}>
-                    <View style={styles.cardImage}>
-                        <Image 
-                            style={{height: 60, margin: 2}}
-                            resizeMode='stretch'
-                            source={{uri: imagePath}}/>
-                    </View>
-                    <View style={styles.cardContent}>
-                        <View style={styles.fundName}>
-                            <Text style={{ fontFamily: 'roboto', fontSize: 12, lineHeight: 22 }}>{fund[0]}</Text>
-                        </View>
-                        <View style={styles.fundDesc}>
-                            <View style={styles.fundNAV}>
-                                <Text><FontAwesome name='rupee' size={13} /> {fund[1]}</Text>
+            return <Card
+                        onPress={() => {}}
+                        tyle={{ container: styles.card }} key={fund[0]}>
+                        <View style={styles.cardMain}>
+                            <View style={styles.cardImage}>
+                                <Image 
+                                    style={{height: 60, margin: 2}}
+                                    resizeMode='stretch'
+                                    source={{uri: imagePath}}/>
                             </View>
-                            <View style={styles.fundPercent}>
-                                {fundPecentTag}
+                            <View style={styles.cardContent}>
+                                <View style={styles.fundName}>
+                                    <Text style={{ fontFamily: 'roboto', fontSize: 12, lineHeight: 22 }}>{fund[0]}</Text>
+                                </View>
+                                <View style={styles.fundDesc}>
+                                    <View style={styles.fundNAV}>
+                                        <Text><FontAwesome name='rupee' size={13} /> {fund[1]}</Text>
+                                    </View>
+                                    <View style={styles.fundPercent}>
+                                        {fundPecentTag}
+                                    </View>
+                                </View>
                             </View>
                         </View>
-                    </View>
-                </View>
-            </Card>;
+                    </Card>;
         });
         return (
             <View style={styles.container}>
                 <Toolbar
-                    rightElement={
-                        <Ionicons 
-                            name='ios-add-circle-outline' 
-                            size={30} color='#fff' 
-                            style={{marginRight: '3%'}}
-                            onPress={() => this.props.navigation.navigate('Manage')}
-                        />}
+                    rightElement="add-circle-outline"
                     centerElement="Mutual Funds"
                     onRightElementPress={() => this.props.navigation.navigate('Manage')}
                 />
