@@ -9,11 +9,12 @@ class API {
         const mutualFundName = data['data']['bse_master'][0]['scheme_name'];
         const NAV = data['data']['graph'][length - 1]['y'];
         const amcCode = data['data']['bse_master'][0]['amc_code'];
+        const dateTime = data['data']['nav_prices'][0]['datetime'];
 
         const todayValue = data['data']['graph'][length - 1]['y'];
         const yesterdayValue = data['data']['graph'][length - 2]['y'];
         const netPercentageChange = ((todayValue - yesterdayValue) / todayValue * 100).toFixed(2);
-        return [mutualFundName, NAV, netPercentageChange, amcCode, fundId];
+        return [mutualFundName, NAV, netPercentageChange, amcCode, fundId, dateTime];
     }
 }
 

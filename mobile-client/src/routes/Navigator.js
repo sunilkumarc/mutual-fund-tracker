@@ -32,15 +32,9 @@ const MyStackNavigator = StackNavigator({
 const MyTabNavigator = TabNavigator({
     Track: {
         screen: MyStackNavigator,
-        navigationOptions: {
-            title: 'Track Funds'
-        }
     },
     Details: {
         screen: FundDetailsScreen,
-        navigationOptions: {
-            title: 'Details'
-        }
     }
 }, {
         tabBarPosition: 'bottom',
@@ -53,7 +47,13 @@ const MyTabNavigator = TabNavigator({
             style: {
                 backgroundColor: '#fff'
             }
-        }
+        },
+        navigationOptions: ({ navigation }) => ({
+            tabBarOnPress: (scene, jumpToIndex) => {
+                console.log('onPress:', scene.route);
+                jumpToIndex(scene.index);
+            },
+        }),
     });
 
 export default MyTabNavigator;
