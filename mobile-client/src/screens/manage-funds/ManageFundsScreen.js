@@ -60,6 +60,7 @@ class ManageFundsScreen extends Component {
         await storedFundsData.push(fundData);
         await AsyncStorage.removeItem('MF_DATA');
         await AsyncStorage.setItem('MF_DATA', JSON.stringify(storedFundsData));
+        await AsyncStorage.setItem('DETAILS_PAGE_MF', JSON.stringify(fundData));
         // DeviceEventEmitter.emit('FundAddedEvent');
         ToastAndroid.show('Fund has been added added.', ToastAndroid.LONG);
     }

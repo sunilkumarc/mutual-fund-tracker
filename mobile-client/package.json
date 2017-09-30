@@ -16,7 +16,7 @@
     "react-native-material-ui": "^1.13.0",
     "react-native-modal-dropdown": "^0.4.4",
     "react-native-table-component": "^1.0.1",
-    "react-navigation": "^1.0.0-beta.11",
+    "react-navigation": "github:react-community/react-navigation#master",
     "styled-components": "^2.1.2"
   }
 }

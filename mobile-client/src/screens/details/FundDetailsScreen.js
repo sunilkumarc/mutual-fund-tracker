@@ -39,6 +39,13 @@ class FundDetailsScreen extends Component {
 
     render() {
         let fund = this.state.fundData;
+        if (fund == null) {
+            return (
+                <View style={styles.container}>
+                    <Toolbar centerElement="Fund Details"/>
+                </View>
+            );
+        }
         let imagePath = 'https://coin.zerodha.com/images/fund_houses/' + fund[3] + '.jpg';
         let fundPecentTag = fund[2] > 0 
             ?   <Text style={{color: 'green', fontFamily: 'lato_bold', fontSize: 12, lineHeight: 25}}>
@@ -69,10 +76,36 @@ class FundDetailsScreen extends Component {
                             </View>
                         </View>
 
-                        <View style={styles.otherDetails}>
-                            <View style={styles.otherDetailsRow}>
-                                <View style={{ flex:0.5 }}><Text>Min Investment</Text></View>
-                                <View style={{ flex:0.5 }}><Text>Scheme Class</Text></View>
+                        <View style={styles.otherDetailsContainer}>
+                            <View style={styles.otherDetails}>
+                                <View style={styles.otherDetailsRow}>
+                                    <View style={styles.otherDetailsItems}><Text style={styles.otherDetailsItemsHeader} Text>Min Investment</Text></View>
+                                    <View style={styles.otherDetailsItems}><Text style={styles.otherDetailsItemsHeader} >Scheme Class</Text></View>
+                                </View>
+                                <View style={styles.otherDetailsRow}>
+                                    <View style={styles.otherDetailsItems}><Text>5000</Text></View>
+                                    <View style={styles.otherDetailsItems}><Text>Equity Diversified</Text></View>
+                                </View>
+                            </View>
+                            <View style={styles.otherDetails}>
+                                <View style={styles.otherDetailsRow}>
+                                    <View style={styles.otherDetailsItems}><Text style={styles.otherDetailsItemsHeader} >Manager Name</Text></View>
+                                    <View style={styles.otherDetailsItems}><Text style={styles.otherDetailsItemsHeader} >Launch Date</Text></View>
+                                </View>
+                                <View style={styles.otherDetailsRow}>
+                                    <View style={styles.otherDetailsItems}><Text>Abhishek Pandit</Text></View>
+                                    <View style={styles.otherDetailsItems}><Text>12-12-12</Text></View>
+                                </View>
+                            </View>
+                            <View style={styles.otherDetails}>
+                                <View style={styles.otherDetailsRow}>
+                                    <View style={styles.otherDetailsItems}><Text style={styles.otherDetailsItemsHeader} >Exit Load</Text></View>
+                                    <View style={styles.otherDetailsItems}><Text style={styles.otherDetailsItemsHeader} >Expense Ratio</Text></View>
+                                </View>
+                                <View style={styles.otherDetailsRow}>
+                                    <View style={styles.otherDetailsItems}><Text>Exit Load</Text></View>
+                                    <View style={styles.otherDetailsItems}><Text>Expense Ratio</Text></View>
+                                </View>
                             </View>
                         </View>
                     </Card>
@@ -90,7 +123,7 @@ const styles = StyleSheet.create({
     },
     detailsCard: {
         flex: 1,
-        height: 400,
+        height: 900,
         marginTop: 10,
         marginLeft: 15,
         marginRight: 15,
@@ -110,18 +143,34 @@ const styles = StyleSheet.create({
     detailsContainer: {
         justifyContent: 'center',
         alignItems: 'center',
+        borderBottomWidth: 1,
+        paddingBottom: 20,
+        borderColor: '#EEE'
     },
     otherDetails: {
         marginLeft: 15,
         marginRight: 15,
-        marginTop: 30
+        marginTop: 24
     },
     otherDetailsRow: {
-        backgroundColor: 'grey',
-        flexDirection: 'row',
-        
-        // alignItems: 'center',
-        // justifyContent: 'center'
+        flexDirection: 'row'
+    },
+    otherDetailsItems: {
+        flex: 0.5,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    otherDetailsItemsHeader: {
+        color: 'grey',
+        fontFamily: 'lato_bold',
+        fontSize: 12,
+        marginBottom: 5
+    },
+    otherDetailsContainer: {
+        borderBottomWidth: 1,
+        borderColor: '#EEE',
+        paddingBottom: 30,
+        backgroundColor: '#E7DEEC'
     }
 });
 
