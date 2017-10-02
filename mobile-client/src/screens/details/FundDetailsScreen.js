@@ -19,7 +19,7 @@ class FundDetailsScreen extends Component {
         super(props);
         this.state = {
             isLoading: false,
-            fundData: {}
+            fundData: null
         };
     }
 
@@ -83,8 +83,8 @@ class FundDetailsScreen extends Component {
                                     <View style={styles.otherDetailsItems}><Text style={styles.otherDetailsItemsHeader} >Scheme Class</Text></View>
                                 </View>
                                 <View style={styles.otherDetailsRow}>
-                                    <View style={styles.otherDetailsItems}><Text>5000</Text></View>
-                                    <View style={styles.otherDetailsItems}><Text>Equity Diversified</Text></View>
+                                    <View style={styles.otherDetailsItems}><Text>{fund[6]}</Text></View>
+                                    <View style={styles.otherDetailsItems}><Text>{fund[7]}</Text></View>
                                 </View>
                             </View>
                             <View style={styles.otherDetails}>
@@ -93,18 +93,18 @@ class FundDetailsScreen extends Component {
                                     <View style={styles.otherDetailsItems}><Text style={styles.otherDetailsItemsHeader} >Launch Date</Text></View>
                                 </View>
                                 <View style={styles.otherDetailsRow}>
-                                    <View style={styles.otherDetailsItems}><Text>Abhishek Pandit</Text></View>
-                                    <View style={styles.otherDetailsItems}><Text>12-12-12</Text></View>
+                                    <View style={styles.otherDetailsItems}><Text>{fund[8]}</Text></View>
+                                    <View style={styles.otherDetailsItems}><Text>{fund[9]}</Text></View>
                                 </View>
                             </View>
                             <View style={styles.otherDetails}>
                                 <View style={styles.otherDetailsRow}>
                                     <View style={styles.otherDetailsItems}><Text style={styles.otherDetailsItemsHeader} >Exit Load</Text></View>
-                                    <View style={styles.otherDetailsItems}><Text style={styles.otherDetailsItemsHeader} >Expense Ratio</Text></View>
+                                    <View style={styles.otherDetailsItems}><Text style={styles.otherDetailsItemsHeader} >Dividend Payout</Text></View>
                                 </View>
                                 <View style={styles.otherDetailsRow}>
-                                    <View style={styles.otherDetailsItems}><Text>Exit Load</Text></View>
-                                    <View style={styles.otherDetailsItems}><Text>Expense Ratio</Text></View>
+                                    <View style={styles.otherDetailsItems}><Text>{fund[10]} %</Text></View>
+                                    <View style={styles.otherDetailsItems}><Text>{fund[11]} %</Text></View>
                                 </View>
                             </View>
                         </View>
@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderColor: '#EEE',
         paddingBottom: 30,
-        backgroundColor: '#E7DEEC'
+        // backgroundColor: '#E7DEEC'
     }
 });
 

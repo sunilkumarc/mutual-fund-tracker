@@ -90,6 +90,7 @@ class TrackFundsScreen extends Component {
             }
             await AsyncStorage.removeItem('MF_DATA');
             await AsyncStorage.setItem('MF_DATA', JSON.stringify(newData));
+            await AsyncStorage.setItem('DETAILS_PAGE_MF', JSON.stringify(newData[0]));
             this.setState({ tableData: newData });
         }
     }

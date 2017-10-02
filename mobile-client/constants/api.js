@@ -14,7 +14,21 @@ class API {
         const todayValue = data['data']['graph'][length - 1]['y'];
         const yesterdayValue = data['data']['graph'][length - 2]['y'];
         const netPercentageChange = ((todayValue - yesterdayValue) / todayValue * 100).toFixed(2);
-        return [mutualFundName, NAV, netPercentageChange, amcCode, fundId, dateTime];
+
+        const manager = data['data']['master'][0]['manager'];
+        const schemeClass = data['data']['master'][0]['scheme_class'];
+        let minimumInvestment = parseFloat(data['data']['bse_master'][0]['min_purchase_amt']);
+        minimumInvestment = Math.round(minimumInvestment * 100) / 100;
+        const launchDate = data['data']['master'][0]['launch_date'];
+        const exitLoad = data['data']['master'][0]['exit_load'];
+        let dividentPayout = parseFloat(data['data']['master'][0]['dividend_percentage']);
+        if (dividentPayout == "")
+            dividentPayout = "N/A";
+        else {
+            dividentPayout = Math.round(dividentPayout * 100) / 100;
+        }
+
+        return [mutualFundName, NAV, netPercentageChange, amcCode, fundId, dateTime, minimumInvestment, schemeClass, manager, launchDate, exitLoad, dividentPayout];
     }
 }
 
