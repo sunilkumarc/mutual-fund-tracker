@@ -20,15 +20,26 @@ class API {
         let minimumInvestment = parseFloat(data['data']['bse_master'][0]['min_purchase_amt']);
         minimumInvestment = Math.round(minimumInvestment * 100) / 100;
         const launchDate = data['data']['master'][0]['launch_date'];
-        const exitLoad = data['data']['master'][0]['exit_load'];
+        let exitLoad = data['data']['master'][0]['exit_load'];
+        if (exitLoad != 'Nil') {
+            exitLoad += " %";
+        }
         let dividentPayout = parseFloat(data['data']['master'][0]['dividend_percentage']);
         if (dividentPayout == "")
             dividentPayout = "N/A";
         else {
-            dividentPayout = Math.round(dividentPayout * 100) / 100;
+            dividentPayout = Math.round(dividentPayout * 100) / 100 + "%";
         }
+        let oneYearReturns = data['data']['nav_prices'][0]['year_per'];
+        oneYearReturns = Math.round(oneYearReturns * 100) / 100;
+        
+        let threeYearReturns = data['data']['nav_prices'][0]['three_year_comp_per'];
+        threeYearReturns = Math.round(threeYearReturns * 100) / 100;
 
-        return [mutualFundName, NAV, netPercentageChange, amcCode, fundId, dateTime, minimumInvestment, schemeClass, manager, launchDate, exitLoad, dividentPayout];
+        let fiveYearReturns = data['data']['nav_prices'][0]['five_year_comp_per'];
+        fiveYearReturns = Math.round(fiveYearReturns * 100) / 100;
+
+        return [mutualFundName, NAV, netPercentageChange, amcCode, fundId, dateTime, minimumInvestment, schemeClass, manager, launchDate, exitLoad, dividentPayout, oneYearReturns, threeYearReturns, fiveYearReturns];
     }
 }
 

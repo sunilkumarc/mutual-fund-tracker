@@ -6,7 +6,8 @@ import {
     AsyncStorage, 
     DeviceEventEmitter,
     ScrollView,
-    Image
+    Image,
+    Picker
 } from 'react-native';
 import { 
     Toolbar, 
@@ -37,6 +38,20 @@ class FundDetailsScreen extends Component {
         this.loadData();
     }
 
+    getYearlyReturnsText(fund) {
+        if (fund == 0) {
+            return ( <Text style={{color: 'green', fontFamily: 'lato_bold', fontSize: 12}}>{fund}%</Text> );
+        }
+
+        return ( fund > 0 ?
+                    <Text style={{color: 'green', fontFamily: 'lato_bold', fontSize: 12}}>
+                        <FontAwesome name='arrow-circle-up' size={15} color='green'/> {fund}%
+                    </Text> :
+                    <Text style={{color: 'red', fontFamily: 'lato_bold', fontSize: 12}}>
+                        <FontAwesome name='arrow-circle-down' size={15} color='red'/> {fund}%
+                </Text> );
+    }
+
     render() {
         let fund = this.state.fundData;
         if (fund == null) {
@@ -56,6 +71,7 @@ class FundDetailsScreen extends Component {
                     <FontAwesome name='rupee' size={13} /> {fund[1]}  ( <FontAwesome name='arrow-circle-down' size={15} color='red'/> {fund[2]}% )
                     <Text style={{ color: 'grey' }}>   as on {fund[5]}</Text>
                 </Text>;
+
         return (
             <View style={styles.container}>
                 <Toolbar centerElement="Fund Details"/>
@@ -73,6 +89,21 @@ class FundDetailsScreen extends Component {
                             </View>
                             <View>
                                 {fundPecentTag}
+                            </View>
+                        </View>
+
+                        <View style={styles.yearlyReturnsContainer}>
+                            <View style={styles.yearlyReturnsRow}>
+                                <View style={styles.yearlyReturnsItems}><Text style={styles.yearlyReturnsItemsHeader}>1 Year</Text></View>
+                                <View style={styles.yearlyReturnsItems}><Text>{this.getYearlyReturnsText(fund[12])}</Text></View>
+                            </View>
+                            <View style={styles.yearlyReturnsRow}>
+                                <View style={styles.yearlyReturnsItems}><Text style={styles.yearlyReturnsItemsHeader}>3 Years</Text></View>
+                                <View style={styles.yearlyReturnsItems}><Text>{this.getYearlyReturnsText(fund[13])}</Text></View>
+                            </View>
+                            <View style={styles.yearlyReturnsRow}>
+                                <View style={styles.yearlyReturnsItems}><Text style={styles.yearlyReturnsItemsHeader}>5 Years</Text></View>
+                                <View style={styles.yearlyReturnsItems}><Text>{this.getYearlyReturnsText(fund[14])}</Text></View>
                             </View>
                         </View>
 
@@ -103,8 +134,8 @@ class FundDetailsScreen extends Component {
                                     <View style={styles.otherDetailsItems}><Text style={styles.otherDetailsItemsHeader} >Dividend Payout</Text></View>
                                 </View>
                                 <View style={styles.otherDetailsRow}>
-                                    <View style={styles.otherDetailsItems}><Text>{fund[10]} %</Text></View>
-                                    <View style={styles.otherDetailsItems}><Text>{fund[11]} %</Text></View>
+                                    <View style={styles.otherDetailsItems}><Text>{fund[10]}</Text></View>
+                                    <View style={styles.otherDetailsItems}><Text>{fund[11]}</Text></View>
                                 </View>
                             </View>
                         </View>
@@ -153,12 +184,25 @@ const styles = StyleSheet.create({
         marginTop: 24
     },
     otherDetailsRow: {
-        flexDirection: 'row'
+        flexDirection: 'row',
+    },
+    yearlyReturnsRow: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginLeft: 80,
+        marginRight: 120,
+        marginTop: 8
     },
     otherDetailsItems: {
         flex: 0.5,
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    yearlyReturnsItems: {
+        flex: 0.5,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     otherDetailsItemsHeader: {
         color: 'grey',
@@ -166,11 +210,21 @@ const styles = StyleSheet.create({
         fontSize: 12,
         marginBottom: 5
     },
+    yearlyReturnsItemsHeader: {
+        color: 'grey',
+        fontFamily: 'lato_bold',
+        fontSize: 12,
+    },
     otherDetailsContainer: {
         borderBottomWidth: 1,
         borderColor: '#EEE',
         paddingBottom: 30,
         // backgroundColor: '#E7DEEC'
+    },
+    yearlyReturnsContainer: {
+        borderBottomWidth: 1,
+        borderColor: '#EEE',
+        paddingBottom: 15,
     }
 });
 
