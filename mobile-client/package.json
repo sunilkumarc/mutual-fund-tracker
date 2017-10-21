@@ -16,9 +16,12 @@
     "react-native-material-kit": "^0.4.1",
     "react-native-material-ui": "^1.13.0",
     "react-native-modal-dropdown": "^0.4.4",
+    "react-native-svg": "^5.4.2",
     "react-native-table-component": "^1.0.1",
     "react-navigation": "github:react-community/react-navigation#master",
+    "react-timestamp": "^4.3.0",
     "rnpm": "^1.9.0",
-    "styled-components": "^2.1.2"
+    "styled-components": "^2.1.2",
+    "victory-native": "^0.15.0"
   }
 }

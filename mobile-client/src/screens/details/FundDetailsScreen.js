@@ -7,13 +7,14 @@ import {
     DeviceEventEmitter,
     ScrollView,
     Image,
-    Picker
+    Picker,
 } from 'react-native';
 import { 
     Toolbar, 
     Card 
 } from 'react-native-material-ui';
 import { FontAwesome } from '@expo/vector-icons';
+import { VictoryChart, VictoryTheme, VictoryLine, VictoryPie, VictoryLabel } from "victory-native";
 
 class FundDetailsScreen extends Component {
     constructor(props) {
@@ -75,7 +76,8 @@ class FundDetailsScreen extends Component {
         return (
             <View style={styles.container}>
                 <Toolbar centerElement="Fund Details"/>
-                <ScrollView>
+                <ScrollView
+                    showsVerticalScrollIndicator={false}>
                     <Card style={{ container: styles.detailsCard }}>
                         <View style={styles.detailsContainer}>
                             <View style={styles.imageContainer}>
@@ -139,6 +141,23 @@ class FundDetailsScreen extends Component {
                                 </View>
                             </View>
                         </View>
+                        <View style={styles.graphContainer} pointerEvents="none">
+                            <View style={styles.graphHeader}>
+                                <Text style={{ fontFamily: 'lato_bold', fontSize: 15 }}>Statistics</Text>
+                            </View>
+                            <VictoryChart
+                                theme={VictoryTheme.material}>
+                                <VictoryLine
+                                    data={fund[15]}
+                                    labels={(datum) => datum.y}
+                                    labelComponent={<VictoryLabel renderInPortal dy={-20}/>}
+                                    style={{ 
+                                        data: { stroke: "#187cd0" },
+                                        labels: { fontSize: 10 }
+                                    }}
+                                />
+                            </VictoryChart>
+                        </View>
                     </Card>
                     <Card style={{ container: styles.card }} />
                 </ScrollView>
@@ -152,9 +171,13 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#EEE'
     },
+    graphHeader: {
+        marginTop: 20,
+        marginLeft: -30,
+    },
     detailsCard: {
         flex: 1,
-        height: 900,
+        height: 980,
         marginTop: 10,
         marginLeft: 15,
         marginRight: 15,
@@ -165,23 +188,30 @@ const styles = StyleSheet.create({
     fundImage: {
         height: 100,
         width: 250,
-        margin: 2
+        margin: 2,
     },
     imageContainer: {
         paddingTop: 30,
-        paddingBottom: 25
+        paddingBottom: 25,
     },
     detailsContainer: {
         justifyContent: 'center',
         alignItems: 'center',
         borderBottomWidth: 1,
         paddingBottom: 20,
-        borderColor: '#EEE'
+        borderColor: '#EEE',
+    },
+    graphContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingBottom: 20,
+        paddingLeft: 30,
+        backgroundColor: '#EEE',
     },
     otherDetails: {
         marginLeft: 15,
         marginRight: 15,
-        marginTop: 24
+        marginTop: 24,
     },
     otherDetailsRow: {
         flexDirection: 'row',
@@ -190,14 +220,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        marginLeft: 80,
-        marginRight: 120,
-        marginTop: 8
+        marginLeft: 90,
+        marginRight: 110,
+        marginTop: 8,
     },
     otherDetailsItems: {
         flex: 0.5,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     yearlyReturnsItems: {
         flex: 0.5,
@@ -208,7 +238,7 @@ const styles = StyleSheet.create({
         color: 'grey',
         fontFamily: 'lato_bold',
         fontSize: 12,
-        marginBottom: 5
+        marginBottom: 5,
     },
     yearlyReturnsItemsHeader: {
         color: 'grey',
@@ -219,12 +249,12 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderColor: '#EEE',
         paddingBottom: 30,
-        // backgroundColor: '#E7DEEC'
     },
     yearlyReturnsContainer: {
         borderBottomWidth: 1,
         borderColor: '#EEE',
         paddingBottom: 15,
+        backgroundColor: '#EEE'
     }
 });
 

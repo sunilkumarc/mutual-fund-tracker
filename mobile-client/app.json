@@ -1,23 +1,24 @@
 {
   "expo": {
-    "name": "mobile-client",
-    "description": "An empty new project",
+    "name": "Mutual Funds",
+    "description": "Mutual Funds Tracker",
     "slug": "mobile-client",
     "privacy": "public",
     "sdkVersion": "19.0.0",
     "version": "1.0.0",
     "orientation": "portrait",
     "primaryColor": "#cccccc",
-    "icon": "./assets/icons/app-icon.png",
     "loading": {
-      "icon": "./assets/icons/loading-icon.png",
-      "hideExponentText": false
+      "backgroundImage": "./assets/images/SplashScreen.png"
     },
     "packagerOpts": {
       "assetExts": ["ttf", "mp4"]
     },
     "ios": {
       "supportsTablet": true
+    },
+    "android": {
+      "package": "com.srt.apps"
     }
   }
 }

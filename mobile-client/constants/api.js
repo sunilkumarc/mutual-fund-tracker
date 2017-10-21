@@ -21,14 +21,14 @@ class API {
         minimumInvestment = Math.round(minimumInvestment * 100) / 100;
         const launchDate = data['data']['master'][0]['launch_date'];
         let exitLoad = data['data']['master'][0]['exit_load'];
-        if (exitLoad != 'Nil') {
+        if (exitLoad != 'nil') {
             exitLoad += " %";
         }
         let dividentPayout = parseFloat(data['data']['master'][0]['dividend_percentage']);
         if (dividentPayout == "")
             dividentPayout = "N/A";
         else {
-            dividentPayout = Math.round(dividentPayout * 100) / 100 + "%";
+            dividentPayout = Math.round(dividentPayout * 100) / 100 + " %";
         }
         let oneYearReturns = data['data']['nav_prices'][0]['year_per'];
         oneYearReturns = Math.round(oneYearReturns * 100) / 100;
@@ -39,7 +39,19 @@ class API {
         let fiveYearReturns = data['data']['nav_prices'][0]['five_year_comp_per'];
         fiveYearReturns = Math.round(fiveYearReturns * 100) / 100;
 
-        return [mutualFundName, NAV, netPercentageChange, amcCode, fundId, dateTime, minimumInvestment, schemeClass, manager, launchDate, exitLoad, dividentPayout, oneYearReturns, threeYearReturns, fiveYearReturns];
+        let apiGraphValues = data['data']['graph'];
+        let graphValues = [apiGraphValues[length - 5], apiGraphValues[length-4], apiGraphValues[length-3], apiGraphValues[length-2], apiGraphValues[length-1]];
+        let monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+        ];
+      
+        let graphData = [];
+        for (i = 0; i < graphValues.length; ++i) {
+            let time = new Date(graphValues[i]['x']);
+            graphData.push({x: monthNames[time.getMonth()] + ' ' + time.getDate(), y: graphValues[i]['y']});
+        }
+
+        return [mutualFundName, NAV, netPercentageChange, amcCode, fundId, dateTime, minimumInvestment, schemeClass, manager, launchDate, exitLoad, dividentPayout, oneYearReturns, threeYearReturns, fiveYearReturns, graphData];
     }
 }
 

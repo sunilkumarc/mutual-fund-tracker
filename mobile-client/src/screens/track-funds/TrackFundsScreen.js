@@ -12,7 +12,8 @@ import {
     DeviceEventEmitter,
     TouchableOpacity,
     TouchableHighlight,
-    Alert
+    Alert,
+    RefreshControl
 } from 'react-native';
 import {
     Table,
@@ -51,7 +52,8 @@ class TrackFundsScreen extends Component {
         super(props);
         this.state = {
             isLoading: false,
-            tableData: []
+            tableData: [],
+            refreshing: false,
         };
     }
 
@@ -88,11 +90,18 @@ class TrackFundsScreen extends Component {
                     newData.push(storedFundsData[i]);
                 }
             }
+            console.log('Clicked Delete!', newData);
             await AsyncStorage.removeItem('MF_DATA');
             await AsyncStorage.setItem('MF_DATA', JSON.stringify(newData));
             await AsyncStorage.setItem('DETAILS_PAGE_MF', JSON.stringify(newData[0]));
-            this.setState({ tableData: newData });
+            this.setState({ tableData: newData, isLoading: false });
         }
+    }
+
+    _onRefresh() {
+        this.setState({refreshing: true});
+        Alert.alert('Working');
+        this.setState({refreshing: false});
     }
 
     render() {
@@ -153,8 +162,17 @@ class TrackFundsScreen extends Component {
                     onRightElementPress={() => this.props.navigation.navigate('Manage')}
                 />
                 <ScrollView 
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={this.state.refreshing}
+                            onRefresh={this._onRefresh.bind(this)}
+                        />
+                    }
                     showsVerticalScrollIndicator={false}>
                     <View>
+                        <Text>
+                            Last updated : 
+                        </Text>
                         {cards}
                     </View>
                 </ScrollView>
