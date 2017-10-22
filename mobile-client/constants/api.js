@@ -50,8 +50,26 @@ class API {
             let time = new Date(graphValues[i]['x']);
             graphData.push({x: monthNames[time.getMonth()] + ' ' + time.getDate(), y: graphValues[i]['y']});
         }
-
-        return [mutualFundName, NAV, netPercentageChange, amcCode, fundId, dateTime, minimumInvestment, schemeClass, manager, launchDate, exitLoad, dividentPayout, oneYearReturns, threeYearReturns, fiveYearReturns, graphData];
+        let lastUpdated = new Date();
+        return {
+            "mutualFundName": mutualFundName,
+            "NAV": NAV,
+            "netPercentageChange": netPercentageChange,
+            "amcCode": amcCode,
+            "fundId": fundId,
+            "dateTime": dateTime,
+            "minimumInvestment": minimumInvestment,
+            "schemeClass": schemeClass,
+            "manager": manager,
+            "launchDate": launchDate,
+            "exitLoad": exitLoad,
+            "dividentPayout": dividentPayout,
+            "oneYearReturns": oneYearReturns,
+            "threeYearReturns": threeYearReturns,
+            "fiveYearReturns": fiveYearReturns,
+            "graphData": graphData,
+            "lastUpdated": lastUpdated.getFullYear() + "-" + lastUpdated.getMonth() + "-" + lastUpdated.getDate()
+        }
     }
 }
 

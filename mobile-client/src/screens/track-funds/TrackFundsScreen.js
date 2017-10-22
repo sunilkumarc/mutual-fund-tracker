@@ -13,7 +13,8 @@ import {
     TouchableOpacity,
     TouchableHighlight,
     Alert,
-    RefreshControl
+    RefreshControl,
+    ToastAndroid
 } from 'react-native';
 import {
     Table,
@@ -75,6 +76,7 @@ class TrackFundsScreen extends Component {
         });
 
         this.loadData();
+        // await AsyncStorage.clear();
     }
 
     onPopupEvent = async (fund, index) => {
@@ -86,22 +88,44 @@ class TrackFundsScreen extends Component {
             let storedFundsData = JSON.parse(await AsyncStorage.getItem('MF_DATA'));
             let newData = [];
             for (let i = 0; i < storedFundsData.length; ++i) {
-                if (storedFundsData[i][4] != fund[4]) {
+                if (storedFundsData[i]["fundId"] != fund["fundId"]) {
                     newData.push(storedFundsData[i]);
                 }
             }
-            console.log('Clicked Delete!', newData);
             await AsyncStorage.removeItem('MF_DATA');
-            await AsyncStorage.setItem('MF_DATA', JSON.stringify(newData));
-            await AsyncStorage.setItem('DETAILS_PAGE_MF', JSON.stringify(newData[0]));
+            if (newData.length == 0) {
+                await AsyncStorage.removeItem('DETAILS_PAGE_MF');
+            } else {
+                await AsyncStorage.setItem('MF_DATA', JSON.stringify(newData));
+                await AsyncStorage.setItem('DETAILS_PAGE_MF', JSON.stringify(newData[0]));
+            }
             this.setState({ tableData: newData, isLoading: false });
         }
     }
 
-    _onRefresh() {
-        this.setState({refreshing: true});
-        Alert.alert('Working');
-        this.setState({refreshing: false});
+    async _onRefresh() {
+        this.setState({refreshing: true, isLoading: true});
+        let storedFundsData = JSON.parse(await AsyncStorage.getItem('MF_DATA'));
+        if (storedFundsData == null) {
+            this.setState({refreshing: false, isLoading: false});
+            return;
+        }
+        await AsyncStorage.removeItem("MF_DATA");
+        let newData = [];
+        for (i = 0; i < storedFundsData.length; ++i) {
+            let lastUpdated = storedFundsData[i]["lastUpdated"];
+            let currentDate = new Date();
+            if (lastUpdated != (currentDate.getFullYear() + "-" + currentDate.getMonth() + "-" + currentDate.getDate())) {
+                let fundData = await FundsAPI.getFundData(storedFundsData[i]["fundId"]);
+                newData.push(fundData);
+            } else {
+                newData.push(storedFundsData[i]);
+            }
+        }
+        await AsyncStorage.setItem('MF_DATA', JSON.stringify(newData));
+        await AsyncStorage.setItem('LAST_UPDATED', JSON.stringify(new Date().toDateString()));
+        this.setState({refreshing: false, isLoading: false});
+        ToastAndroid.show('Updated', ToastAndroid.SHORT);
     }
 
     render() {
@@ -120,12 +144,12 @@ class TrackFundsScreen extends Component {
             );
         }
         let cards = this.state.tableData.map((fund) => {
-            let imagePath = 'https://coin.zerodha.com/images/fund_houses/' + fund[3] + '.jpg';
-            let fundPecentTag = fund[2] > 0 
-                                        ? <Text style={{color: 'green', fontWeight: 'bold'}}><FontAwesome name='arrow-circle-up' size={15} color='green'/> {fund[2]}%</Text> 
-                                        : <Text style={{color: 'red', fontWeight: 'bold'}}><FontAwesome name='arrow-circle-down' size={15} color='red'/> {fund[2]}%</Text>;
+            let imagePath = 'https://coin.zerodha.com/images/fund_houses/' + fund["amcCode"] + '.jpg';
+            let fundPecentTag = fund["netPercentageChange"] > 0 
+                                        ? <Text style={{color: 'green', fontWeight: 'bold'}}><FontAwesome name='arrow-circle-up' size={15} color='green'/> {fund["netPercentageChange"]}%</Text> 
+                                        : <Text style={{color: 'red', fontWeight: 'bold'}}><FontAwesome name='arrow-circle-down' size={15} color='red'/> {fund["netPercentageChange"]}%</Text>;
             return <Card
-                        style={{ container: styles.card }} key={fund[0]}>
+                        style={{ container: styles.card }} key={fund["mutualFundName"]}>
                         <View style={styles.cardMain}>
                             <View style={styles.cardImage}>
                                 <Image 
@@ -135,11 +159,11 @@ class TrackFundsScreen extends Component {
                             </View>
                             <View style={styles.cardContent}>
                                 <View style={styles.fundName}>
-                                    <Text style={{ fontFamily: 'roboto', fontSize: 12, lineHeight: 22 }}>{fund[0]}</Text>
+                                    <Text style={{ fontFamily: 'roboto', fontSize: 12, lineHeight: 22 }}>{fund["mutualFundName"]}</Text>
                                 </View>
                                 <View style={styles.fundDesc}>
                                     <View style={styles.fundNAV}>
-                                        <Text><FontAwesome name='rupee' size={13} /> {fund[1]}</Text>
+                                        <Text><FontAwesome name='rupee' size={13} /> {fund["NAV"]}</Text>
                                     </View>
                                     <View style={styles.fundPercent}>
                                         {fundPecentTag}
@@ -154,6 +178,14 @@ class TrackFundsScreen extends Component {
                         </View>
                     </Card>;
         });
+        
+        let lastUpdated = '';
+        let lastUpdatedInLocal = AsyncStorage.getItem('LAST_UPDATED');
+        console.log('HERE ', lastUpdatedInLocal);
+        if (this.state.tableData.length > 0 && lastUpdatedInLocal != undefined) {
+            lastUpdated = 'Last Updated : ' + lastUpdatedInLocal;
+        }
+
         return (
             <View style={styles.container}>
                 <Toolbar
@@ -171,7 +203,7 @@ class TrackFundsScreen extends Component {
                     showsVerticalScrollIndicator={false}>
                     <View>
                         <Text>
-                            Last updated : 
+                            {lastUpdated}
                         </Text>
                         {cards}
                     </View>

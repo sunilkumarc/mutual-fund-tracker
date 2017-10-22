@@ -62,15 +62,15 @@ class FundDetailsScreen extends Component {
                 </View>
             );
         }
-        let imagePath = 'https://coin.zerodha.com/images/fund_houses/' + fund[3] + '.jpg';
-        let fundPecentTag = fund[2] > 0 
+        let imagePath = 'https://coin.zerodha.com/images/fund_houses/' + fund["amcCode"] + '.jpg';
+        let fundPecentTag = fund["netPercentageChange"] > 0 
             ?   <Text style={{color: 'green', fontFamily: 'lato_bold', fontSize: 12, lineHeight: 25}}>
-                    <FontAwesome name='rupee' size={13} /> {fund[1]}  ( <FontAwesome name='arrow-circle-up' size={15} color='green'/> {fund[2]}% )
-                    <Text style={{ color: 'grey' }}>   as on {fund[5]}</Text>
+                    <FontAwesome name='rupee' size={13} /> {fund["NAV"]}  ( <FontAwesome name='arrow-circle-up' size={15} color='green'/> {fund["netPercentageChange"]}% )
+                    <Text style={{ color: 'grey' }}>   as on {fund["dateTime"]}</Text>
                 </Text> 
             :   <Text style={{color: 'red', fontFamily: 'lato_bold', fontSize: 12, lineHeight: 25}}>
-                    <FontAwesome name='rupee' size={13} /> {fund[1]}  ( <FontAwesome name='arrow-circle-down' size={15} color='red'/> {fund[2]}% )
-                    <Text style={{ color: 'grey' }}>   as on {fund[5]}</Text>
+                    <FontAwesome name='rupee' size={13} /> {fund["NAV"]}  ( <FontAwesome name='arrow-circle-down' size={15} color='red'/> {fund["netPercentageChange"]}% )
+                    <Text style={{ color: 'grey' }}>   as on {fund["dateTime"]}</Text>
                 </Text>;
 
         return (
@@ -87,7 +87,7 @@ class FundDetailsScreen extends Component {
                                     source={{uri: imagePath}}/>
                             </View>
                             <View style={styles.fundName}>
-                                <Text style={{ fontFamily: 'lato_bold', fontSize: 15, lineHeight: 25, paddingLeft: 20, paddingRight: 20, textAlign: 'center' }}>{fund[0]}</Text>
+                                <Text style={{ fontFamily: 'lato_bold', fontSize: 15, lineHeight: 25, paddingLeft: 20, paddingRight: 20, textAlign: 'center' }}>{fund["mutualFundName"]}</Text>
                             </View>
                             <View>
                                 {fundPecentTag}
@@ -97,15 +97,15 @@ class FundDetailsScreen extends Component {
                         <View style={styles.yearlyReturnsContainer}>
                             <View style={styles.yearlyReturnsRow}>
                                 <View style={styles.yearlyReturnsItems}><Text style={styles.yearlyReturnsItemsHeader}>1 Year</Text></View>
-                                <View style={styles.yearlyReturnsItems}><Text>{this.getYearlyReturnsText(fund[12])}</Text></View>
+                                <View style={styles.yearlyReturnsItems}><Text>{this.getYearlyReturnsText(fund["oneYearReturns"])}</Text></View>
                             </View>
                             <View style={styles.yearlyReturnsRow}>
                                 <View style={styles.yearlyReturnsItems}><Text style={styles.yearlyReturnsItemsHeader}>3 Years</Text></View>
-                                <View style={styles.yearlyReturnsItems}><Text>{this.getYearlyReturnsText(fund[13])}</Text></View>
+                                <View style={styles.yearlyReturnsItems}><Text>{this.getYearlyReturnsText(fund["threeYearReturns"])}</Text></View>
                             </View>
                             <View style={styles.yearlyReturnsRow}>
                                 <View style={styles.yearlyReturnsItems}><Text style={styles.yearlyReturnsItemsHeader}>5 Years</Text></View>
-                                <View style={styles.yearlyReturnsItems}><Text>{this.getYearlyReturnsText(fund[14])}</Text></View>
+                                <View style={styles.yearlyReturnsItems}><Text>{this.getYearlyReturnsText(fund["fiveYearReturns"])}</Text></View>
                             </View>
                         </View>
 
@@ -116,8 +116,8 @@ class FundDetailsScreen extends Component {
                                     <View style={styles.otherDetailsItems}><Text style={styles.otherDetailsItemsHeader} >Scheme Class</Text></View>
                                 </View>
                                 <View style={styles.otherDetailsRow}>
-                                    <View style={styles.otherDetailsItems}><Text>{fund[6]}</Text></View>
-                                    <View style={styles.otherDetailsItems}><Text>{fund[7]}</Text></View>
+                                    <View style={styles.otherDetailsItems}><Text>{fund["minimumInvestment"]}</Text></View>
+                                    <View style={styles.otherDetailsItems}><Text>{fund["schemeClass"]}</Text></View>
                                 </View>
                             </View>
                             <View style={styles.otherDetails}>
@@ -126,8 +126,8 @@ class FundDetailsScreen extends Component {
                                     <View style={styles.otherDetailsItems}><Text style={styles.otherDetailsItemsHeader} >Launch Date</Text></View>
                                 </View>
                                 <View style={styles.otherDetailsRow}>
-                                    <View style={styles.otherDetailsItems}><Text>{fund[8]}</Text></View>
-                                    <View style={styles.otherDetailsItems}><Text>{fund[9]}</Text></View>
+                                    <View style={styles.otherDetailsItems}><Text>{fund["manager"]}</Text></View>
+                                    <View style={styles.otherDetailsItems}><Text>{fund["launchDate"]}</Text></View>
                                 </View>
                             </View>
                             <View style={styles.otherDetails}>
@@ -136,8 +136,8 @@ class FundDetailsScreen extends Component {
                                     <View style={styles.otherDetailsItems}><Text style={styles.otherDetailsItemsHeader} >Dividend Payout</Text></View>
                                 </View>
                                 <View style={styles.otherDetailsRow}>
-                                    <View style={styles.otherDetailsItems}><Text>{fund[10]}</Text></View>
-                                    <View style={styles.otherDetailsItems}><Text>{fund[11]}</Text></View>
+                                    <View style={styles.otherDetailsItems}><Text>{fund["exitLoad"]}</Text></View>
+                                    <View style={styles.otherDetailsItems}><Text>{fund["dividentPayout"]}</Text></View>
                                 </View>
                             </View>
                         </View>
@@ -148,7 +148,7 @@ class FundDetailsScreen extends Component {
                             <VictoryChart
                                 theme={VictoryTheme.material}>
                                 <VictoryLine
-                                    data={fund[15]}
+                                    data={fund["graphData"]}
                                     labels={(datum) => datum.y}
                                     labelComponent={<VictoryLabel renderInPortal dy={-20}/>}
                                     style={{ 
