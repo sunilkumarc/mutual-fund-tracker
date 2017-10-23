@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "Mutual Funds",
+    "icon": "./assets/images/icon_48.png",
     "description": "Mutual Funds Tracker",
     "slug": "mobile-client",
     "privacy": "public",
@@ -13,9 +14,6 @@
     },
     "packagerOpts": {
       "assetExts": ["ttf", "mp4"]
-    },
-    "ios": {
-      "supportsTablet": true
     },
     "android": {
       "package": "com.srt.apps"

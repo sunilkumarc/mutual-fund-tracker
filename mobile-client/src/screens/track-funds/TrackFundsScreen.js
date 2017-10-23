@@ -55,6 +55,7 @@ class TrackFundsScreen extends Component {
             isLoading: false,
             tableData: [],
             refreshing: false,
+            lastRefreshed: null
         };
     }
 
@@ -66,7 +67,11 @@ class TrackFundsScreen extends Component {
             await AsyncStorage.setItem('DETAILS_PAGE_MF', JSON.stringify(storedFundsData[0]));
             this.setState({ tableData: storedFundsData });
         }
-
+        let lastRefreshed = await AsyncStorage.getItem('LAST_UPDATED');
+        if (lastRefreshed == null)
+            this.setState({lastRefreshed: ''});
+        else
+            this.setState({lastRefreshed: lastRefreshed});
         this.setState({ isLoading: false });
     }
 
@@ -123,9 +128,9 @@ class TrackFundsScreen extends Component {
             }
         }
         await AsyncStorage.setItem('MF_DATA', JSON.stringify(newData));
-        await AsyncStorage.setItem('LAST_UPDATED', JSON.stringify(new Date().toDateString()));
-        this.setState({refreshing: false, isLoading: false});
-        ToastAndroid.show('Updated', ToastAndroid.SHORT);
+        let lastRefreshed = 'Last Updated on - ' + new Date().toDateString();
+        await AsyncStorage.setItem('LAST_UPDATED', lastRefreshed);
+        this.setState({refreshing: false, isLoading: false, lastRefreshed: lastRefreshed});
     }
 
     render() {
@@ -178,13 +183,6 @@ class TrackFundsScreen extends Component {
                         </View>
                     </Card>;
         });
-        
-        let lastUpdated = '';
-        let lastUpdatedInLocal = AsyncStorage.getItem('LAST_UPDATED');
-        console.log('HERE ', lastUpdatedInLocal);
-        if (this.state.tableData.length > 0 && lastUpdatedInLocal != undefined) {
-            lastUpdated = 'Last Updated : ' + lastUpdatedInLocal;
-        }
 
         return (
             <View style={styles.container}>
@@ -201,9 +199,9 @@ class TrackFundsScreen extends Component {
                         />
                     }
                     showsVerticalScrollIndicator={false}>
-                    <View>
-                        <Text>
-                            {lastUpdated}
+                    <View style={styles.lastRefreshedView}>
+                        <Text style={styles.lastRefreshedText}>
+                            {this.state.lastRefreshed}
                         </Text>
                         {cards}
                     </View>
@@ -216,6 +214,16 @@ class TrackFundsScreen extends Component {
 const styles = StyleSheet.create({
     toolbarTitle: {
         fontFamily: 'roboto'
+    },
+    lastRefreshedView: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 5,
+    },
+    lastRefreshedText: {
+        fontFamily: 'lato_bold', 
+        fontSize: 12,
+        color: 'dimgray',
     },
     moreButton: {
         flex: 0.06,
