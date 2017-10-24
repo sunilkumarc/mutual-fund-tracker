@@ -10,7 +10,8 @@
     "orientation": "portrait",
     "primaryColor": "#cccccc",
     "loading": {
-      "backgroundImage": "./assets/images/SplashScreen.png"
+      "icon": "./assets/images/icon_48.png",
+      "backgroundColor": "#6458A8"
     },
     "packagerOpts": {
       "assetExts": ["ttf", "mp4"]

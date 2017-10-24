@@ -10,7 +10,7 @@ const uiTheme = {
     palette: {
         primaryColor: '#6458A8',
 	},
-	fontFamily: 'roboto_italic',
+	fontFamily: 'lato',
     toolbar: {
         container: {
 			height: 50,

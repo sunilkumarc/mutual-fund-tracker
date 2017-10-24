@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingBottom: 20,
         paddingLeft: 30,
-        backgroundColor: '#EEE',
+        // backgroundColor: '#EEE',
     },
     otherDetails: {
         marginLeft: 15,
@@ -260,7 +260,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderColor: '#EEE',
         paddingBottom: 15,
-        backgroundColor: '#EEE'
+        // backgroundColor: '#EEE'
     }
 });
 
