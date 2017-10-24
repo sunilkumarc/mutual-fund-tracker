@@ -122,15 +122,16 @@ class TrackFundsScreen extends Component {
             let currentDate = new Date();
             if (lastUpdated != (currentDate.getFullYear() + "-" + currentDate.getMonth() + "-" + currentDate.getDate())) {
                 let fundData = await FundsAPI.getFundData(storedFundsData[i]["fundId"]);
-                newData.push(fundData);
+                await newData.push(fundData);
             } else {
-                newData.push(storedFundsData[i]);
+                await newData.push(storedFundsData[i]);
             }
         }
+        await AsyncStorage.removeItem('MF_DATA');
         await AsyncStorage.setItem('MF_DATA', JSON.stringify(newData));
-        let lastRefreshed = 'Last Updated on - ' + new Date().toDateString();
+        let lastRefreshed = 'Last Updated On - ' + new Date().toDateString();
         await AsyncStorage.setItem('LAST_UPDATED', lastRefreshed);
-        this.setState({refreshing: false, isLoading: false, lastRefreshed: lastRefreshed});
+        this.setState({refreshing: false, isLoading: false, lastRefreshed: lastRefreshed, tableData: newData});
     }
 
     render() {
@@ -139,7 +140,7 @@ class TrackFundsScreen extends Component {
                 <View style={styles.container}>
                     <Toolbar
                         rightElement="add-circle-outline"
-                        centerElement="Mutual Funds"
+                        centerElement={<Text style={styles.toolbarTitle}>Mutual Funds</Text>}
                         onRightElementPress={() => this.props.navigation.navigate('Manage')}
                     />
                     <ActivityIndicator
@@ -188,7 +189,7 @@ class TrackFundsScreen extends Component {
             <View style={styles.container}>
                 <Toolbar
                     rightElement="add-circle-outline"
-                    centerElement="Mutual Funds"
+                    centerElement={<Text style={styles.toolbarTitle}>Mutual Funds</Text>}
                     onRightElementPress={() => this.props.navigation.navigate('Manage')}
                 />
                 <ScrollView 
@@ -213,7 +214,9 @@ class TrackFundsScreen extends Component {
 
 const styles = StyleSheet.create({
     toolbarTitle: {
-        fontFamily: 'roboto'
+        fontFamily: 'lato_bold',
+        color: '#FFF',
+        fontSize: 20
     },
     lastRefreshedView: {
         justifyContent: 'center',

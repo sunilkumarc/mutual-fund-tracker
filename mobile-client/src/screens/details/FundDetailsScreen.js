@@ -28,7 +28,6 @@ class FundDetailsScreen extends Component {
     async loadData() {
         let fundToShow = JSON.parse(await AsyncStorage.getItem('DETAILS_PAGE_MF'));
         this.setState({ fundData: fundToShow });
-        console.log(fundToShow);
     }
     
     async componentDidMount() {
@@ -58,7 +57,7 @@ class FundDetailsScreen extends Component {
         if (fund == null) {
             return (
                 <View style={styles.container}>
-                    <Toolbar centerElement="Fund Details"/>
+                    <Toolbar centerElement={<Text style={styles.toolbarTitle}>Fund Details</Text>}/>
                 </View>
             );
         }
@@ -75,7 +74,9 @@ class FundDetailsScreen extends Component {
 
         return (
             <View style={styles.container}>
-                <Toolbar centerElement="Fund Details"/>
+                <Toolbar
+                    centerElement={<Text style={styles.toolbarTitle}>Fund Details</Text>}
+                    />
                 <ScrollView
                     showsVerticalScrollIndicator={false}>
                     <Card style={{ container: styles.detailsCard }}>
@@ -170,6 +171,11 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#EEE'
+    },
+    toolbarTitle: {
+        fontFamily: 'lato_bold',
+        color: '#FFF',
+        fontSize: 20
     },
     graphHeader: {
         marginTop: 20,

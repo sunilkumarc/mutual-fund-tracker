@@ -78,7 +78,7 @@ class ManageFundsScreen extends Component {
             <View style={styles.container}>
                 <Toolbar
                     leftElement="arrow-back"
-                    centerElement="Add Funds"
+                    centerElement={<Text style={styles.toolbarTitle}>Add Funds</Text>}
                     searchable={{
                         autoFocus: true,
                         placeholder: 'Search Funds',
@@ -116,5 +116,10 @@ const styles = StyleSheet.create({
         height: 70,
         padding: 10,
         marginTop: 2
+    },
+    toolbarTitle: {
+        fontFamily: 'lato_bold',
+        color: '#FFF',
+        fontSize: 20
     }
 })

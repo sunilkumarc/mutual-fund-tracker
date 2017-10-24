@@ -46,7 +46,11 @@ const MyTabNavigator = TabNavigator({
             indicatorStyle: { backgroundColor: '#6458A8' },
             style: {
                 backgroundColor: '#fff'
-            }
+            },
+            labelStyle: {
+                fontSize: 13,
+                fontWeight: 'bold'
+            },
         },
         navigationOptions: ({ navigation }) => ({
             tabBarOnPress: (scene, jumpToIndex) => {
