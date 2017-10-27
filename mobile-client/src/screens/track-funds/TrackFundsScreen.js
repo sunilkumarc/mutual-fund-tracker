@@ -115,18 +115,12 @@ class TrackFundsScreen extends Component {
             this.setState({refreshing: false, isLoading: false});
             return;
         }
-        await AsyncStorage.removeItem("MF_DATA");
-        let newData = [];
+        
+        let res = [];
         for (i = 0; i < storedFundsData.length; ++i) {
-            let lastUpdated = storedFundsData[i]["lastUpdated"];
-            let currentDate = new Date();
-            if (lastUpdated != (currentDate.getFullYear() + "-" + currentDate.getMonth() + "-" + currentDate.getDate())) {
-                let fundData = await FundsAPI.getFundData(storedFundsData[i]["fundId"]);
-                await newData.push(fundData);
-            } else {
-                await newData.push(storedFundsData[i]);
-            }
+            res.push(FundsAPI.getFundData(storedFundsData[i]["fundId"]));
         }
+        newData = await Promise.all(res);
         await AsyncStorage.removeItem('MF_DATA');
         await AsyncStorage.setItem('MF_DATA', JSON.stringify(newData));
         let lastRefreshed = 'Last Updated On - ' + new Date().toDateString();
