@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Mutual Funds",
-    "icon": "./assets/images/icon_48.png",
+    "icon": "./assets/icons/icon_58.png",
     "description": "Mutual Funds Tracker",
     "slug": "mobile-client",
     "privacy": "public",
@@ -10,7 +10,8 @@
     "orientation": "portrait",
     "primaryColor": "#cccccc",
     "loading": {
-      "icon": "./assets/images/icon_48.png",
+      "backgroundImage": "./assets/images/SplashScreen.png",
+      "icon": "./assets/icons/icon.png",
       "backgroundColor": "#6458A8"
     },
     "packagerOpts": {
