@@ -15,6 +15,7 @@ import {
 } from 'react-native-material-ui';
 import { FontAwesome } from '@expo/vector-icons';
 import { VictoryChart, VictoryTheme, VictoryLine, VictoryPie, VictoryLabel } from "victory-native";
+import { WebBrowser } from 'expo';
 
 class FundDetailsScreen extends Component {
     constructor(props) {
@@ -52,6 +53,10 @@ class FundDetailsScreen extends Component {
                 </Text> );
     }
 
+    handleBrowserOpen = async (url) => {
+        await WebBrowser.openBrowserAsync(url);
+    }
+
     render() {
         let fund = this.state.fundData;
         if (fund == null) {
@@ -71,7 +76,7 @@ class FundDetailsScreen extends Component {
                     <FontAwesome name='rupee' size={13} /> {fund["NAV"]}  ( <FontAwesome name='arrow-circle-down' size={15} color='red'/> {fund["netPercentageChange"]}% )
                     <Text style={{ color: 'grey' }}>   as on {fund["dateTime"]}</Text>
                 </Text>;
-
+        let fundURL = "https://coin.zerodha.com/funds/" + fund["fundId"];
         return (
             <View style={styles.container}>
                 <Toolbar
@@ -92,6 +97,11 @@ class FundDetailsScreen extends Component {
                             </View>
                             <View>
                                 {fundPecentTag}
+                            </View>
+                            <View style={styles.zerodhaView}>
+                                <Text style={styles.zerodhaLink} onPress={() => this.handleBrowserOpen(fundURL)}>
+                                    View on Zerodha
+                                </Text>
                             </View>
                         </View>
 
@@ -260,7 +270,16 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderColor: '#EEE',
         paddingBottom: 15,
-        // backgroundColor: '#EEE'
+    },
+    zerodhaView: {
+        marginBottom: -10,
+        marginTop: 10
+    },
+    zerodhaLink: {
+        fontFamily: 'lato_bold',
+        color: '#187cd0',
+        fontSize: 15,
+        textDecorationLine: 'underline',
     }
 });
 

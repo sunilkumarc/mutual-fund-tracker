@@ -179,6 +179,17 @@ class TrackFundsScreen extends Component {
                     </Card>;
         });
 
+        var lastRefreshedText = <View style={styles.homeScreenImage}>
+                                    <Image source={require('../../../assets/images/HomeScreen.png')} />
+                                </View>
+        if (this.state.tableData.length > 0) {
+            lastRefreshedText = <View style={styles.lastRefreshedView}>
+                <Text style={styles.lastRefreshedText}>
+                    {this.state.lastRefreshed}
+                </Text>
+            </View>;
+        }
+
         return (
             <View style={styles.container}>
                 <Toolbar
@@ -194,12 +205,8 @@ class TrackFundsScreen extends Component {
                         />
                     }
                     showsVerticalScrollIndicator={false}>
-                    <View style={styles.lastRefreshedView}>
-                        <Text style={styles.lastRefreshedText}>
-                            {this.state.lastRefreshed}
-                        </Text>
-                        {cards}
-                    </View>
+                    {lastRefreshedText}
+                    {cards}
                 </ScrollView>
             </View>
         );
@@ -282,6 +289,12 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#EEEEEE'
+    },
+    homeScreenImage: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 100,
     },
     fundsTable: {
         marginTop: 5

@@ -40,7 +40,7 @@ export default class PopupMenu extends Component {
           <Icon
             name='more-vert'
             size={ICON_SIZE}
-            color={'#7562DB'}
+            color={'dimgrey'}
             ref={this.onRef} />
         </TouchableOpacity>
       </View>

@@ -42,9 +42,9 @@ class ManageFundsScreen extends Component {
     async onPressItem(item) {
         await Alert.alert(
             'Add this fund?',
-            'This fund will be added in your profile. This can be undone later.',
+            'The fund will be added. This can be deleted later.',
             [
-                {text: 'OK', onPress: () => this.addFund(item)},
+                {text: 'Add', onPress: () => this.addFund(item)},
                 {text: 'Cancel', onPress: () => {}},                
             ]
         );
@@ -108,8 +108,8 @@ const styles = StyleSheet.create({
     fundItem: {
         paddingBottom: 25,
         paddingTop: 25,
-        paddingLeft: 20,
-        paddingRight: 20,
+        paddingLeft: 25,
+        paddingRight: 25,
         borderColor: '#8679CF',
     },
     card: {
