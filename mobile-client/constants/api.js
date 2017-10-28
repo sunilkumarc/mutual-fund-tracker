@@ -3,7 +3,6 @@ import axios from 'axios';
 class API {
     async getFundData(fundId) {
         let url = `https://mf.zerodha.com/api/fund-info?graph_type=normal&scheme_id=${fundId}&session_token=`;
-        console.log('GET - ', url);
         const { data } = await axios.get(url);
         const length = data['data']['graph'].length;
         const mutualFundName = data['data']['bse_master'][0]['scheme_name'];

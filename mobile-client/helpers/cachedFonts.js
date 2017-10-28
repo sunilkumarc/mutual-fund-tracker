@@ -12,9 +12,6 @@ export const fontAssets = cachedFonts([
         roboto_bold: require('../assets/fonts/Roboto/Roboto-Bold.ttf')
     },
     {
-        roboto_italic: require('../assets/fonts/Roboto/Roboto-Italic.ttf')   
-    },
-    {
         lato: require('../assets/fonts/Lato/Lato-Regular.ttf')
     },
     {

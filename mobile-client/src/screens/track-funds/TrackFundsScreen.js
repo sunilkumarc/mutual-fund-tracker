@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
     toolbarTitle: {
         fontFamily: 'lato_bold',
         color: '#FFF',
-        fontSize: 20
+        fontSize: 22
     },
     lastRefreshedView: {
         justifyContent: 'center',

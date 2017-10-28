@@ -54,7 +54,6 @@ const MyTabNavigator = TabNavigator({
         },
         navigationOptions: ({ navigation }) => ({
             tabBarOnPress: (scene, jumpToIndex) => {
-                console.log('onPress:', scene.route);
                 jumpToIndex(scene.index);
             },
         }),

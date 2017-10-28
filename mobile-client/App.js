@@ -35,9 +35,11 @@ export default class App extends Component {
 
 	render() {
 		if (!this.state.fontLoaded) {
-			return <ActivityIndicator
-				style={[styles.centering, { height: 500 }]}
-				size="large" />
+			return (
+				<View style={styles.container}>
+					<Text style={styles.loadingText}>Loading ... </Text>
+				</View>
+			);
 		}
 
 		return (
@@ -51,8 +53,13 @@ export default class App extends Component {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#fff',
+		backgroundColor: '#6458A8',
 		alignItems: 'center',
 		justifyContent: 'center',
 	},
+	loadingText: {
+		fontSize: 25,
+		color: '#fff',
+		fontWeight: 'bold'
+	}
 });
