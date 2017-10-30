@@ -206,7 +206,7 @@ class TrackFundsScreen extends Component {
                     }
                     showsVerticalScrollIndicator={false}>
                     {lastRefreshedText}
-                    {cards}
+                    {cards} 
                 </ScrollView>
             </View>
         );

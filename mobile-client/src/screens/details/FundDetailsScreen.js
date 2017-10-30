@@ -16,6 +16,7 @@ import {
 import { FontAwesome } from '@expo/vector-icons';
 import { VictoryChart, VictoryTheme, VictoryLine, VictoryPie, VictoryLabel } from "victory-native";
 import { WebBrowser } from 'expo';
+import { AdMobBanner } from 'react-native-admob';
 
 class FundDetailsScreen extends Component {
     constructor(props) {
@@ -84,6 +85,12 @@ class FundDetailsScreen extends Component {
                     />
                 <ScrollView
                     showsVerticalScrollIndicator={false}>
+                    <AdMobBanner
+                            bannerSize="banner"
+                            addUnitID={`ca-app-pub-9886802792048958/9950438721`}
+                            testDeviceID="0856525c0c859633"
+                            didFailToReceiveAdWithError={console.log} />
+
                     <Card style={{ container: styles.detailsCard }}>
                         <View style={styles.detailsContainer}>
                             <View style={styles.imageContainer}>
@@ -169,6 +176,11 @@ class FundDetailsScreen extends Component {
                                 />
                             </VictoryChart>
                         </View>
+                        <AdMobBanner
+                            bannerSize="banner"
+                            addUnitID="ca-app-pub-9886802792048958/9950438721"
+                            testDeviceID="0856525c0c859633"
+                            didFailToReceiveAdWithError={console.log} />
                     </Card>
                     <Card style={{ container: styles.card }} />
                 </ScrollView>
