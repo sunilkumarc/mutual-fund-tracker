@@ -128,6 +128,23 @@ class TrackFundsScreen extends Component {
         this.setState({refreshing: false, isLoading: false, lastRefreshed: lastRefreshed, tableData: newData});
     }
 
+    async _deleteAll() {
+        await Alert.alert(
+            'Are you Sure?',
+            'This will delete all the funds from your device!',
+            [
+                {text: 'Delete', onPress: () => this.deleteAll()},
+                {text: 'Cancel', onPress: () => {}},                
+            ]
+        );
+    }
+
+    async deleteAll() {
+        this.setState({refreshing: true});
+        await AsyncStorage.removeItem('MF_DATA');
+        this.setState({refreshing: false, tableData: []});
+    }
+
     render() {
         if (this.state.isLoading) {
             return (
@@ -146,8 +163,8 @@ class TrackFundsScreen extends Component {
         let cards = this.state.tableData.map((fund) => {
             let imagePath = 'https://coin.zerodha.com/images/fund_houses/' + fund["amcCode"] + '.jpg';
             let fundPecentTag = fund["netPercentageChange"] > 0 
-                                        ? <Text style={{color: 'green', fontWeight: 'bold'}}><FontAwesome name='arrow-circle-up' size={15} color='green'/> {fund["netPercentageChange"]}%</Text> 
-                                        : <Text style={{color: 'red', fontWeight: 'bold'}}><FontAwesome name='arrow-circle-down' size={15} color='red'/> {fund["netPercentageChange"]}%</Text>;
+                                        ? <Text style={{color: 'green', fontWeight: 'bold', fontSize: 12}}><FontAwesome name='arrow-circle-up' size={15} color='green'/> {fund["netPercentageChange"]}%</Text> 
+                                        : <Text style={{color: 'red', fontWeight: 'bold', fontSize: 12}}><FontAwesome name='arrow-circle-down' size={15} color='red'/> {fund["netPercentageChange"]}%</Text>;
             return <Card
                         style={{ container: styles.card }} key={fund["mutualFundName"]}>
                         <View style={styles.cardMain}>
@@ -159,11 +176,11 @@ class TrackFundsScreen extends Component {
                             </View>
                             <View style={styles.cardContent}>
                                 <View style={styles.fundName}>
-                                    <Text style={{ fontFamily: 'roboto', fontSize: 12, lineHeight: 22 }}>{fund["mutualFundName"]}</Text>
+                                    <Text style={{ fontFamily: 'roboto', fontSize: 11, lineHeight: 22 }}>{fund["mutualFundName"]}</Text>
                                 </View>
                                 <View style={styles.fundDesc}>
                                     <View style={styles.fundNAV}>
-                                        <Text><FontAwesome name='rupee' size={13} /> {fund["NAV"]}</Text>
+                                        <Text style={{ fontSize: 12, fontFamily: 'lato' }}><FontAwesome name='rupee' size={11} /> {fund["NAV"]}</Text>
                                     </View>
                                     <View style={styles.fundPercent}>
                                         {fundPecentTag}
@@ -187,6 +204,20 @@ class TrackFundsScreen extends Component {
                 <Text style={styles.lastRefreshedText}>
                     {this.state.lastRefreshed}
                 </Text>
+                <Button raised primary accent text="Delete All"
+                    onPress={() => this._deleteAll()}
+                    style={{
+                        upperCase: false,
+                        container: {
+                            height: 20,
+                            backgroundColor: '#FF6347',
+                            marginLeft: 50
+                        },
+                        text: {
+                            fontSize: 10,
+                            fontFamily: 'lato'
+                        }
+                    }} />
             </View>;
         }
 
@@ -220,9 +251,10 @@ const styles = StyleSheet.create({
         fontSize: 22
     },
     lastRefreshedView: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 5,
+        marginLeft: 15,
+        marginTop: 12,
+        flexDirection: 'row',
+        height: 20,
     },
     lastRefreshedText: {
         fontFamily: 'lato_bold', 
@@ -231,7 +263,7 @@ const styles = StyleSheet.create({
     },
     moreButton: {
         flex: 0.06,
-        height: 110,
+        height: 130,
     },
     cardMain: {
         flex: 1,
@@ -271,7 +303,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         justifyContent: 'center',
         borderColor: '#000',
-        padding: 5,
+        padding: 10
     },
     fundDesc: {
         flex: 0.3,
@@ -279,9 +311,9 @@ const styles = StyleSheet.create({
         borderColor: '#000'
     },
     card: {
-        height: 120,
+        height: 140,
         padding: 5,
-        marginTop: 10,
+        marginTop: 12,
         marginLeft: 15,
         marginRight: 15,
         alignSelf: 'stretch',
