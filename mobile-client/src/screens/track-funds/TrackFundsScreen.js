@@ -176,7 +176,7 @@ class TrackFundsScreen extends Component {
                             </View>
                             <View style={styles.cardContent}>
                                 <View style={styles.fundName}>
-                                    <Text style={{ fontFamily: 'roboto', fontSize: 11, lineHeight: 22 }}>{fund["mutualFundName"]}</Text>
+                                    <Text style={{ fontFamily: 'roboto', fontSize: 12, lineHeight: 22 }}>{fund["mutualFundName"]}</Text>
                                 </View>
                                 <View style={styles.fundDesc}>
                                     <View style={styles.fundNAV}>
@@ -197,7 +197,9 @@ class TrackFundsScreen extends Component {
         });
 
         var lastRefreshedText = <View style={styles.homeScreenImage}>
-                                    <Image source={require('../../../assets/images/HomeScreen.png')} />
+                                    <Text style={styles.directionsText}>1. Add funds using  +  button at the top.</Text>
+                                    <Text style={styles.directionsText}>2. Pull to refresh added funds data.</Text>
+                                    <Text style={styles.directionsText}>3. Open fund details on Zerodha website from Details screen.</Text>
                                 </View>
         if (this.state.tableData.length > 0) {
             lastRefreshedText = <View style={styles.lastRefreshedView}>
@@ -211,7 +213,7 @@ class TrackFundsScreen extends Component {
                         container: {
                             height: 20,
                             backgroundColor: '#FF6347',
-                            marginLeft: 50
+                            marginLeft: 48
                         },
                         text: {
                             fontSize: 10,
@@ -227,6 +229,11 @@ class TrackFundsScreen extends Component {
                     rightElement="add-circle-outline"
                     centerElement={<Text style={styles.toolbarTitle}>Mutual Funds</Text>}
                     onRightElementPress={() => this.props.navigation.navigate('Manage')}
+                    style={{
+                        container: {
+                            shadowOpacity: 0
+                        }
+                    }}
                 />
                 <ScrollView 
                     refreshControl={
@@ -248,7 +255,7 @@ const styles = StyleSheet.create({
     toolbarTitle: {
         fontFamily: 'lato_bold',
         color: '#FFF',
-        fontSize: 22
+        fontSize: 20
     },
     lastRefreshedView: {
         marginLeft: 15,
@@ -317,6 +324,7 @@ const styles = StyleSheet.create({
         marginLeft: 15,
         marginRight: 15,
         alignSelf: 'stretch',
+        shadowOpacity: 0,
     },
     container: {
         flex: 1,
@@ -325,7 +333,6 @@ const styles = StyleSheet.create({
     homeScreenImage: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center',
         marginTop: 100,
     },
     fundsTable: {
@@ -347,6 +354,14 @@ const styles = StyleSheet.create({
     },
     row: {
         backgroundColor: '#fff'
+    },
+    directionsText: {
+        fontFamily: 'cactus_tequila',
+        fontSize: 18,
+        lineHeight: 25,
+        color: 'dimgrey',
+        marginLeft: 15,
+        marginTop: 15
     }
 });
 

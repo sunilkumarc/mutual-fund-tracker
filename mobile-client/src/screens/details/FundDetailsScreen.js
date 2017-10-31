@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
     toolbarTitle: {
         fontFamily: 'lato_bold',
         color: '#FFF',
-        fontSize: 22
+        fontSize: 20
     },
     graphHeader: {
         marginTop: 20,
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
     },
     detailsCard: {
         flex: 1,
-        height: 980,
+        height: 1000,
         marginTop: 10,
         marginLeft: 15,
         marginRight: 15,

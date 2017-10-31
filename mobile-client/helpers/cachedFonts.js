@@ -16,5 +16,8 @@ export const fontAssets = cachedFonts([
     },
     {
         lato_bold: require('../assets/fonts/Lato/Lato-Bold.ttf')
+    },
+    {
+        cactus_tequila: require('../assets/fonts/Cactus/Cactus-Tequila.ttf')
     }
 ]);

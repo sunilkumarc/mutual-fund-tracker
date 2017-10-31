@@ -67,8 +67,8 @@ class ManageFundsScreen extends Component {
         return (<TouchableOpacity
                     onPress={() => this.onPressItem(item)}> 
             <Card style={{ container: styles.card }}>
-                <Text>{item.name}</Text>
-                <Text>({item.desc})</Text>
+                <Text style={styles.fundName}>{item.name}</Text>
+                <Text style={styles.fundDesc}>({item.desc})</Text>
             </Card>
         </TouchableOpacity>);
     }
@@ -105,21 +105,22 @@ const styles = StyleSheet.create({
     container: {
         flex: 1
     },
-    fundItem: {
-        paddingBottom: 25,
-        paddingTop: 25,
-        paddingLeft: 25,
-        paddingRight: 25,
-        borderColor: '#8679CF',
-    },
     card: {
-        height: 70,
-        padding: 10,
-        marginTop: 2
+        height: 80,
+        padding: 15,
+        marginTop: 0,
     },
     toolbarTitle: {
         fontFamily: 'lato_bold',
         color: '#FFF',
-        fontSize: 22
+        fontSize: 20
+    },
+    fundName: {
+        fontFamily: 'roboto',
+        fontSize: 14,
+    },
+    fundDesc: {
+        fontFamily: 'roboto',
+        fontSize: 13
     }
 })

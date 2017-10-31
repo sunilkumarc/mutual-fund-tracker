@@ -58,8 +58,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 	},
 	loadingText: {
-		fontSize: 25,
+		fontSize: 24,
 		color: '#fff',
-		fontWeight: 'bold'
 	}
 });
