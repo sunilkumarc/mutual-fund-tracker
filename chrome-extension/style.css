@@ -173,3 +173,15 @@ h3 a {
     color: #04c;
     font-size: 1.2em;
 }
+
+#loading-text {
+    display: none;
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.5em;
+    margin: 2em;
+}
+
+#funds-table {
+    display: none
+}
