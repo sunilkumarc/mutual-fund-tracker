@@ -96,7 +96,7 @@ function getData(fund_id) {
             var length = data['data']['graph'].length;
             var content = "<tr>";
             content += "<td style=\"text-align: left; padding-right: 20px; box-shadow: -1px 0px 10px 0px #aaaaaa;\"><a id=\"mutual-fund\" href=\"https://coin.zerodha.com/funds/" + fund_id + "\">" + data['data']['bse_master'][0]['scheme_name'] + "</a></td>";
-            content += "<td style=\"text-align: center; box-shadow: -1px 0px 10px 0px #aaaaaa;\">" + "&#8377; " + data['data']['graph'][length - 1]['y'] + "</td>";
+            content += "<td style=\"text-align: center; box-shadow: -1px 0px 10px 0px #aaaaaa;\">" + "&#8377; " + round(data['data']['graph'][length - 1]['y']) + "</td>";
 
             var todayValue = data['data']['graph'][length - 1]['y'];
             var yesterdayValue = data['data']['graph'][length - 2]['y'];
@@ -123,11 +123,11 @@ function loadData() {
             for (var i = 0; i < data.mf_ids.length; ++i) {
                 getData(data.mf_ids[i]);
             }
-            $("#loading-text").css("display", "none");
             $("#funds-table").css("display", "table");
         } else {
             $("#funds-table").css("display", "none");
         }
+        $("#loading-text").css("display", "none");
     });
 }
 
