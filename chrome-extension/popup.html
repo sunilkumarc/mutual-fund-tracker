@@ -8,22 +8,28 @@
     <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
 </head>
 <body>
-	<h1 style="margin-top: 5px; margin-bottom: 5px">Your Mutual Funds</h1>
-    <hr/>
-    <table id="funds-table">
-        <tr>
-            <th>Mutual Fund</th>
-            <th id="nav-header">Current NAV</th>
-            <th>Percentage Change</th>
-        </tr>
-        <div>
-            <tbody id="funds-data">
+	
+    <div id="home-page">
+        <h1 style="margin-top: 5px; margin-bottom: 5px">Your Mutual Funds</h1>
+        <hr/>
+        <table id="funds-table">
+            <tr>
+                <th>Mutual Fund</th>
+                <th id="nav-header">Current NAV</th>
+                <th>Percentage Change</th>
+            </tr>
+            <div>
+                <tbody id="funds-data">
 
-            </tbody>
+                </tbody>
+            </div>
+        </table>
+        <div id="loading-text">
+            Loading ...
         </div>
-    </table>
-    <div id="loading-text">
-        Loading ...
+    </div>
+    <div id="details-page">
+        
     </div>
 
     <br/>
@@ -34,6 +40,7 @@
     <a id="clear">Clear All Funds</a>
     <span id="bar">|</span>
     <a id="feature" href="https://docs.google.com/forms/d/e/1FAIpQLSeF9Wy_la9RSmul7QrgZZoBoVSqVNKMiTmcPqw2z3elEDTmfw/viewform?usp=sf_link">Request Feature</a>
+    <span id="bar">|</span>
     <a id="funds-list" href="https://mf.zerodha.com/funds">List of all mutual funds</a>
     <br/>
 

@@ -13,9 +13,70 @@ $("#fund-options").click(function (ev) {
     $("#fund-options").html("");
 });
 
+$("#go-back").click(function (ev) {
+    $("#details-page").slideUp();
+    $("#home-page").slideDown();
+});
+
 $('body').on('click', 'a', function () {
     if ($(this).attr("id") != "clear")
         chrome.tabs.create({ url: $(this).attr('href') });
+});
+
+function prepareDetailsPage(data) {
+    console.log(JSON.stringify(data));
+    var length = data['data']['graph'].length;
+    var content = "<div>";
+    content += "<img src=\"https://coin.zerodha.com/images/fund_houses/" + data['data']['bse_master'][0]['amc_code'] + ".jpg\" />";
+    content += "<div>" + data['data']['bse_master'][0]['scheme_name'] + "</div>";
+
+    var todayValue = data['data']['graph'][length - 1]['y'];
+    var yesterdayValue = data['data']['graph'][length - 2]['y'];
+    var netPercentageChange = (todayValue - yesterdayValue) / todayValue * 100;
+    var dateTime = data['data']['nav_prices'][0]['datetime'];
+    var oneYearReturns = data['data']['nav_prices'][0]['year_per'];
+    oneYearReturns = Math.round(oneYearReturns * 100) / 100;
+    
+    var threeYearReturns = data['data']['nav_prices'][0]['three_year_comp_per'];
+    threeYearReturns = Math.round(threeYearReturns * 100) / 100;
+
+    var fiveYearReturns = data['data']['nav_prices'][0]['five_year_comp_per'];
+    fiveYearReturns = Math.round(fiveYearReturns * 100) / 100;
+
+    if (netPercentageChange < 0) {
+        content += "<div>";
+        content += "<span>" + todayValue + "</span>";
+        content += "<span>( " + round(netPercentageChange) + "% )</span>";
+    }
+    content += "<span> as on " + dateTime + "</span>";
+    content += "</div>";
+
+    content += "<table>";
+    content += "<tr><td>1 Year</td><td>" + oneYearReturns + "%</td></tr>";
+    content += "<tr><td>3 Year</td><td>" + threeYearReturns + "%</td></tr>";
+    content += "<tr><td>5 Year</td><td>" + fiveYearReturns + "%</td></tr>";
+    content += "</table>";
+    
+    content += "</div>";
+    return content;
+}
+
+$(document).on('click','.go-to-details',function(){
+    var fund_id = $(this).attr("href");
+    var url = "https://mf.zerodha.com/api/fund-info?graph_type=normal&scheme_id=" + fund_id + "&session_token=";
+    $.ajax({
+        url: url,
+        async: false,
+        success: function(data) {
+            $("#details-page").html(prepareDetailsPage(data));
+        
+            $("#home-page").slideUp();
+            $("#details-page").slideDown();
+        },
+        error: function(error) {
+            console.log('HERE' + error);
+        } 
+    });
 });
 
 $("#add-mutual-fund").click(function () {
@@ -95,7 +156,8 @@ function getData(fund_id) {
         success: function(data) {
             var length = data['data']['graph'].length;
             var content = "<tr>";
-            content += "<td style=\"text-align: left; padding-right: 20px; box-shadow: -1px 0px 10px 0px #aaaaaa;\"><a id=\"mutual-fund\" href=\"https://coin.zerodha.com/funds/" + fund_id + "\">" + data['data']['bse_master'][0]['scheme_name'] + "</a></td>";
+            // content += "<td style=\"text-align: left; padding-right: 20px; box-shadow: -1px 0px 10px 0px #aaaaaa;\"><a id=\"mutual-fund\" href=\"https://coin.zerodha.com/funds/" + fund_id + "\">" + data['data']['bse_master'][0]['scheme_name'] + "</a></td>";
+            content += "<td style=\"text-align: left; padding-right: 20px; box-shadow: -1px 0px 10px 0px #aaaaaa;\"><span class=\"go-to-details\"  href=\"" + fund_id + "\">" + data['data']['bse_master'][0]['scheme_name'] + "</span></td>";
             content += "<td style=\"text-align: center; box-shadow: -1px 0px 10px 0px #aaaaaa;\">" + "&#8377; " + round(data['data']['graph'][length - 1]['y']) + "</td>";
 
             var todayValue = data['data']['graph'][length - 1]['y'];
