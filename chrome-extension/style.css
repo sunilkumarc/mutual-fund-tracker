@@ -189,3 +189,52 @@ h3 a {
 #details-page {
     display: none
 }
+
+.go-back {
+    cursor: pointer;
+}
+
+.negative-nav {
+    color: red;
+}
+
+.positive-nav {
+    color: green;
+}
+
+.additional-details-table {
+    width: 100%;
+}
+
+.additional-details-table tr td {
+    background-color: transparent;
+}
+
+.returns-table {
+    margin: 0 auto;
+    width: 40%;
+}
+
+.returns-table tr td {
+    background-color: transparent;
+}
+
+.details-page-image img {
+    margin-left: auto;
+	margin-right: auto;
+    display: block;
+    margin-bottom: 1em;
+    margin-top: 1em;
+}
+
+.details-page-text {
+    width: 100%;
+    text-align: center;
+    padding: 0.4em;
+}
+
+.close-details-page {
+    margin-left: 96%;
+    margin-top: 2%;
+    cursor: pointer;
+}

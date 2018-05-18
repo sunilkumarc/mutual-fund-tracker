@@ -23,12 +23,20 @@ $('body').on('click', 'a', function () {
         chrome.tabs.create({ url: $(this).attr('href') });
 });
 
+$(document).on('click','.go-back',function(){
+    $("#details-page").slideUp();
+    $("#home-page").slideDown();
+});
+
 function prepareDetailsPage(data) {
     console.log(JSON.stringify(data));
     var length = data['data']['graph'].length;
-    var content = "<div>";
+    var content = "";
+
+    content += "<i class='em em-x close-details-page go-back'></i>";
+    content += "<div class='details-page-image'>";
     content += "<img src=\"https://coin.zerodha.com/images/fund_houses/" + data['data']['bse_master'][0]['amc_code'] + ".jpg\" />";
-    content += "<div>" + data['data']['bse_master'][0]['scheme_name'] + "</div>";
+    content += "<div class='details-page-text'>" + data['data']['bse_master'][0]['scheme_name'] + "</div>";
 
     var todayValue = data['data']['graph'][length - 1]['y'];
     var yesterdayValue = data['data']['graph'][length - 2]['y'];
@@ -44,19 +52,54 @@ function prepareDetailsPage(data) {
     fiveYearReturns = Math.round(fiveYearReturns * 100) / 100;
 
     if (netPercentageChange < 0) {
+        content += "<div class='negative-nav details-page-text'>";
+    } else if (netPercentageChange > 0) {
+        content += "<div class='positive-nav details-page-text'>";
+    } else {
         content += "<div>";
-        content += "<span>" + todayValue + "</span>";
-        content += "<span>( " + round(netPercentageChange) + "% )</span>";
     }
+    content += "<span>" + todayValue + "</span>";
+    content += "<span>( " + round(netPercentageChange) + "% )</span>";
     content += "<span> as on " + dateTime + "</span>";
     content += "</div>";
 
-    content += "<table>";
+    content += "<hr/>";
+    content += "<table class='returns-table'>";
     content += "<tr><td>1 Year</td><td>" + oneYearReturns + "%</td></tr>";
     content += "<tr><td>3 Year</td><td>" + threeYearReturns + "%</td></tr>";
     content += "<tr><td>5 Year</td><td>" + fiveYearReturns + "%</td></tr>";
     content += "</table>";
-    
+
+    var minInvestment = data['data']['bse_master'][0]['min_purchase_amt'];
+    minInvestment = Math.round(minInvestment * 100) / 100;
+    var schemeClass = data['data']['master'][0]['scheme_class'];
+    var manager = data['data']['master'][0]['manager'];
+    var launchDate = data['data']['master'][0]['launch_date'];
+    var exitLoad = data['data']['master'][0]['exit_load'];
+    if (exitLoad != 'nil') {
+        exitLoad += " %";
+    }
+    var dividentPayout = parseFloat(data['data']['master'][0]['dividend_percentage']);
+    if (dividentPayout == "")
+        dividentPayout = "N/A";
+    else {
+        dividentPayout = Math.round(dividentPayout * 100) / 100 + " %";
+    }
+
+    content += "<hr/>";
+    content += "<table class='additional-details-table'>";
+    content += "<tr><td>Min Investment</td><td>Scheme Class</td></tr>";
+    content += "<tr><td>" + minInvestment + "</td><td>" + schemeClass + "</td></tr>";
+    content += "<tr><td></td><td></td></tr>";
+
+    content += "<tr><td>Manager Name</td><td>Launch Date</td></tr>";
+    content += "<tr><td>" + manager + "</td><td>" + launchDate + "</td></tr>";
+    content += "<tr><td></td><td></td></tr>";
+
+    content += "<tr><td>Exit Load</td><td>Dividend Payout</td></tr>";
+    content += "<tr><td>" + exitLoad + "</td><td>" + dividentPayout + "</td></tr>";
+    content += "</table>";
+
     content += "</div>";
     return content;
 }
