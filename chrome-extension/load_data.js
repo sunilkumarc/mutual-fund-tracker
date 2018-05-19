@@ -13,17 +13,14 @@ $("#fund-options").click(function (ev) {
     $("#fund-options").html("");
 });
 
-$("#go-back").click(function (ev) {
-    $("#details-page").slideUp();
-    $("#home-page").slideDown();
-});
-
 $('body').on('click', 'a', function () {
     if ($(this).attr("id") != "clear")
         chrome.tabs.create({ url: $(this).attr('href') });
 });
 
 $(document).on('click','.go-back',function(){
+    $('#chart-container').css('display', 'none');
+
     $("#details-page").slideUp();
     $("#home-page").slideDown();
 });
@@ -33,10 +30,11 @@ function prepareDetailsPage(data) {
     var length = data['data']['graph'].length;
     var content = "";
 
-    content += "<i class='em em-x close-details-page go-back'></i>";
+    // content += "<i class='em em-x close-details-page go-back'></i>";
+    content += "<i class='fas fa-times-circle close-details-page go-back'></i>";
     content += "<div class='details-page-image'>";
     content += "<img src=\"https://coin.zerodha.com/images/fund_houses/" + data['data']['bse_master'][0]['amc_code'] + ".jpg\" />";
-    content += "<div class='details-page-text'>" + data['data']['bse_master'][0]['scheme_name'] + "</div>";
+    content += "<div class='details-page-text details-page-text-name'>" + data['data']['bse_master'][0]['scheme_name'] + "</div>";
 
     var todayValue = data['data']['graph'][length - 1]['y'];
     var yesterdayValue = data['data']['graph'][length - 2]['y'];
@@ -52,22 +50,49 @@ function prepareDetailsPage(data) {
     fiveYearReturns = Math.round(fiveYearReturns * 100) / 100;
 
     if (netPercentageChange < 0) {
-        content += "<div class='negative-nav details-page-text'>";
+        content += "<div class='negative-nav details-page-text'> ";
+        content += "<span>&#8377; " + todayValue + "</span>";
+        content += "<span> ( <i class='fas fa-arrow-circle-down'></i> " + round(netPercentageChange) + "% ) </span>";
     } else if (netPercentageChange > 0) {
         content += "<div class='positive-nav details-page-text'>";
+        content += "<span>&#8377; " + todayValue + "</span>";
+        content += "<span> ( <i class='fas fa-arrow-circle-up'></i> " + round(netPercentageChange) + "% ) </span>";
     } else {
         content += "<div>";
+        content += "<span>&#8377; " + todayValue + "</span>";
+        content += "<span> ( " + round(netPercentageChange) + "% ) </span>";
     }
-    content += "<span>" + todayValue + "</span>";
-    content += "<span>( " + round(netPercentageChange) + "% )</span>";
-    content += "<span> as on " + dateTime + "</span>";
+    
+    content += "<span class='details-page-date'> as on " + dateTime + "</span>";
     content += "</div>";
 
-    content += "<hr/>";
+    content += "<hr class='details-page-hr'/>";
     content += "<table class='returns-table'>";
-    content += "<tr><td>1 Year</td><td>" + oneYearReturns + "%</td></tr>";
-    content += "<tr><td>3 Year</td><td>" + threeYearReturns + "%</td></tr>";
-    content += "<tr><td>5 Year</td><td>" + fiveYearReturns + "%</td></tr>";
+    
+    content += "<tr><td>1 Year</td>";
+    if (oneYearReturns > 0)
+        content += "<td style='font-weight:bold; color:green;'><i class='fas fa-arrow-circle-up'></i> " + oneYearReturns + "%</td></tr>";
+    else if (oneYearReturns < 0)
+        content += "<td style='font-weight:bold; color:red;'><i class='fas fa-arrow-circle-down'></i> " + oneYearReturns + "%</td></tr>";
+    else
+    content += "<td style='font-weight:bold;'>" + oneYearReturns + "%</td></tr>";
+
+    content += "<tr><td>3 Year</td>";
+    if (oneYearReturns > 0)
+        content += "<td style='font-weight:bold; color:green;'><i class='fas fa-arrow-circle-up'></i> " + threeYearReturns + "%</td></tr>";
+    else if (oneYearReturns < 0)
+        content += "<td style='font-weight:bold; color:red;'><i class='fas fa-arrow-circle-down'></i> " + threeYearReturns + "%</td></tr>";
+    else
+        content += "<td style='font-weight:bold; '>" + threeYearReturns + "%</td></tr>";
+
+    content += "<tr><td>5 Year</td>";
+    if (oneYearReturns > 0)
+        content += "<td style='font-weight:bold; color:green;'><i class='fas fa-arrow-circle-up'></i> " + fiveYearReturns + "%</td></tr>";
+    else if (oneYearReturns < 0)
+        content += "<td style='font-weight:bold; color:red;'><i class='fas fa-arrow-circle-down'></i> " + fiveYearReturns + "%</td></tr>";
+    else
+        content += "<td style='font-weight:bold; '>" + fiveYearReturns + "%</td></tr>";
+
     content += "</table>";
 
     var minInvestment = data['data']['bse_master'][0]['min_purchase_amt'];
@@ -86,22 +111,83 @@ function prepareDetailsPage(data) {
         dividentPayout = Math.round(dividentPayout * 100) / 100 + " %";
     }
 
-    content += "<hr/>";
+    content += "<hr class='details-page-hr'/>";
     content += "<table class='additional-details-table'>";
-    content += "<tr><td>Min Investment</td><td>Scheme Class</td></tr>";
-    content += "<tr><td>" + minInvestment + "</td><td>" + schemeClass + "</td></tr>";
+    content += "<tr style='font-weight: bold;'><td>Min Investment</td><td>Scheme Class</td></tr>";
+    content += "<tr style='font-size: 0.9em;'><td>&#8377; " + minInvestment + "</td><td>" + schemeClass + "</td></tr>";
     content += "<tr><td></td><td></td></tr>";
 
-    content += "<tr><td>Manager Name</td><td>Launch Date</td></tr>";
-    content += "<tr><td>" + manager + "</td><td>" + launchDate + "</td></tr>";
+    content += "<tr style='font-weight: bold;'><td>Manager Name</td><td>Launch Date</td></tr>";
+    content += "<tr style='font-size: 0.9em;'><td>" + manager + "</td><td>" + launchDate + "</td></tr>";
     content += "<tr><td></td><td></td></tr>";
 
-    content += "<tr><td>Exit Load</td><td>Dividend Payout</td></tr>";
-    content += "<tr><td>" + exitLoad + "</td><td>" + dividentPayout + "</td></tr>";
+    content += "<tr style='font-weight: bold;'><td>Exit Load</td><td>Dividend Payout</td></tr>";
+    content += "<tr style='font-size: 0.9em;'><td>" + exitLoad + "</td><td>" + dividentPayout + "</td></tr>";
     content += "</table>";
+    content += "<hr class='details-page-hr'/>";
+
+    loadChart(data);
 
     content += "</div>";
     return content;
+}
+
+function getDataPoints(data) {
+    var length = data['data']['graph'].length;
+    
+    var apiGraphValues = data['data']['graph'];
+    
+    var graphValues = [];
+    var valuesCount = 10;
+    for (var i = valuesCount; i > 0; --i) {
+        graphValues.push(apiGraphValues[length-i]);
+    }
+    
+    var graphData = [];
+    for (i = 0; i < graphValues.length; ++i) {
+        var time = new Date(graphValues[i]['x']);
+        graphData.push({x: time, y: graphValues[i]['y']});
+    }
+
+    return graphData;
+}
+
+function loadChart(data) {
+    var chartData = getDataPoints(data);
+
+    var chart = new CanvasJS.Chart("chart-container", {
+        animationEnabled: true,
+        title:{
+            text: "NAV of Mutual Fund ( last 10 days )"
+        },
+        axisX:{
+            valueFormatString: "DD MMM",
+            crosshair: {
+                enabled: true,
+                snapToDataPoint: true
+            }
+        },
+        axisY: {
+            title: "NAV (In Rupees)",
+            includeZero: false,
+            valueFormatString: "##0.00",
+            crosshair: {
+                enabled: true,
+                snapToDataPoint: true,
+                labelFormatter: function(e) {
+                    return "$" + CanvasJS.formatNumber(e.value, "##0.00");
+                }
+            }
+        },
+        data: [{
+            type: "area",
+            xValueFormatString: "DD MMM",
+            yValueFormatString: "##0.00",
+            dataPoints: chartData
+        }]
+    });
+    chart.render();
+    $('#chart-container').css('display', 'block');
 }
 
 $(document).on('click','.go-to-details',function(){
@@ -200,7 +286,7 @@ function getData(fund_id) {
             var length = data['data']['graph'].length;
             var content = "<tr>";
             // content += "<td style=\"text-align: left; padding-right: 20px; box-shadow: -1px 0px 10px 0px #aaaaaa;\"><a id=\"mutual-fund\" href=\"https://coin.zerodha.com/funds/" + fund_id + "\">" + data['data']['bse_master'][0]['scheme_name'] + "</a></td>";
-            content += "<td style=\"text-align: left; padding-right: 20px; box-shadow: -1px 0px 10px 0px #aaaaaa;\"><span class=\"go-to-details\"  href=\"" + fund_id + "\">" + data['data']['bse_master'][0]['scheme_name'] + "</span></td>";
+            content += "<td class=\"go-to-details\"  href=\"" + fund_id + "\" style=\"cursor: pointer; text-align: left; padding-right: 20px; box-shadow: -1px 0px 10px 0px #aaaaaa;\"><span>" + data['data']['bse_master'][0]['scheme_name'] + "</span></td>";
             content += "<td style=\"text-align: center; box-shadow: -1px 0px 10px 0px #aaaaaa;\">" + "&#8377; " + round(data['data']['graph'][length - 1]['y']) + "</td>";
 
             var todayValue = data['data']['graph'][length - 1]['y'];

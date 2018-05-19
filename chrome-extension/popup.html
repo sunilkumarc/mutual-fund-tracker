@@ -6,6 +6,7 @@
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 </head>
 <body>
 	
@@ -42,19 +43,21 @@
 
         <div id="popup">
             <hr/>
-            <h3>Guess What! <br/><br/>
-                <h3>I have been working on Android app for this same extension<i class="em em-iphone"></i> <br/>
+                <h3>New Feature: Clicking on a mutual fund name now opens a details page!<br/>
                     Cheers! <i class="em em-beers"></i></h3>
-            </h3>
         </div>
     </div>
-    <div id="details-page">
-        
+    <div>
+        <div id="details-page">
+            
+        </div>
+        <div id="chart-container" style="height: 300px; width: 100%;"></div>
     </div>
 
     <script src="mf_data.js"></script>
     <script src="jquery.js"></script>
     <script src="jquery-cookie.js"></script>
+    <script src="canvasjs.min.js"></script>
     <script src="load_data.js"></script>
     <script src="popup.js"></script>
 </body>

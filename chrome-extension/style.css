@@ -231,10 +231,39 @@ h3 a {
     width: 100%;
     text-align: center;
     padding: 0.4em;
+    font-weight: bold;
+}
+
+.details-page-text-name {
+    font-size: 1.2em;
 }
 
 .close-details-page {
-    margin-left: 96%;
+    margin-left: 95%;
     margin-top: 2%;
     cursor: pointer;
+    color: #E74D5F;
+    font-size: 1.5em;
+}
+
+#details-page {
+    background-color: #fff;
+    font-size: 1.1em;
+}
+
+.details-page-hr {
+    border-color: #EEEFF0;
+}
+
+.details-page-date {
+    color: grey;
+}
+
+#chart-container {
+    background-color: #fff;
+    display: none;
+}
+
+.go-to-details:hover {
+    background-color: rgb(250, 249, 249);
 }
