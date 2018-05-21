@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { View, UIManager, findNodeHandle, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -10,11 +11,11 @@ export default class PopupMenu extends Component {
     actions:  PropTypes.arrayOf(PropTypes.string).isRequired,
     onPress: PropTypes.func.isRequired
   }
-
+ 
   constructor (props) {
     super(props)
     this.state = {
-      icon: null
+      icon: null 
     }
   }
 

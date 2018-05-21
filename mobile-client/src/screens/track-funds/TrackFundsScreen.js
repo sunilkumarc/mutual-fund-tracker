@@ -162,7 +162,7 @@ class TrackFundsScreen extends Component {
         }
         let cards = this.state.tableData.map((fund) => {
             let imagePath = 'https://coin.zerodha.com/images/fund_houses/' + fund["amcCode"] + '.jpg';
-            let fundPecentTag = fund["netPercentageChange"] > 0 
+            let fundPercentTag = fund["netPercentageChange"] > 0 
                                         ? <Text style={{color: 'green', fontWeight: 'bold', fontSize: 12}}><FontAwesome name='arrow-circle-up' size={15} color='green'/> {fund["netPercentageChange"]}%</Text> 
                                         : <Text style={{color: 'red', fontWeight: 'bold', fontSize: 12}}><FontAwesome name='arrow-circle-down' size={15} color='red'/> {fund["netPercentageChange"]}%</Text>;
             return <Card
@@ -183,7 +183,7 @@ class TrackFundsScreen extends Component {
                                         <Text style={{ fontSize: 12, fontFamily: 'lato' }}><FontAwesome name='rupee' size={11} /> {fund["NAV"]}</Text>
                                     </View>
                                     <View style={styles.fundPercent}>
-                                        {fundPecentTag}
+                                        {fundPercentTag}
                                     </View>
                                 </View>
                             </View>
@@ -213,7 +213,7 @@ class TrackFundsScreen extends Component {
                         container: {
                             height: 20,
                             backgroundColor: '#FF6347',
-                            marginLeft: 48
+                            
                         },
                         text: {
                             fontSize: 10,

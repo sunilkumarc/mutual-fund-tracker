@@ -3,9 +3,8 @@ import {
     DeviceEventEmitter
 } from 'react-native';
 import {
-    TabNavigator,
-    DrawerNavigator,
-    StackNavigator
+    createStackNavigator,
+    createBottomTabNavigator
 } from 'react-navigation';
 import {
     TrackFundsScreen,
@@ -18,7 +17,7 @@ import {
     Octicons
 } from '@expo/vector-icons';
 
-const MyStackNavigator = StackNavigator({
+const MyStackNavigator = createStackNavigator({
     Track: {
         screen: TrackFundsScreen
     },
@@ -29,7 +28,7 @@ const MyStackNavigator = StackNavigator({
         headerMode: 'none'
     });
 
-const MyTabNavigator = TabNavigator({
+const MyTabNavigator = createBottomTabNavigator({
     Track: {
         screen: MyStackNavigator,
     },
@@ -38,25 +37,25 @@ const MyTabNavigator = TabNavigator({
     }
 }, {
         tabBarPosition: 'bottom',
-        tabBarOptions: {
-            upperCaseLabel: false,
-            activeTintColor: '#7562DB',
-            inactiveTintColor: '#7562DB',
-            pressColor: '#7562DB',
-            indicatorStyle: { backgroundColor: '#6458A8' },
-            style: {
-                backgroundColor: '#fff'
-            },
-            labelStyle: {
-                fontSize: 13,
-                fontWeight: 'bold'
-            },
-        },
-        navigationOptions: ({ navigation }) => ({
-            tabBarOnPress: (scene, jumpToIndex) => {
-                jumpToIndex(scene.index);
-            },
-        }),
+        // tabBarOptions: {
+        //     upperCaseLabel: false,
+        //     activeTintColor: '#7562CC',
+        //     inactiveTintColor: '#7562DB',
+        //     pressColor: '#7562DB',
+        //     indicatorStyle: { backgroundColor: '#6458A8' },
+        //     style: {
+        //         backgroundColor: '#fff'
+        //     },
+        //     labelStyle: {
+        //         fontSize: 13,
+        //         fontWeight: 'bold'
+        //     },
+        // },
+        // navigationOptions: ({ navigation, navigationOptions }) => ({
+        //     tabBarOnPress: (scene, jumpToIndex) => {
+        //         jumpToIndex(scene.index);
+        //     },
+        // }),
     });
 
 export default MyTabNavigator;
