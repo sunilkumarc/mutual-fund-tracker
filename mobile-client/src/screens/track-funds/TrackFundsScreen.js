@@ -145,6 +145,7 @@ class TrackFundsScreen extends Component {
         this.setState({refreshing: false, tableData: []});
     }
 
+
     render() {
         if (this.state.isLoading) {
             return (
@@ -162,9 +163,10 @@ class TrackFundsScreen extends Component {
         }
         let cards = this.state.tableData.map((fund) => {
             let imagePath = 'https://coin.zerodha.com/images/fund_houses/' + fund["amcCode"] + '.jpg';
+
             let fundPercentTag = fund["netPercentageChange"] > 0 
-                                        ? <Text style={{color: 'green', fontWeight: 'bold', fontSize: 12}}><FontAwesome name='arrow-circle-up' size={15} color='green'/> {fund["netPercentageChange"]}%</Text> 
-                                        : <Text style={{color: 'red', fontWeight: 'bold', fontSize: 12}}><FontAwesome name='arrow-circle-down' size={15} color='red'/> {fund["netPercentageChange"]}%</Text>;
+                                        ? <Text style={{color: 'green', fontSize: 12}}><FontAwesome name='arrow-circle-up' size={15} color='green'/> {fund["netPercentageChange"]}%</Text> 
+                                        : <Text style={{color: 'red', fontSize: 12}}><FontAwesome name='arrow-circle-down' size={15} color='red'/> {fund["netPercentageChange"]}%</Text>;
             return <Card
                         style={{ container: styles.card }} key={fund["mutualFundName"]}>
                         <View style={styles.cardMain}>

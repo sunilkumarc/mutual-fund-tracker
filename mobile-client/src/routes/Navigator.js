@@ -12,10 +12,15 @@ import {
     FundDetailsScreen
 } from '../screens';
 import Exponent from 'expo';
+import Icon from 'react-native-vector-icons/Ionicons';
 import {
     FontAwesome,
-    Octicons
+    Ionicons,
+    MaterialIcons
 } from '@expo/vector-icons';
+
+
+import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 
 const MyStackNavigator = createStackNavigator({
     Track: {
@@ -28,35 +33,42 @@ const MyStackNavigator = createStackNavigator({
         headerMode: 'none'
     });
 
-const MyTabNavigator = createBottomTabNavigator({
+const MyTabNavigator = createMaterialBottomTabNavigator({
     Track: {
         screen: MyStackNavigator,
+        navigationOptions: {
+            tabBarLabel: {
+                tintColor: 'blue'
+            },
+            tabBarIcon: ({ tintColor }) => (
+                <MaterialIcons name = "view-list" color = { tintColor } size = { 25 }/>
+            )
+        }
     },
     Details: {
         screen: FundDetailsScreen,
+        navigationOptions: {
+            tabBarIcon: ({ tintColor }) => (
+                <Ionicons name = "md-analytics" color = { tintColor } size = { 25 }/>
+            )
+        }
     }
 }, {
-        tabBarPosition: 'bottom',
-        // tabBarOptions: {
-        //     upperCaseLabel: false,
-        //     activeTintColor: '#7562CC',
-        //     inactiveTintColor: '#7562DB',
-        //     pressColor: '#7562DB',
-        //     indicatorStyle: { backgroundColor: '#6458A8' },
-        //     style: {
-        //         backgroundColor: '#fff'
-        //     },
-        //     labelStyle: {
-        //         fontSize: 13,
-        //         fontWeight: 'bold'
-        //     },
-        // },
-        // navigationOptions: ({ navigation, navigationOptions }) => ({
-        //     tabBarOnPress: (scene, jumpToIndex) => {
-        //         jumpToIndex(scene.index);
-        //     },
-        // }),
-    });
+    backBehavior: 'initialRoute',
+    shifting: true,
+    animationEnabled: true,
+    activeTintColor: 'white',
+    
+    tabBarOptions: {
+    
+        labelStyle: {
+            fontSize: 14,
+        },
+        style: {
+            borderTopWidth: 0.5,
+            borderTopColor: '#6458A8'
+        }
+    }
+});
 
 export default MyTabNavigator;
-

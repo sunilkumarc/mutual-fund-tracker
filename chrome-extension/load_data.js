@@ -187,7 +187,6 @@ function loadChart(data) {
         }]
     });
     chart.render();
-    $('#chart-container').css('display', 'block');
 }
 
 $(document).on('click','.go-to-details',function(){
@@ -198,9 +197,10 @@ $(document).on('click','.go-to-details',function(){
         async: false,
         success: function(data) {
             $("#details-page").html(prepareDetailsPage(data));
-        
             $("#home-page").slideUp();
             $("#details-page").slideDown();
+            
+            $('#chart-container').css('display', 'block');
         },
         error: function(error) {
             console.log('HERE' + error);
