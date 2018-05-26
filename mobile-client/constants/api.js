@@ -39,7 +39,12 @@ class API {
         fiveYearReturns = Math.round(fiveYearReturns * 100) / 100;
 
         let apiGraphValues = data['data']['graph'];
-        let graphValues = [apiGraphValues[length - 5], apiGraphValues[length-4], apiGraphValues[length-3], apiGraphValues[length-2], apiGraphValues[length-1]];
+        var graphValues = [];
+        var valuesCount = 8;
+        for (var i = valuesCount; i > 0; --i) {
+            graphValues.push(apiGraphValues[length-i]);
+        }
+
         let monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
             "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
         ];
@@ -47,7 +52,7 @@ class API {
         let graphData = [];
         for (i = 0; i < graphValues.length; ++i) {
             let time = new Date(graphValues[i]['x']);
-            graphData.push({x: monthNames[time.getMonth()] + ' ' + time.getDate(), y: graphValues[i]['y']});
+            graphData.push({x: (time.getMonth()+1) + '/' + time.getDate(), y: graphValues[i]['y']});
         }
         let lastUpdated = new Date();
         return {

@@ -31,17 +31,14 @@ const MyStackNavigator = createStackNavigator({
     }
 }, {
         headerMode: 'none'
-    });
-
-const MyTabNavigator = createMaterialBottomTabNavigator({
+});
+    
+const MyTabNavigator = createBottomTabNavigator({
     Track: {
         screen: MyStackNavigator,
         navigationOptions: {
-            tabBarLabel: {
-                tintColor: 'blue'
-            },
             tabBarIcon: ({ tintColor }) => (
-                <MaterialIcons name = "view-list" color = { tintColor } size = { 25 }/>
+                <MaterialIcons name = "view-list" color = { tintColor } size = { 22 }/>
             )
         }
     },
@@ -49,26 +46,31 @@ const MyTabNavigator = createMaterialBottomTabNavigator({
         screen: FundDetailsScreen,
         navigationOptions: {
             tabBarIcon: ({ tintColor }) => (
-                <Ionicons name = "md-analytics" color = { tintColor } size = { 25 }/>
+                <Ionicons name = "md-analytics" color = { tintColor } size = { 22 }/>
             )
         }
     }
 }, {
     backBehavior: 'initialRoute',
-    shifting: true,
-    animationEnabled: true,
-    activeTintColor: 'white',
-    
+    swipeEnabled: true,
     tabBarOptions: {
-    
-        labelStyle: {
-            fontSize: 14,
-        },
+        upperCaseLabel: false,
+        activeTintColor: '#7562DB',
+        pressColor: '#7562DB',
+        pressOpacity: 1,    
+        indicatorStyle: { backgroundColor: '#6458A8' },
         style: {
-            borderTopWidth: 0.5,
-            borderTopColor: '#6458A8'
+            backgroundColor: '#fff'
+        },
+        labelStyle: {
+            fontSize: 13,
+            fontWeight: 'bold'
+        },
+        tabStyle: {
+            borderRightWidth: 0.5,
+            borderRightColor: '#6458A8'
         }
-    }
+    },
 });
 
 export default MyTabNavigator;

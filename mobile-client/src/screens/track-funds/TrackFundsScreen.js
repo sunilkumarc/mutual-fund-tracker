@@ -34,6 +34,12 @@ import { Toolbar, COLOR, ThemeProvider, Card, Button, ActionButton } from 'react
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import { FundsAPI } from '../../../constants/api';
 import PopupMenu from '../../../helpers/PopupMenu';
+import {
+    AdMobBanner,
+    AdMobInterstitial,
+    PublisherBanner,
+    AdMobRewarded
+  } from 'expo';
 
 const uiTheme = {
     palette: {
@@ -211,15 +217,15 @@ class TrackFundsScreen extends Component {
                 <Button raised primary accent text="Delete All"
                     onPress={() => this._deleteAll()}
                     style={{
-                        upperCase: false,
                         container: {
                             height: 20,
                             backgroundColor: '#FF6347',
-                            
+                            marginEnd: 10,
                         },
                         text: {
                             fontSize: 10,
-                            fontFamily: 'lato'
+                            fontFamily: 'lato',
+                            
                         }
                     }} />
             </View>;
@@ -246,8 +252,13 @@ class TrackFundsScreen extends Component {
                     }
                     showsVerticalScrollIndicator={false}>
                     {lastRefreshedText}
-                    {cards} 
+                    {cards}
                 </ScrollView>
+                <AdMobBanner
+                        bannerSize="fullBanner"
+                        adUnitID="ca-app-pub-9886802792048958/9950438721"
+                        testDeviceID="EMULATOR"
+                        onDidFailToReceiveAdWithError={this.bannerError} />
             </View>
         );
     }
@@ -260,12 +271,14 @@ const styles = StyleSheet.create({
         fontSize: 20
     },
     lastRefreshedView: {
+        flex:1,
         marginLeft: 15,
-        marginTop: 12,
+        marginTop: 15,
         flexDirection: 'row',
         height: 20,
     },
     lastRefreshedText: {
+        flex:0.99,
         fontFamily: 'lato_bold', 
         fontSize: 12,
         color: 'dimgray',
