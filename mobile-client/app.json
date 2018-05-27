@@ -6,9 +6,13 @@
     "slug": "mobile-client",
     "privacy": "public",
     "sdkVersion": "27.0.0",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "primaryColor": "#cccccc",
+    "splash": {
+      "image": "./assets/images/SplashScreen3.png",
+      "backgroundColor": "#6458A8"
+    },
     "loading": {
       "backgroundImage": "./assets/images/SplashScreen.png",
       "icon": "./assets/icons/icon.png",
