@@ -22,7 +22,8 @@
       "assetExts": ["ttf", "mp4"]
     },
     "android": {
-      "package": "com.sunil_srt.apps"
+      "package": "com.sunil_srt.apps",
+      "versionCode": 2
     }
   }
 }
