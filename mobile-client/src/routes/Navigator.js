@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import {
     createStackNavigator,
-    createBottomTabNavigator
+    createBottomTabNavigator,
 } from 'react-navigation';
 import {
     TrackFundsScreen,
@@ -16,7 +16,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {
     FontAwesome,
     Ionicons,
-    MaterialIcons
+    MaterialIcons,
+    MaterialCommunityIcons
 } from '@expo/vector-icons';
 
 
@@ -38,7 +39,8 @@ const MyTabNavigator = createBottomTabNavigator({
         screen: MyStackNavigator,
         navigationOptions: {
             tabBarIcon: ({ tintColor }) => (
-                <MaterialIcons name = "view-list" color = { tintColor } size = { 22 }/>
+                <MaterialCommunityIcons name = "cards" color = { tintColor } size = { 20 }/>
+                
             )
         }
     },
@@ -46,7 +48,7 @@ const MyTabNavigator = createBottomTabNavigator({
         screen: FundDetailsScreen,
         navigationOptions: {
             tabBarIcon: ({ tintColor }) => (
-                <Ionicons name = "md-analytics" color = { tintColor } size = { 22 }/>
+                <Ionicons name = "md-analytics" color = { tintColor } size = { 20 }/>
             )
         }
     }
@@ -57,17 +59,16 @@ const MyTabNavigator = createBottomTabNavigator({
         upperCaseLabel: false,
         activeTintColor: '#7562DB',
         pressColor: '#7562DB',
-        pressOpacity: 1,    
-        indicatorStyle: { backgroundColor: '#6458A8' },
+        pressOpacity: 1,
         style: {
-            backgroundColor: '#fff'
+            backgroundColor: '#fff',
+            borderTopWidth: 0.6,
+            borderTopColor: '#6458A8',
         },
         labelStyle: {
-            fontSize: 13,
-            fontWeight: 'bold'
+            fontSize: 12,
         },
         tabStyle: {
-            borderRightWidth: 0.5,
             borderRightColor: '#6458A8'
         }
     },
