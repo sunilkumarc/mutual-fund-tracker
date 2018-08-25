@@ -138,7 +138,7 @@ function getDataPoints(data) {
     var apiGraphValues = data['data']['graph'];
     
     var graphValues = [];
-    var valuesCount = 10;
+    var valuesCount = apiGraphValues.length;
     for (var i = valuesCount; i > 0; --i) {
         graphValues.push(apiGraphValues[length-i]);
     }
@@ -161,7 +161,7 @@ function loadChart(data) {
             text: "NAV of Mutual Fund ( last 10 days )"
         },
         axisX:{
-            valueFormatString: "DD MMM",
+            valueFormatString: "DD MMM YYYY",
             crosshair: {
                 enabled: true,
                 snapToDataPoint: true
@@ -181,7 +181,7 @@ function loadChart(data) {
         },
         data: [{
             type: "area",
-            xValueFormatString: "DD MMM",
+            xValueFormatString: "DD MMM YYYY",
             yValueFormatString: "##0.00",
             dataPoints: chartData
         }]
