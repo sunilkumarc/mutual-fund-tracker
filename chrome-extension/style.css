@@ -287,17 +287,12 @@ h3 a {
 div.im-checkout {
     margin-bottom: 0;
     font-weight: bold;
-    font-size: 1em;
-    background-color: #006dcc;
 }
 
 div.im-checkout a {
-    display: inline-block;
-    border: none;
-    color: #fff;
-    padding: 7px;
+    color: dodgerblue;
 }
 
 div.im-checkout a:hover {
-    background-color: #04c
+    color: #2349F5;
 }
