@@ -1,10 +1,10 @@
 setTimeout(() => {
-    var mobile_client_popup = window.localStorage.getItem('android-app-release-notification-2');
+    var mobile_client_popup = window.localStorage.getItem('donate-button-notification');
     if (mobile_client_popup == null) {
         $('#popup').show();
-        window.localStorage.setItem('android-app-release-notification-2', 2);
+        window.localStorage.setItem('donate-button-notification', 1);
     } else if (mobile_client_popup > 0) {
         $('#popup').show();
-        window.localStorage.setItem('android-app-release-notification-2', mobile_client_popup-1);
+        window.localStorage.setItem('donate-button-notification', mobile_client_popup-1);
     }
 }, 1000);
