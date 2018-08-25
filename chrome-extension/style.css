@@ -96,7 +96,6 @@ table div {
     font-size: 1.2em;
     cursor: pointer;
     color: dodgerblue;
-    float: right;
     font-style: italic;
 }
 
@@ -266,4 +265,34 @@ h3 a {
 
 .go-to-details:hover {
     background-color: rgb(250, 249, 249);
+}
+
+#instamojo-donate-button {
+    font-size: 1.2em;
+    cursor: pointer;
+    color: dodgerblue;
+    text-decoration: underline;
+    font-style: italic;
+}
+
+.im-checkout {
+    display: inline-block;
+    font-size: 1.2em;
+    cursor: pointer;
+    text-decoration: underline;
+    font-style: italic;
+    margin-bottom: 0;
+}
+
+div.im-checkout {
+    margin-bottom: 0;
+    font-weight: bold;
+}
+
+div.im-checkout a {
+    color: dodgerblue;
+}
+
+div.im-checkout a:hover {
+    color: #2349F5;
 }
