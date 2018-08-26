@@ -296,3 +296,24 @@ div.im-checkout a {
 div.im-checkout a:hover {
     color: #2349F5;
 }
+
+.chart-duration {
+    border: none;
+    display: inline-block;
+    margin-left: 4%;
+    box-shadow: 1px 1px 6px 1px grey;
+    margin-bottom: 2%;
+    width: 39%;
+}
+
+.chart-duration-button {
+    display: inline-block;
+    background-color: #fff;
+    color: #000;
+    padding: 3%;
+}
+
+.chart-duration-button:hover {
+    background-color: #EEEFF0;
+    cursor: pointer;
+}

@@ -1,3 +1,5 @@
+var globalData = null;
+
 function round(num) {
     return Math.round(num * 100) / 100;
 }
@@ -126,19 +128,32 @@ function prepareDetailsPage(data) {
     content += "</table>";
     content += "<hr class='details-page-hr'/>";
 
-    loadChart(data);
+    content += "<div class='chart-duration'><div>"
+    content += "<div class='chart-duration-button' data-duration='max' style='background-color:#EEEFF0'>max</div>"
+    content += "<div class='chart-duration-button' data-duration='1m'>1m</div>"
+    content += "<div class='chart-duration-button' data-duration='3m'>3m</div>"
+    content += "<div class='chart-duration-button' data-duration='6m'>6m</div>"
+    content += "<div class='chart-duration-button' data-duration='1y'>1y</div>"
+    content += "<div class='chart-duration-button' data-duration='3y'>3y</div>"
+    content += "<div class='chart-duration-button' data-duration='5y'>5y</div>"
+    content += "</div></div>"
+
+    loadChart(data, data['data']['graph'].length);
 
     content += "</div>";
     return content;
 }
 
-function getDataPoints(data) {
+function getDataPoints(data, duration) {
     var length = data['data']['graph'].length;
     
     var apiGraphValues = data['data']['graph'];
     
     var graphValues = [];
     var valuesCount = apiGraphValues.length;
+    if (duration < valuesCount) {
+        valuesCount = duration;
+    }
     for (var i = valuesCount; i > 0; --i) {
         graphValues.push(apiGraphValues[length-i]);
     }
@@ -152,8 +167,8 @@ function getDataPoints(data) {
     return graphData;
 }
 
-function loadChart(data) {
-    var chartData = getDataPoints(data);
+function loadChart(data, duration) {
+    var chartData = getDataPoints(data, duration);
 
     var chart = new CanvasJS.Chart("chart-container", {
         animationEnabled: true,
@@ -192,10 +207,12 @@ function loadChart(data) {
 $(document).on('click','.go-to-details',function(){
     var fund_id = $(this).attr("href");
     var url = "https://mf.zerodha.com/api/fund-info?graph_type=normal&scheme_id=" + fund_id + "&session_token=";
+    console.log(url);
     $.ajax({
         url: url,
         async: false,
         success: function(data) {
+            globalData = data;
             $("#details-page").html(prepareDetailsPage(data));
             $("#home-page").slideUp();
             $("#details-page").slideDown();
@@ -321,5 +338,36 @@ function loadData() {
         $("#loading-text").css("display", "none");
     });
 }
+
+$(document).on('click','.chart-duration-button',function(data){
+    var duration = $(this).attr('data-duration');
+    $('.chart-duration-button').css('background-color', '#fff');
+    $(this).css('background-color', '#EEEFF0');
+    var apiGraphValues = globalData['data']['graph'];
+    
+    switch(duration) {
+        case '1m':
+            loadChart(globalData, 22);
+            break;
+        case '3m':
+            loadChart(globalData, 66);
+            break;
+        case '6m':
+            loadChart(globalData, 132);
+            break;
+        case '1y':
+            loadChart(globalData, 264);
+            break;
+        case '3y':
+            loadChart(globalData, 792);
+            break;
+        case '5y':
+            loadChart(globalData, 1320);
+            break;
+        default:
+            loadChart(globalData, apiGraphValues.length);
+            break;
+    }
+});
 
 loadData();
