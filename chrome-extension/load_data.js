@@ -138,7 +138,7 @@ function prepareDetailsPage(data) {
     content += "<div class='chart-duration-button' data-duration='5y'>5y</div>"
     content += "</div></div>"
 
-    loadChart(data, data['data']['graph'].length);
+    loadChart(data, data['data']['graph'].length, 'max');
 
     content += "</div>";
     return content;
@@ -167,13 +167,13 @@ function getDataPoints(data, duration) {
     return graphData;
 }
 
-function loadChart(data, duration) {
+function loadChart(data, duration, duration_text) {
     var chartData = getDataPoints(data, duration);
 
     var chart = new CanvasJS.Chart("chart-container", {
         animationEnabled: true,
         title:{
-            text: "NAV of Mutual Fund ( last 10 days )"
+            text: "NAV of Mutual Fund ( " + duration_text + " )"
         },
         axisX:{
             valueFormatString: "DD MMM YYYY",
@@ -347,25 +347,25 @@ $(document).on('click','.chart-duration-button',function(data){
     
     switch(duration) {
         case '1m':
-            loadChart(globalData, 22);
+            loadChart(globalData, 22, '1 month');
             break;
         case '3m':
-            loadChart(globalData, 66);
+            loadChart(globalData, 66, '3 months');
             break;
         case '6m':
-            loadChart(globalData, 132);
+            loadChart(globalData, 132, '6 months');
             break;
         case '1y':
-            loadChart(globalData, 264);
+            loadChart(globalData, 264, '1 year');
             break;
         case '3y':
-            loadChart(globalData, 792);
+            loadChart(globalData, 792, '3 years');
             break;
         case '5y':
-            loadChart(globalData, 1320);
+            loadChart(globalData, 1320, '5 years');
             break;
         default:
-            loadChart(globalData, apiGraphValues.length);
+            loadChart(globalData, apiGraphValues.length, 'max');
             break;
     }
 });
