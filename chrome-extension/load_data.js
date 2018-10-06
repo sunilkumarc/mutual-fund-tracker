@@ -79,18 +79,18 @@ function prepareDetailsPage(data) {
     else
     content += "<td style='font-weight:bold;'>" + oneYearReturns + "%</td></tr>";
 
-    content += "<tr><td>3 Year</td>";
-    if (oneYearReturns > 0)
+    content += "<tr><td>3 Years</td>";
+    if (threeYearReturns > 0)
         content += "<td style='font-weight:bold; color:green;'><i class='fas fa-arrow-circle-up'></i> " + threeYearReturns + "%</td></tr>";
-    else if (oneYearReturns < 0)
+    else if (threeYearReturns < 0)
         content += "<td style='font-weight:bold; color:red;'><i class='fas fa-arrow-circle-down'></i> " + threeYearReturns + "%</td></tr>";
     else
         content += "<td style='font-weight:bold; '>" + threeYearReturns + "%</td></tr>";
 
-    content += "<tr><td>5 Year</td>";
-    if (oneYearReturns > 0)
+    content += "<tr><td>5 Years</td>";
+    if (fiveYearReturns > 0)
         content += "<td style='font-weight:bold; color:green;'><i class='fas fa-arrow-circle-up'></i> " + fiveYearReturns + "%</td></tr>";
-    else if (oneYearReturns < 0)
+    else if (fiveYearReturns < 0)
         content += "<td style='font-weight:bold; color:red;'><i class='fas fa-arrow-circle-down'></i> " + fiveYearReturns + "%</td></tr>";
     else
         content += "<td style='font-weight:bold; '>" + fiveYearReturns + "%</td></tr>";
